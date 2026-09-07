@@ -152,17 +152,53 @@ function WeekBucketChart({ calibration }: { calibration: Calibration }) {
   );
 }
 
+// Recharts drops X-axis tick labels that would overlap, silently. Six
+// entries of "montecarlo cheating" length exceed that threshold where four
+// did not, so the labels are shortened here and `interval={0}` below forces
+// every one to render rather than letting the chart quietly hide some.
+const METHOD_LABELS: Record<string, string> = {
+  vegas: "Vegas",
+  montecarlo: "Monte Carlo",
+  ml: "ML model",
+  blend: "Blend",
+  blend3: "Blend (3-way)",
+};
+
+function backtestLabel(key: string): string {
+  const separator = key.lastIndexOf("_");
+  if (separator < 0) return key;
+  const method = key.slice(0, separator);
+  const variant = key.slice(separator + 1);
+  return `${METHOD_LABELS[method] ?? method}\n${variant}`;
+}
+
+function BacktestTick({ x, y, payload }: { x?: number; y?: number; payload?: { value: string } }) {
+  const [method, variant] = (payload?.value ?? "").split("\n");
+  return (
+    <g transform={`translate(${x ?? 0},${y ?? 0})`}>
+      <text x={0} y={0} dy={12} textAnchor="middle" fontSize={11} fill="#475569">
+        {method}
+      </text>
+      <text x={0} y={0} dy={26} textAnchor="middle" fontSize={10} fill="#94a3b8">
+        {variant}
+      </text>
+    </g>
+  );
+}
+
 function BacktestChart({ summary }: { summary: Record<string, BacktestMethodSummary> }) {
-  const data = Object.entries(summary).map(([key, s]) => ({
-    key: key.replace("_", " "),
-    "Median weeks survived": s.median_weeks_survived,
-    "Mean weeks survived": s.mean_weeks_survived,
-  }));
+  const data = Object.entries(summary)
+    .sort(([a], [b]) => a.localeCompare(b))
+    .map(([key, s]) => ({
+      key: backtestLabel(key),
+      "Median weeks survived": s.median_weeks_survived,
+      "Mean weeks survived": s.mean_weeks_survived,
+    }));
   return (
     <ResponsiveContainer width="100%" height={280}>
       <BarChart data={data} margin={{ top: 8, right: 16, bottom: 8, left: 0 }}>
         <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" vertical={false} />
-        <XAxis dataKey="key" tick={{ fontSize: 12 }} />
+        <XAxis dataKey="key" tick={<BacktestTick />} interval={0} height={44} />
         <YAxis />
         <Tooltip />
         <Legend />
