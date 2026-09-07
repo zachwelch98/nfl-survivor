@@ -42,6 +42,34 @@ model:
     # Kept available (and still computed for the analysis view) but not the
     # default primary_method per the finding above.
     enabled: true
+  ml:
+    # Method 3, the supervised classifier (models/ml.py). These two values
+    # are the OUTPUT of evaluate/ml_model_selection.py's 3x3 walk-forward
+    # grid (expanding window, fit 2011..N-1 -> score season N, for N in
+    # 2015..2025, n=2885 games), not a guess.
+    #
+    # No combination separated from the leader on Brier by more than the
+    # bootstrap CI, so the decision fell to calibration in the 0.85-0.99
+    # band -- where survivor picks actually live, and the same criterion
+    # that settled vegas-vs-montecarlo above. hist_gb+isotonic predicted
+    # 90.3% and delivered 89.5% over 86 games in that band; the nominal
+    # Brier leader (random_forest, 0.2235 vs 0.2274) was not significantly
+    # ahead and was calibrated on too few high-confidence games to trust.
+    classifier: "hist_gb"
+    calibration_method: "isotonic"
+    # Feature-construction knobs; the first three mirror montecarlo's so the
+    # two methods shrink team ratings identically.
+    rating_shrink_k: 5
+    prior_blend_prev_season: 0.6
+    prior_blend_league_mean: 0.4
+    opp_adj_alpha: 40.0
+    rolling_windows: [3, 5]
+    rolling_min_games_floor: 3
+    min_train_games: 200
+    # Earliest season used for training. Play-by-play must be loaded back to
+    # (this - 1) so the first training season has a prior-season baseline;
+    # rows with no pbp history are dropped by models/ml.py, not imputed.
+    train_floor_season: 2011
 
 optimizer:
   # Confidence decay applied to win probabilities for weeks beyond the current

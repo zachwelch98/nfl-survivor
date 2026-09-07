@@ -45,11 +45,25 @@ class BlendModelConfig(BaseModel):
     enabled: bool
 
 
+class MLModelConfig(BaseModel):
+    classifier: Literal["logistic", "random_forest", "hist_gb"]
+    calibration_method: Literal["none", "sigmoid", "isotonic"]
+    rating_shrink_k: float
+    prior_blend_prev_season: float
+    prior_blend_league_mean: float
+    opp_adj_alpha: float
+    rolling_windows: tuple[int, ...]
+    rolling_min_games_floor: int
+    min_train_games: int
+    train_floor_season: int
+
+
 class ModelConfig(BaseModel):
-    primary_method: Literal["vegas", "montecarlo", "blend"]
+    primary_method: Literal["vegas", "montecarlo", "blend", "ml", "blend3"]
     vegas: VegasModelConfig
     montecarlo: MonteCarloModelConfig
     blend: BlendModelConfig
+    ml: MLModelConfig
 
 
 class OptimizerConfig(BaseModel):

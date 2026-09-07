@@ -37,7 +37,10 @@ Ranked, in order:
   3. Calibration in the 0.85-0.99 band, which is where survivor picks
      actually live. This is the criterion that settled Vegas-vs-Monte-Carlo,
      and a model that is excellent on average but overconfident in that band
-     is useless for this application specifically.
+     is useless for this application specifically. Only counted when at
+     least MIN_HIGH_CONFIDENCE_GAMES land in the band: a 4-point calibration
+     gap measured on 26 games is noise, and picking on it would be selecting
+     the luckiest small sample rather than the best-calibrated model.
   4. Simplicity (logistic < random_forest < hist_gb) when the above tie.
 
 Log loss, ROC-AUC and accuracy are reported alongside but do not select:
@@ -59,6 +62,15 @@ from survivor.models.ml import CALIBRATION_METHODS, CLASSIFIER_NAMES, CORE_FEATU
 
 # Ordered simplest-first; used as the final tie-break.
 _COMPLEXITY_ORDER = {"logistic": 0, "random_forest": 1, "hist_gb": 2}
+
+# Below this many games in the 0.85-0.99 band, the observed calibration gap
+# is too noisy to select on. At n=26 the standard error on an ~88% rate is
+# about 6 points -- larger than any gap the grid actually produces.
+MIN_HIGH_CONFIDENCE_GAMES = 50
+
+# Two combinations whose pooled Brier differs by less than this are treated
+# as tied and settled by the criteria below it.
+BRIER_TIE_TOLERANCE = 0.005
 
 
 def build_walkforward_features(
@@ -328,8 +340,10 @@ def recommend_combination(summary: pl.DataFrame, detail: dict) -> dict:
         }
 
     # Not separable on Brier: fall to high-confidence calibration, then simplicity.
-    contenders = summary.filter(pl.col("brier") <= leader["brier"] + 0.005)
-    with_gap = contenders.filter(pl.col("high_conf_gap").is_not_null())
+    contenders = summary.filter(pl.col("brier") <= leader["brier"] + BRIER_TIE_TOLERANCE)
+    with_gap = contenders.filter(
+        pl.col("high_conf_gap").is_not_null() & (pl.col("high_conf_n") >= MIN_HIGH_CONFIDENCE_GAMES)
+    )
     if with_gap.height > 0:
         best_calibrated = with_gap.with_columns(pl.col("high_conf_gap").abs().alias("abs_gap")).sort(
             ["abs_gap", "complexity"]
@@ -339,7 +353,8 @@ def recommend_combination(summary: pl.DataFrame, detail: dict) -> dict:
             "reason": (
                 "Brier differences among the leaders are not statistically separable, so this was decided on "
                 f"calibration in the 0.85-0.99 band (predicted {best_calibrated['high_conf_predicted']:.3f} "
-                f"vs actual {best_calibrated['high_conf_actual']:.3f})"
+                f"vs actual {best_calibrated['high_conf_actual']:.3f} over "
+                f"{best_calibrated['high_conf_n']} games)"
             ),
         }
 

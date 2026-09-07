@@ -496,7 +496,10 @@ def _build_matchup_row(
         "pass_efficiency_multiplier": weather.pass_efficiency_multiplier,
         "fg_success_multiplier": weather.fg_success_multiplier,
         "div_game": float(div_game) if div_game is not None else None,
-        "week": float(week),
+        # Named distinctly from the `week` passthrough identifier: as a feature
+        # this is "how late in the season is it", and letting the two share a
+        # name meant the float feature silently overwrote the int identifier.
+        "week_in_season": float(week),
     }
     for day in _WEEKDAYS:
         row[f"is_{day.lower()}"] = float(weekday == day) if weekday is not None else None
