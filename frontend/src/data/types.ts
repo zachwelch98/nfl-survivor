@@ -1,0 +1,162 @@
+// Mirrors backend/survivor/export/json_bundle.py's output shapes exactly.
+// Hand-kept in sync rather than generated from a shared schema (a
+// deliberate scope cut) -- `make export` regenerates the JSON files, so a
+// shape mismatch surfaces at review/build time rather than silently.
+
+export type Method = "vegas" | "montecarlo" | "blend";
+
+export interface SeasonMeta {
+  season: number;
+  current_week: number;
+  generated_at: string;
+  primary_method: Method;
+  tie_counts_as_loss: boolean;
+  used_teams: string[];
+}
+
+export interface BoardGame {
+  game_id: string;
+  home_team: string;
+  away_team: string;
+  gameday: string;
+  spread_line: number | null;
+  vegas_home_win_prob: number;
+  vegas_away_win_prob: number;
+  vegas_tie_prob: number;
+  mc_home_win_prob: number | null;
+  mc_away_win_prob: number | null;
+  mc_tie_prob: number | null;
+  mc_simulated_spread: number | null;
+}
+
+export interface WeekBoard {
+  season: number;
+  week: number;
+  games: BoardGame[];
+  recommended_pick: string | null;
+  cost_of_deviation: Record<string, number>;
+}
+
+export interface WeekPick {
+  week: number;
+  team: string;
+  survival_prob: number;
+}
+
+export interface SeasonPlanAlternate {
+  total_survival_prob: number;
+  picks: WeekPick[];
+}
+
+export interface SeasonPlan {
+  season: number;
+  current_week: number;
+  recommended_sequence: WeekPick[];
+  total_survival_prob: number | null;
+  alternates: SeasonPlanAlternate[];
+}
+
+export interface ReliabilityBin {
+  bin_low: number;
+  bin_high: number;
+  n: number;
+  mean_predicted: number;
+  empirical_rate: number;
+}
+
+export interface ConfidenceSlice {
+  threshold_low: number;
+  threshold_high: number;
+  n: number;
+  brier: number | null;
+  log_loss: number | null;
+  empirical_win_rate: number | null;
+  mean_predicted: number | null;
+}
+
+export interface WeekBucketMetrics {
+  n: number;
+  brier: number;
+  log_loss: number;
+}
+
+export interface MethodCalibration {
+  brier: number;
+  log_loss: number;
+  reliability: ReliabilityBin[];
+  high_confidence_slice: ConfidenceSlice;
+  by_week_bucket: Record<string, WeekBucketMetrics>;
+}
+
+export interface BootstrapComparison {
+  point_estimate: number;
+  ci_low: number;
+  ci_high: number;
+  mc_significantly_better?: boolean;
+  vegas_significantly_better?: boolean;
+  blend_significantly_better?: boolean;
+}
+
+export interface BlendCalibration {
+  n_games: number;
+  brier: number;
+  log_loss: number;
+  vegas_on_same_subset_brier: number;
+  blend_vs_vegas_bootstrap: BootstrapComparison;
+}
+
+export interface Calibration {
+  n_games: number;
+  vegas: MethodCalibration;
+  montecarlo: MethodCalibration;
+  mc_vs_vegas_brier_skill_score: number;
+  mc_vs_vegas_bootstrap: BootstrapComparison;
+  blend?: BlendCalibration;
+}
+
+export interface BacktestMethodSummary {
+  method: string;
+  cheating: boolean;
+  median_weeks_survived: number;
+  mean_weeks_survived: number;
+  p_survive_to_week10: number;
+  p_survive_full_season: number;
+  n_seasons: number;
+}
+
+export interface BacktestSeasonRow {
+  season: number;
+  method: string;
+  cheating: boolean;
+  n_picks: number;
+  week_eliminated: number | null;
+  survived_full_season: boolean;
+}
+
+export interface Backtest {
+  summary: Record<string, BacktestMethodSummary>;
+  seasons: BacktestSeasonRow[];
+}
+
+export interface StrategyOutcomeSummary {
+  median_weeks_survived: number;
+  mean_weeks_survived: number;
+  p_survive_full_run: number;
+  survive_to_week_curve: Record<string, number>;
+}
+
+export type Simulation = Record<string, StrategyOutcomeSummary>;
+
+// --- localStorage-persisted user state (not part of the pipeline export) ---
+
+export interface UserPick {
+  season: number;
+  week: number;
+  team: string;
+  outcome: "pending" | "win" | "loss" | "tie";
+}
+
+export interface UserState {
+  version: 1;
+  picks: UserPick[];
+}

@@ -1,0 +1,237 @@
+{
+  "n_games": 1084,
+  "vegas": {
+    "brier": 0.21011072410430717,
+    "log_loss": 0.6073117676071347,
+    "reliability": [
+      {
+        "bin_low": 0.0,
+        "bin_high": 0.1,
+        "n": 1,
+        "mean_predicted": 0.08663091923295704,
+        "empirical_rate": 0.0
+      },
+      {
+        "bin_low": 0.1,
+        "bin_high": 0.2,
+        "n": 21,
+        "mean_predicted": 0.15709404405962896,
+        "empirical_rate": 0.19047619047619047
+      },
+      {
+        "bin_low": 0.2,
+        "bin_high": 0.30000000000000004,
+        "n": 88,
+        "mean_predicted": 0.2559732559152701,
+        "empirical_rate": 0.26136363636363635
+      },
+      {
+        "bin_low": 0.30000000000000004,
+        "bin_high": 0.4,
+        "n": 167,
+        "mean_predicted": 0.361197521298652,
+        "empirical_rate": 0.33532934131736525
+      },
+      {
+        "bin_low": 0.4,
+        "bin_high": 0.5,
+        "n": 154,
+        "mean_predicted": 0.4385054520652843,
+        "empirical_rate": 0.4025974025974026
+      },
+      {
+        "bin_low": 0.5,
+        "bin_high": 0.6000000000000001,
+        "n": 204,
+        "mean_predicted": 0.5668072226315154,
+        "empirical_rate": 0.5931372549019608
+      },
+      {
+        "bin_low": 0.6000000000000001,
+        "bin_high": 0.7000000000000001,
+        "n": 212,
+        "mean_predicted": 0.6441573009249182,
+        "empirical_rate": 0.6415094339622641
+      },
+      {
+        "bin_low": 0.7000000000000001,
+        "bin_high": 0.8,
+        "n": 158,
+        "mean_predicted": 0.7452551082498523,
+        "empirical_rate": 0.759493670886076
+      },
+      {
+        "bin_low": 0.8,
+        "bin_high": 0.9,
+        "n": 74,
+        "mean_predicted": 0.8506496548756726,
+        "empirical_rate": 0.8918918918918919
+      },
+      {
+        "bin_low": 0.9,
+        "bin_high": 1.0,
+        "n": 5,
+        "mean_predicted": 0.9137410634093819,
+        "empirical_rate": 1.0
+      }
+    ],
+    "high_confidence_slice": {
+      "threshold_low": 0.85,
+      "threshold_high": 0.99,
+      "n": 51,
+      "brier": 0.04467177788796132,
+      "log_loss": 0.20698070695851783,
+      "empirical_win_rate": 0.9607843137254902,
+      "mean_predicted": 0.875305244549963
+    },
+    "by_week_bucket": {
+      "wk1-4": {
+        "n": 254,
+        "brier": 0.22484269946458504,
+        "log_loss": 0.6403886706448109
+      },
+      "wk10-14": {
+        "n": 286,
+        "brier": 0.20626033951821943,
+        "log_loss": 0.5986964904684181
+      },
+      "wk15+": {
+        "n": 255,
+        "brier": 0.19438752779426735,
+        "log_loss": 0.5698622174251183
+      },
+      "wk5-9": {
+        "n": 289,
+        "brier": 0.21484672171389432,
+        "log_loss": 0.6198102838234576
+      }
+    }
+  },
+  "montecarlo": {
+    "brier": 0.24655948031438485,
+    "log_loss": 0.7111750803750333,
+    "reliability": [
+      {
+        "bin_low": 0.0,
+        "bin_high": 0.1,
+        "n": 35,
+        "mean_predicted": 0.06187035678006691,
+        "empirical_rate": 0.5142857142857142
+      },
+      {
+        "bin_low": 0.1,
+        "bin_high": 0.2,
+        "n": 94,
+        "mean_predicted": 0.15861651008486086,
+        "empirical_rate": 0.39361702127659576
+      },
+      {
+        "bin_low": 0.2,
+        "bin_high": 0.30000000000000004,
+        "n": 108,
+        "mean_predicted": 0.25394299900403144,
+        "empirical_rate": 0.4166666666666667
+      },
+      {
+        "bin_low": 0.30000000000000004,
+        "bin_high": 0.4,
+        "n": 139,
+        "mean_predicted": 0.36014557037518496,
+        "empirical_rate": 0.37410071942446044
+      },
+      {
+        "bin_low": 0.4,
+        "bin_high": 0.5,
+        "n": 176,
+        "mean_predicted": 0.4480200886743454,
+        "empirical_rate": 0.5284090909090909
+      },
+      {
+        "bin_low": 0.5,
+        "bin_high": 0.6000000000000001,
+        "n": 159,
+        "mean_predicted": 0.551050014726697,
+        "empirical_rate": 0.5471698113207547
+      },
+      {
+        "bin_low": 0.6000000000000001,
+        "bin_high": 0.7000000000000001,
+        "n": 149,
+        "mean_predicted": 0.6498488595778653,
+        "empirical_rate": 0.6174496644295302
+      },
+      {
+        "bin_low": 0.7000000000000001,
+        "bin_high": 0.8,
+        "n": 103,
+        "mean_predicted": 0.7463917100121559,
+        "empirical_rate": 0.7087378640776699
+      },
+      {
+        "bin_low": 0.8,
+        "bin_high": 0.9,
+        "n": 87,
+        "mean_predicted": 0.8422576218972838,
+        "empirical_rate": 0.7931034482758621
+      },
+      {
+        "bin_low": 0.9,
+        "bin_high": 1.0,
+        "n": 34,
+        "mean_predicted": 0.938599079922556,
+        "empirical_rate": 0.7941176470588235
+      }
+    ],
+    "high_confidence_slice": {
+      "threshold_low": 0.85,
+      "threshold_high": 0.99,
+      "n": 64,
+      "brier": 0.1851754891093456,
+      "log_loss": 0.6191221150701931,
+      "empirical_win_rate": 0.78125,
+      "mean_predicted": 0.9020851596685908
+    },
+    "by_week_bucket": {
+      "wk1-4": {
+        "n": 254,
+        "brier": 0.2962655842166813,
+        "log_loss": 0.87490523864323
+      },
+      "wk10-14": {
+        "n": 286,
+        "brier": 0.2150253608131087,
+        "log_loss": 0.6198245755230503
+      },
+      "wk15+": {
+        "n": 255,
+        "brier": 0.223405261074425,
+        "log_loss": 0.6382906908123972
+      },
+      "wk5-9": {
+        "n": 289,
+        "brier": 0.2545101159281268,
+        "log_loss": 0.7219858192193843
+      }
+    }
+  },
+  "mc_vs_vegas_brier_skill_score": -0.17347404024928825,
+  "mc_vs_vegas_bootstrap": {
+    "point_estimate": -0.036448756210077676,
+    "ci_low": -0.04650602487572188,
+    "ci_high": -0.02649219670247849,
+    "mc_significantly_better": false,
+    "vegas_significantly_better": true
+  },
+  "blend": {
+    "n_games": 977,
+    "brier": 0.21126030011200886,
+    "log_loss": 0.6098081058566868,
+    "vegas_on_same_subset_brier": 0.20666312586779587,
+    "blend_vs_vegas_bootstrap": {
+      "point_estimate": -0.004597174244212993,
+      "ci_low": -0.009822738853582274,
+      "ci_high": 0.0006294389698283584,
+      "blend_significantly_better": false
+    }
+  }
+}

@@ -1,0 +1,27 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ink: #0f172a;
+  --color-paper: #f8fafc;
+  --color-accent: #2563eb;
+  --color-accent-soft: #dbeafe;
+  --color-win: #16a34a;
+  --color-loss: #dc2626;
+  --color-tie: #ca8a04;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-feature-settings: "tnum" 1;
+}
+
+::selection {
+  background: var(--color-accent-soft);
+}
