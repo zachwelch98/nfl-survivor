@@ -182,3 +182,31 @@ def test_real_data_leakage_property():
 
     for team, profile in profiles.items():
         assert profile.n_drives <= max_by_team.get(team, 0) + 1  # +1 tolerance for off-by-one at boundary
+
+
+def test_drives_per_game_present_and_reasonable():
+    # 3 games of 10 drives each -> drives_per_game should be exactly 10.
+    rows = []
+    for g in range(3):
+        for d in range(10):
+            rows.append(_play(f"game{g}", d, 2024, 3 + g, "KC", "DEN", "pass", "Touchdown", play_id=d))
+    dt = build_drive_table(_pbp(rows))
+    asof = AsOf(season=2024, week=10, game_type="REG")
+    profiles = compute_offense_profiles(dt, asof, shrink_k=5, prior_blend_prev_season=0.6, prior_blend_league_mean=0.4)
+    assert profiles["KC"].drives_per_game == pytest.approx(10.0, abs=1e-6)
+
+
+def test_drives_per_game_no_leakage():
+    """A team's drives_per_game must not be pulled toward a future week's pace."""
+    early = [_play(f"g{i}", i, 2024, 5, "KC", "OPP", "pass", "Touchdown", play_id=i) for i in range(24)]
+    import polars as _pl
+
+    early_dt = build_drive_table(_pbp(early))
+    future = [_play(f"f{i}", i, 2024, 12, "KC", "OPP", "pass", "Touchdown", play_id=2000 + i) for i in range(600)]
+    future_dt = build_drive_table(_pbp(future))
+    combined = _pl.concat([early_dt, future_dt])
+
+    asof = AsOf(season=2024, week=10, game_type="REG")
+    profiles = compute_offense_profiles(combined, asof, shrink_k=5, prior_blend_prev_season=0.6, prior_blend_league_mean=0.4)
+    # only the early (week 5) drives should be visible -> n_drives should reflect only those
+    assert profiles["KC"].n_drives == early_dt.filter(_pl.col("offense") == "KC").height

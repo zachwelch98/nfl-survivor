@@ -155,6 +155,7 @@ class TeamDriveProfile:
     rates: dict[str, float]  # shrunk category distribution, sums to ~1.0
     plays_per_drive: float
     red_zone_td_rate: float  # P(TD | reached red zone), shrunk
+    drives_per_game: float  # shrunk pace metric — possessions/game (league avg ~9.7)
 
 
 def _team_profiles(
@@ -175,6 +176,19 @@ def _team_profiles(
     )
     rz_league = this_season.filter(pl.col("reached_red_zone"))
     league_mean_rz_td = float(rz_league["scored_td_in_red_zone"].mean()) if rz_league.height > 0 else 0.55
+
+    def _drives_per_game_by_team(df: pl.DataFrame) -> dict[str, float]:
+        if df.height == 0:
+            return {}
+        per_game = df.group_by(["game_id", team_col]).agg(pl.len().alias("n"))
+        avg = per_game.group_by(team_col).agg(pl.col("n").mean().alias("avg"))
+        return dict(zip(avg[team_col].to_list(), avg["avg"].to_list()))
+
+    dpg_this_season = _drives_per_game_by_team(this_season)
+    dpg_prior_season = _drives_per_game_by_team(prior_season)
+    league_mean_dpg = float(sum(dpg_this_season.values()) / len(dpg_this_season)) if dpg_this_season else (
+        float(sum(dpg_prior_season.values()) / len(dpg_prior_season)) if dpg_prior_season else 9.7
+    )
 
     teams = sorted(set(visible[team_col].drop_nulls().unique().to_list()))
     profiles: dict[str, TeamDriveProfile] = {}
@@ -214,12 +228,25 @@ def _team_profiles(
             team_prior_rz /= blend_total
         shrunk_rz_td = _shrink_scalar(observed_rz_td, n_rz_observed, team_prior_rz, shrink_k)
 
+        # drives_per_game is a per-game (not per-drive) average, so it's
+        # weighted by games played rather than shrink_k (which is calibrated
+        # in drive-count units) — pace stabilizes quickly, so a small fixed
+        # k of 2 games is used instead.
+        n_games_observed = team_this_season["game_id"].n_unique() if n_observed > 0 else 0
+        observed_dpg = dpg_this_season.get(team, league_mean_dpg)
+        prior_dpg = dpg_prior_season.get(team, league_mean_dpg)
+        team_prior_dpg = prior_blend_prev_season * prior_dpg + prior_blend_league_mean * league_mean_dpg
+        if blend_total > 0:
+            team_prior_dpg /= blend_total
+        shrunk_dpg = _shrink_scalar(observed_dpg, n_games_observed, team_prior_dpg, k=2.0)
+
         profiles[team] = TeamDriveProfile(
             team=team,
             n_drives=n_observed,
             rates=shrunk_rates,
             plays_per_drive=shrunk_ppd,
             red_zone_td_rate=shrunk_rz_td,
+            drives_per_game=shrunk_dpg,
         )
 
     return profiles
@@ -247,4 +274,9 @@ def league_average_profile(drive_table: pl.DataFrame, as_of: AsOf) -> TeamDriveP
     ppd = float(base["play_count"].mean()) if base.height > 0 else 5.5
     rz = base.filter(pl.col("reached_red_zone"))
     rz_td = float(rz["scored_td_in_red_zone"].mean()) if rz.height > 0 else 0.55
-    return TeamDriveProfile(team="LEAGUE", n_drives=base.height, rates=rates, plays_per_drive=ppd, red_zone_td_rate=rz_td)
+    if base.height > 0:
+        per_game = base.group_by(["game_id", "offense"]).agg(pl.len().alias("n"))
+        dpg = float(per_game["n"].mean())
+    else:
+        dpg = 9.7
+    return TeamDriveProfile(team="LEAGUE", n_drives=base.height, rates=rates, plays_per_drive=ppd, red_zone_td_rate=rz_td, drives_per_game=dpg)
