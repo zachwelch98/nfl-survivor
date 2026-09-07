@@ -8,7 +8,9 @@ import type { Backtest, Calibration, SeasonMeta, SeasonPlan, Simulation, WeekBoa
 const BASE = "/data";
 
 async function getJSON<T>(path: string): Promise<T> {
-  const res = await fetch(`${BASE}/${path}`);
+  // no-store: after a pipeline export regenerates these static files, a
+  // refetch should see the new bytes rather than a cached copy.
+  const res = await fetch(`${BASE}/${path}`, { cache: "no-store" });
   if (!res.ok) {
     throw new Error(`Failed to load ${path}: ${res.status} ${res.statusText}`);
   }

@@ -85,6 +85,11 @@ data to show by the time it existed.
 - **The frontend is a thin, swappable read layer.** Every view fetches through
   `frontend/src/data/source.ts`; nothing else calls `fetch`. Swapping static
   JSON for a live API later is a one-file change.
+- **The Dashboard can trigger the pipeline itself.** A dev-only Vite
+  middleware (`frontend/vite-plugins/pipeline.ts`) exposes `/api/pipeline/*`
+  and shells out to `make <target>` (allowlisted, one job at a time) so
+  `make refresh|recommend|export|export-full|backtest|test` can be run from
+  a button instead of a terminal — see `frontend/README.md`.
 
 ## Project layout
 

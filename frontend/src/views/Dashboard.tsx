@@ -1,21 +1,28 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { AsyncView } from "../components/AsyncView";
 import { Card, StatTile } from "../components/Card";
+import { CommandRunner } from "../components/CommandRunner";
 import { ProbPill } from "../components/ProbBar";
 import { useAsync } from "../lib/useAsync";
 import { getSeasonMeta, getSeasonPlan, getWeekBoard } from "../data/source";
 import { teamName } from "../lib/teams";
 import { useUserState } from "../lib/useUserState";
-import { survivalRecord } from "../data/storage";
+import { survivalRecord, usedTeams } from "../data/storage";
 
 export default function Dashboard() {
-  const meta = useAsync(() => getSeasonMeta(), []);
+  // Bumped after a pipeline command (refresh/export) succeeds, so the views
+  // below refetch the JSON files that command just regenerated instead of
+  // showing what was loaded on first render.
+  const [refreshNonce, setRefreshNonce] = useState(0);
+  const meta = useAsync(() => getSeasonMeta(), [refreshNonce]);
   const { state } = useUserState();
 
   return (
     <AsyncView state={meta}>
       {(m) => {
         const record = survivalRecord(state, m.season);
+        const myUsedTeams = Array.from(usedTeams(state, m.season));
         return (
           <div className="space-y-6">
             <div>
@@ -35,8 +42,14 @@ export default function Dashboard() {
               <StatTile label="Teams used" value={m.used_teams.length} />
             </div>
 
-            <RecommendedPickCard season={m.season} week={m.current_week} />
-            <SeasonPreviewCard />
+            <RecommendedPickCard season={m.season} week={m.current_week} refreshNonce={refreshNonce} />
+            <SeasonPreviewCard refreshNonce={refreshNonce} />
+            <CommandRunner
+              season={m.season}
+              week={m.current_week}
+              usedTeams={myUsedTeams}
+              onSuccess={() => setRefreshNonce((n) => n + 1)}
+            />
           </div>
         );
       }}
@@ -44,14 +57,14 @@ export default function Dashboard() {
   );
 }
 
-function RecommendedPickCard({ season, week }: { season: number; week: number }) {
-  const board = useAsync(() => getWeekBoard(week), [week]);
+function RecommendedPickCard({ season, week, refreshNonce }: { season: number; week: number; refreshNonce: number }) {
+  const board = useAsync(() => getWeekBoard(week), [week, refreshNonce]);
   return (
     <AsyncView state={board}>
       {(b) => {
         const top = [...b.games].sort((a, z) => Math.max(z.vegas_home_win_prob, 1 - z.vegas_home_win_prob) - Math.max(a.vegas_home_win_prob, 1 - a.vegas_home_win_prob));
         return (
-          <Card title={`Week ${week} recommended pick`} subtitle="Optimized for full-season survival, not just this week">
+          <Card title={`Week ${week} recommended pick`} subtitle="Optimized for full-season survival, not just this week's win probability">
             {b.recommended_pick ? (
               <div className="flex items-center gap-4">
                 <div className="w-16 h-16 rounded-xl bg-accent-soft flex items-center justify-center text-lg font-bold text-accent">
@@ -96,8 +109,8 @@ function RecommendedPickCard({ season, week }: { season: number; week: number })
   );
 }
 
-function SeasonPreviewCard() {
-  const plan = useAsync(() => getSeasonPlan(), []);
+function SeasonPreviewCard({ refreshNonce }: { refreshNonce: number }) {
+  const plan = useAsync(() => getSeasonPlan(), [refreshNonce]);
   return (
     <AsyncView state={plan}>
       {(p) => (
