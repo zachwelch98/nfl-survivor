@@ -90,3 +90,44 @@ def test_collect_predictions_real_data_smoke():
     assert preds["vegas_home_win_prob"].is_between(0, 1).all()
     assert preds["mc_home_win_prob"].is_between(0, 1).all()
     assert preds["home_win"].is_in([0, 1]).all()
+
+
+def test_summarize_comparison_structure_and_significance_flags():
+    from survivor.evaluate.model_comparison import summarize_comparison
+
+    # Vegas clearly better, MC pure noise -> vegas should come out significantly better
+    n = 1500
+    rng = np.random.default_rng(3)
+    true_p = rng.uniform(0.2, 0.8, n)
+    outcome = (rng.uniform(0, 1, n) < true_p).astype(int)
+    vegas = np.clip(true_p + rng.normal(0, 0.03, n), 0.02, 0.98)
+    mc = np.clip(rng.uniform(0.3, 0.7, n), 0.02, 0.98)
+    weeks = (np.arange(n) % 18 + 1)
+
+    preds = pl.DataFrame(
+        {
+            "season": [2024] * n,
+            "week": weeks.tolist(),
+            "home_team": ["AAA"] * n,
+            "away_team": ["BBB"] * n,
+            "home_win": outcome.tolist(),
+            "vegas_home_win_prob": vegas.tolist(),
+            "mc_home_win_prob": mc.tolist(),
+        }
+    )
+    summary = summarize_comparison(preds, n_boot=500, seed=0)
+    assert summary["n_games"] == n
+    assert summary["mc_vs_vegas_bootstrap"]["vegas_significantly_better"] is True
+    assert summary["mc_vs_vegas_bootstrap"]["mc_significantly_better"] is False
+    assert set(summary["vegas"].keys()) >= {"brier", "log_loss", "reliability", "high_confidence_slice", "by_week_bucket"}
+    assert "blend" not in summary  # no blend column supplied
+
+
+def test_summarize_comparison_includes_blend_when_present():
+    from survivor.evaluate.model_comparison import add_walkforward_blend, summarize_comparison
+
+    preds = _synthetic_predictions(n_weeks=25, games_per_week=14, seed=5)
+    preds = add_walkforward_blend(preds, min_train_games=100)
+    summary = summarize_comparison(preds, n_boot=300, seed=1)
+    assert "blend" in summary
+    assert "blend_vs_vegas_bootstrap" in summary["blend"]

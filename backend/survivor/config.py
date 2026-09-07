@@ -46,6 +46,7 @@ class BlendModelConfig(BaseModel):
 
 
 class ModelConfig(BaseModel):
+    primary_method: Literal["vegas", "montecarlo", "blend"]
     vegas: VegasModelConfig
     montecarlo: MonteCarloModelConfig
     blend: BlendModelConfig

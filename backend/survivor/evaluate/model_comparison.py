@@ -132,3 +132,75 @@ def add_walkforward_blend(predictions: pl.DataFrame, min_train_games: int = 100)
     blend_series = pl.Series("blend_home_win_prob", blend_preds)
     blend_series = pl.when(blend_series.is_nan()).then(None).otherwise(blend_series).alias("blend_home_win_prob")
     return predictions.with_columns(blend_series)
+
+
+def summarize_comparison(predictions: pl.DataFrame, n_boot: int = 3000, seed: int = 0) -> dict:
+    """Package the full plan §3 comparison into one JSON-serializable dict:
+    overall Brier/log loss/BSS + bootstrap CI, week-bucket breakdown,
+    high-confidence-band slice, and (where present) the blend's numbers.
+    This is the payload the frontend's "Historical analysis" view and the
+    weekly-operation method choice both consume — see plan §3 and §9.
+    """
+    from survivor.evaluate.calibration import high_confidence_slice, reliability_curve
+    from survivor.evaluate.metrics import bootstrap_metric_diff, brier_score, brier_skill_score, log_loss, metrics_by_group
+
+    outcome = predictions["home_win"].to_numpy().astype(float)
+    vegas = predictions["vegas_home_win_prob"].to_numpy()
+    mc = predictions["mc_home_win_prob"].to_numpy()
+    weeks = predictions["week"].to_numpy()
+
+    week_bucket = np.select(
+        [weeks <= 4, weeks <= 9, weeks <= 14],
+        ["wk1-4", "wk5-9", "wk10-14"],
+        default="wk15+",
+    )
+
+    boot = bootstrap_metric_diff(mc, vegas, outcome, metric_fn=brier_score, n_boot=n_boot, seed=seed)
+
+    result = {
+        "n_games": int(len(outcome)),
+        "vegas": {
+            "brier": brier_score(vegas, outcome),
+            "log_loss": log_loss(vegas, outcome),
+            "reliability": [b.__dict__ for b in reliability_curve(vegas, outcome)],
+            "high_confidence_slice": high_confidence_slice(vegas, outcome).__dict__,
+            "by_week_bucket": metrics_by_group(vegas, outcome, week_bucket),
+        },
+        "montecarlo": {
+            "brier": brier_score(mc, outcome),
+            "log_loss": log_loss(mc, outcome),
+            "reliability": [b.__dict__ for b in reliability_curve(mc, outcome)],
+            "high_confidence_slice": high_confidence_slice(mc, outcome).__dict__,
+            "by_week_bucket": metrics_by_group(mc, outcome, week_bucket),
+        },
+        "mc_vs_vegas_brier_skill_score": brier_skill_score(mc, outcome, reference_prob=vegas),
+        "mc_vs_vegas_bootstrap": {
+            "point_estimate": boot.point_estimate,
+            "ci_low": boot.ci_low,
+            "ci_high": boot.ci_high,
+            "mc_significantly_better": boot.excludes_zero and boot.point_estimate > 0,
+            "vegas_significantly_better": boot.excludes_zero and boot.point_estimate < 0,
+        },
+    }
+
+    if "blend_home_win_prob" in predictions.columns:
+        blend_eval = predictions.filter(pl.col("blend_home_win_prob").is_not_null())
+        if blend_eval.height > 0:
+            b_outcome = blend_eval["home_win"].to_numpy().astype(float)
+            b_vegas = blend_eval["vegas_home_win_prob"].to_numpy()
+            b_blend = blend_eval["blend_home_win_prob"].to_numpy()
+            boot_blend = bootstrap_metric_diff(b_blend, b_vegas, b_outcome, metric_fn=brier_score, n_boot=n_boot, seed=seed + 1)
+            result["blend"] = {
+                "n_games": int(blend_eval.height),
+                "brier": brier_score(b_blend, b_outcome),
+                "log_loss": log_loss(b_blend, b_outcome),
+                "vegas_on_same_subset_brier": brier_score(b_vegas, b_outcome),
+                "blend_vs_vegas_bootstrap": {
+                    "point_estimate": boot_blend.point_estimate,
+                    "ci_low": boot_blend.ci_low,
+                    "ci_high": boot_blend.ci_high,
+                    "blend_significantly_better": boot_blend.excludes_zero and boot_blend.point_estimate > 0,
+                },
+            }
+
+    return result

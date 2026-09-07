@@ -16,6 +16,16 @@ pool:
   allow_two_picks_late_season: false   # some pools loosen rules after week N; off by default
 
 model:
+  # Empirical finding (evaluate/model_comparison.py, walk-forward on real
+  # 2022-2024 games, n=813): Vegas is significantly better calibrated than
+  # Monte Carlo (bootstrap CI on the Brier difference excludes zero, favoring
+  # Vegas), and Monte Carlo is specifically overconfident in the 0.85-0.99
+  # band survivor picks live in (predicted ~90.5% win rate, actual ~71.1%,
+  # vs Vegas's well-calibrated ~87.7%/96.7%). Blending does not help either
+  # (CI on blend-vs-Vegas straddles zero). Re-run the comparison and update
+  # this if that ever changes -- it is a data-driven default, not a
+  # permanent assumption. See plan §3/§7.
+  primary_method: "vegas"               # "vegas" | "montecarlo" | "blend"
   vegas:
     # Logistic regression of spread_line -> home win prob, refit walk-forward
     # on seasons strictly before the as-of point (see plan §2, Method 1).
@@ -29,6 +39,8 @@ model:
     prior_blend_league_mean: 0.4
   blend:
     # Logistic stack of both models' probabilities, fit on prior seasons only.
+    # Kept available (and still computed for the analysis view) but not the
+    # default primary_method per the finding above.
     enabled: true
 
 optimizer:
