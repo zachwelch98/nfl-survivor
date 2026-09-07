@@ -207,3 +207,24 @@ def run_season_backtest(
             break
 
     return SeasonResult(season=season, method=method, cheating=cheating, picks=tuple(picks), week_eliminated=week_eliminated)
+
+
+def summarize_backtest(results: pl.DataFrame) -> dict:
+    """Package per-season backtest rows (as produced by running
+    run_season_backtest across many seasons/methods/variants) into the
+    plan §6 deliverable: survival distribution per method, and how the
+    honest vs. cheating variants compare (quantifying what real future-line
+    lookahead would be worth).
+    """
+    summary = (
+        results.group_by(["method", "cheating"])
+        .agg(
+            pl.col("n_picks").median().alias("median_weeks_survived"),
+            pl.col("n_picks").mean().alias("mean_weeks_survived"),
+            (pl.col("n_picks") >= 10).mean().alias("p_survive_to_week10"),
+            pl.col("survived_full_season").mean().alias("p_survive_full_season"),
+            pl.len().alias("n_seasons"),
+        )
+        .sort(["method", "cheating"])
+    )
+    return {row["method"] + ("_cheating" if row["cheating"] else "_honest"): row for row in summary.iter_rows(named=True)}

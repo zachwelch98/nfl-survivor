@@ -103,3 +103,24 @@ def test_backtest_week_eliminated_matches_last_pick_result(real_data):
             is_home = row["home_team"] == pick.team
             won = (row["home_score"] > row["away_score"]) if is_home else (row["away_score"] > row["home_score"])
             assert won
+
+
+def test_summarize_backtest_structure():
+    import polars as pl
+
+    from survivor.backtest.harness import summarize_backtest
+
+    df = pl.DataFrame(
+        {
+            "season": [2020, 2020, 2021, 2021],
+            "method": ["vegas", "vegas", "vegas", "vegas"],
+            "cheating": [False, False, True, True],
+            "n_picks": [4, 6, 8, 10],
+            "week_eliminated": [4, 6, 8, 10],
+            "survived_full_season": [False, False, False, False],
+        }
+    )
+    summary = summarize_backtest(df)
+    assert "vegas_honest" in summary and "vegas_cheating" in summary
+    assert summary["vegas_honest"]["median_weeks_survived"] == pytest.approx(5.0)
+    assert summary["vegas_cheating"]["median_weeks_survived"] == pytest.approx(9.0)
