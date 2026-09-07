@@ -730,4 +730,17 @@ def build_feature_table(
     if not rows:
         return pl.DataFrame()
 
-    return pl.DataFrame(rows, strict=False)
+    # Explicit schema rather than inference. Every feature is a float by
+    # construction, but polars infers dtypes from the first 100 rows only,
+    # and a feature that is legitimately null for the first 100 games (an
+    # early-season travel or opponent-adjusted value, say) would be inferred
+    # as Null and then fail to accept a float thousands of rows later.
+    schema = {
+        "game_id": pl.Utf8,
+        "season": pl.Int64,
+        "week": pl.Int64,
+        "home_team": pl.Utf8,
+        "away_team": pl.Utf8,
+        "home_win": pl.Int64,
+    } | {name: pl.Float64 for name in feature_columns(tuple(rolling_windows))}
+    return pl.DataFrame(rows, schema=schema, strict=False)
