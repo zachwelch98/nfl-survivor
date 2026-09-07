@@ -17,6 +17,20 @@ from survivor.config import CONFIG
 from survivor.features.drive_rates import build_drive_table
 
 
+def _default_pbp_seasons(season: int, schedules) -> list[int]:
+    """[season-1, season] normally, but nflverse has no play-by-play for a
+    season with zero games played yet (e.g. recommending for next week's
+    season before it kicks off), and nflreadpy rejects such a season
+    outright — drop it from the request in that case, since drive_rates.py
+    would find nothing there to use anyway."""
+    import polars as pl
+
+    played = schedules.filter((pl.col("season") == season) & pl.col("home_score").is_not_null())
+    if played.height == 0:
+        return [season - 1]
+    return [season - 1, season]
+
+
 def _parse_used(used: str | None) -> list[str]:
     if not used:
         return []
@@ -50,8 +64,8 @@ def recommend(season: int, week: int, used: str, pbp_seasons: str | None) -> Non
     from survivor.export.json_bundle import build_season_plan, build_week_board
 
     used_teams = _parse_used(used)
-    seasons = [int(s) for s in pbp_seasons.split(",")] if pbp_seasons else [season - 1, season]
     schedules = load_schedules()
+    seasons = [int(s) for s in pbp_seasons.split(",")] if pbp_seasons else _default_pbp_seasons(season, schedules)
     pbp = load_pbp(seasons)
     drive_table = build_drive_table(pbp)
 
@@ -83,8 +97,8 @@ def export(season: int, week: int, used: str, pbp_seasons: str | None, with_anal
     from survivor.export.json_bundle import export_all
 
     used_teams = _parse_used(used)
-    seasons = [int(s) for s in pbp_seasons.split(",")] if pbp_seasons else [season - 1, season]
     schedules = load_schedules()
+    seasons = [int(s) for s in pbp_seasons.split(",")] if pbp_seasons else _default_pbp_seasons(season, schedules)
     pbp = load_pbp(seasons)
 
     comparison_predictions = None
@@ -96,9 +110,15 @@ def export(season: int, week: int, used: str, pbp_seasons: str | None, with_anal
         from survivor.backtest.harness import run_season_backtest, summarize_backtest
         from survivor.simulate.season import precompute_weekly_survival_tables, simulate_strategies, summarize_strategy_outcomes
 
+        # comparison_weeks spans multiple past seasons and each of those
+        # needs its own prior-season pbp too (drive_rates.py's "this_season
+        # + prior_season" lookback) — the narrow `pbp` loaded above (scoped
+        # to just the recommendation) isn't wide enough for this.
+        analysis_pbp = load_pbp(list(range(season - 5, season)))
+
         click.echo("Computing model comparison (this takes a while)...")
         comparison_weeks = [(s, w) for s in range(season - 4, season) for w in range(1, 19)]
-        comparison_predictions = collect_predictions(pbp, schedules, comparison_weeks)
+        comparison_predictions = collect_predictions(analysis_pbp, schedules, comparison_weeks)
         comparison_predictions = add_walkforward_blend(comparison_predictions)
 
         click.echo("Running backtest across historical seasons...")
@@ -117,7 +137,7 @@ def export(season: int, week: int, used: str, pbp_seasons: str | None, with_anal
         backtest_results = pl.DataFrame(rows)
 
         click.echo("Running strategy simulation...")
-        tables = precompute_weekly_survival_tables(pbp, schedules, season - 1)
+        tables = precompute_weekly_survival_tables(analysis_pbp, schedules, season - 1)
         weeks = sorted(tables.keys())
         all_teams = sorted({t for w in weeks for (tw, t) in tables[w].keys()})
         outcomes = simulate_strategies(tables, weeks, all_teams)
