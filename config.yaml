@@ -1,0 +1,48 @@
+# NFL Survivor Pool ML Advisor — configuration
+
+season:
+  current: 2026
+  # First season with usable moneyline coverage in nflverse games.csv.
+  moneyline_start: 2010
+  # First season with any betting lines at all (spread_line).
+  spread_start: 1999
+  # Backtest window — moneyline-complete era, per plan §3/§6.
+  backtest_seasons: [2010, 2025]
+
+pool:
+  # Rules that change the objective. Most standard pools: one pick per week,
+  # never reuse a team, a tie counts as elimination.
+  tie_counts_as_loss: true
+  allow_two_picks_late_season: false   # some pools loosen rules after week N; off by default
+
+model:
+  vegas:
+    # Logistic regression of spread_line -> home win prob, refit walk-forward
+    # on seasons strictly before the as-of point (see plan §2, Method 1).
+    devig_method: "proportional"        # "proportional" | "shin"
+  montecarlo:
+    n_simulations: 10000
+    seed: 1337
+    # Shrinkage: rating = w * observed + (1-w) * prior, w = n / (n + k)
+    rating_shrink_k: 5
+    prior_blend_prev_season: 0.6
+    prior_blend_league_mean: 0.4
+  blend:
+    # Logistic stack of both models' probabilities, fit on prior seasons only.
+    enabled: true
+
+optimizer:
+  # Confidence decay applied to win probabilities for weeks beyond the current
+  # posted-lines horizon, per plan §4. Widens uncertainty as horizon grows.
+  future_week_shrink_to_half: true
+
+simulation:
+  n_season_sims: 20000
+  n_pool_field_entries: 10000
+
+paths:
+  raw: "data/raw"
+  features: "data/features"
+  cache: "data/cache"
+  popularity: "data/popularity"
+  frontend_data: "frontend/public/data"
