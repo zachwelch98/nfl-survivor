@@ -29,6 +29,12 @@ pip install -e ".[dev]"
 pytest
 ```
 
+Use `make recommend` / `make export` / `make backtest` (see Makefile) rather
+than the installed `survivor` console script directly — on this Python 3.14
+venv the editable install's `.pth` file isn't reliably processed by `site.py`
+at interpreter startup, so the Makefile invokes `python -m survivor.cli` with
+`PYTHONPATH=backend` set explicitly instead.
+
 ## Key design decisions
 
 - **No paid odds API.** nflverse's `games.csv` (via `nflreadpy`) already

@@ -4,20 +4,26 @@ SEASON ?= 2026
 WEEK ?= 1
 USED ?=
 
+# The editable install's console script (`survivor`) depends on a .pth file
+# that this Python 3.14 venv doesn't reliably process at startup — invoking
+# via `-m` with PYTHONPATH set explicitly sidesteps that rather than
+# depending on it.
+PY := PYTHONPATH=backend .venv/bin/python -m survivor.cli
+
 refresh:
-	.venv/bin/survivor refresh --pbp-seasons 2024,2025
+	$(PY) refresh --pbp-seasons 2024,2025
 
 recommend:
-	.venv/bin/survivor recommend --season $(SEASON) --week $(WEEK) --used "$(USED)"
+	$(PY) recommend --season $(SEASON) --week $(WEEK) --used "$(USED)"
 
 export:
-	.venv/bin/survivor export --season $(SEASON) --week $(WEEK) --used "$(USED)"
+	$(PY) export --season $(SEASON) --week $(WEEK) --used "$(USED)"
 
 export-full:
-	.venv/bin/survivor export --season $(SEASON) --week $(WEEK) --used "$(USED)" --with-analysis
+	$(PY) export --season $(SEASON) --week $(WEEK) --used "$(USED)" --with-analysis
 
 backtest:
-	.venv/bin/survivor backtest --start 2010 --end 2025
+	$(PY) backtest --start 2010 --end 2025
 
 test:
 	.venv/bin/python -m pytest tests/ -q
