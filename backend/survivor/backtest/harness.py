@@ -24,6 +24,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
+import numpy as np
 import polars as pl
 
 from survivor.clock import AsOf
@@ -91,7 +92,9 @@ def _current_week_probs(
             sim = mc_results.get(row["game_id"])
             vegas_share = vrow["home_win_prob"] / (vrow["home_win_prob"] + vrow["away_win_prob"])
             mc_share = sim.home_win_prob / (sim.home_win_prob + sim.away_win_prob) if sim else 0.5
-            blended_share = float(blend_model.predict([vegas_share], [mc_share])[0])
+            blended_share = float(
+                blend_model.predict({"vegas": np.array([vegas_share]), "mc": np.array([mc_share])})[0]
+            )
             tie_prob = sim.tie_prob if sim else vrow["tie_prob"]
             rows.append({**row, "home_win_prob": blended_share * (1 - tie_prob), "away_win_prob": (1 - blended_share) * (1 - tie_prob), "tie_prob": tie_prob})
         return pl.DataFrame(rows)

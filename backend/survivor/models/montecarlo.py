@@ -37,22 +37,13 @@ from dataclasses import dataclass
 import numpy as np
 
 from survivor.features.drive_rates import OUTCOME_CATEGORIES
+from survivor.models._prob_utils import logit as _logit, sigmoid as _sigmoid
 
-_EPS = 1e-9
 _CATEGORY_INDEX = {c: i for i, c in enumerate(OUTCOME_CATEGORIES)}
 _TD_IDX = _CATEGORY_INDEX["td"]
 _FG_IDX = _CATEGORY_INDEX["fg"]
 _SAFETY_IDX = _CATEGORY_INDEX["safety"]
 _TURNOVER_IDXS = (_CATEGORY_INDEX["turnover_int"], _CATEGORY_INDEX["turnover_fumble"])
-
-
-def _logit(p: float) -> float:
-    p = min(max(p, _EPS), 1 - _EPS)
-    return float(np.log(p / (1 - p)))
-
-
-def _sigmoid(x: float) -> float:
-    return float(1.0 / (1.0 + np.exp(-x)))
 
 
 def combine_matchup_rates(off_rates: dict[str, float], def_rates: dict[str, float], league_rates: dict[str, float]) -> dict[str, float]:

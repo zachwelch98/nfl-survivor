@@ -123,8 +123,10 @@ def add_walkforward_blend(predictions: pl.DataFrame, min_train_games: int = 100)
         test_mask = (row_season == season) & (row_week == week)
         if train_mask.sum() < min_train_games:
             continue
-        model = BlendModel().fit(vegas_arr[train_mask], mc_arr[train_mask], outcome_arr[train_mask])
-        blend_preds[test_mask] = model.predict(vegas_arr[test_mask], mc_arr[test_mask])
+        model = BlendModel().fit(
+            {"vegas": vegas_arr[train_mask], "mc": mc_arr[train_mask]}, outcome_arr[train_mask]
+        )
+        blend_preds[test_mask] = model.predict({"vegas": vegas_arr[test_mask], "mc": mc_arr[test_mask]})
 
     # NaN (unset — not enough training data yet) must become an actual
     # polars null, not float NaN, so `.is_null()`/`.is_not_null()` behave as

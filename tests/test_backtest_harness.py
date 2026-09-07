@@ -80,7 +80,10 @@ def test_backtest_blend_honest_real_season(real_data):
     # fit a blend model on a slice of prior data so the blend method has something to use
     weeks = [(2022, w) for w in range(5, 18)]
     preds = collect_predictions(pbp, schedules, weeks, mc_config=FAST_MC)
-    blend = BlendModel().fit(preds["vegas_home_win_prob"].to_numpy(), preds["mc_home_win_prob"].to_numpy(), preds["home_win"].to_numpy())
+    blend = BlendModel().fit(
+        {"vegas": preds["vegas_home_win_prob"].to_numpy(), "mc": preds["mc_home_win_prob"].to_numpy()},
+        preds["home_win"].to_numpy(),
+    )
 
     result = run_season_backtest(pbp, schedules, season=2023, method="blend", cheating=False, mc_config=FAST_MC, blend_model=blend)
     assert len(result.picks) >= 1
