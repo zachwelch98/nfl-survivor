@@ -4,7 +4,7 @@
       "method": "montecarlo",
       "cheating": false,
       "median_weeks_survived": 3.0,
-      "mean_weeks_survived": 2.8125,
+      "mean_weeks_survived": 2.9375,
       "p_survive_to_week10": 0.0,
       "p_survive_full_season": 0.0,
       "n_seasons": 16
@@ -13,7 +13,7 @@
       "method": "montecarlo",
       "cheating": true,
       "median_weeks_survived": 2.0,
-      "mean_weeks_survived": 2.125,
+      "mean_weeks_survived": 2.4375,
       "p_survive_to_week10": 0.0,
       "p_survive_full_season": 0.0,
       "n_seasons": 16
@@ -21,10 +21,10 @@
     "vegas_honest": {
       "method": "vegas",
       "cheating": false,
-      "median_weeks_survived": 3.0,
-      "mean_weeks_survived": 3.8125,
-      "p_survive_to_week10": 0.0625,
-      "p_survive_full_season": 0.0,
+      "median_weeks_survived": 4.5,
+      "mean_weeks_survived": 5.125,
+      "p_survive_to_week10": 0.1875,
+      "p_survive_full_season": 0.0625,
       "n_seasons": 16
     },
     "vegas_cheating": {
@@ -42,9 +42,9 @@
       "season": 2010,
       "method": "vegas",
       "cheating": false,
-      "n_picks": 5,
-      "week_eliminated": 5,
-      "survived_full_season": false
+      "n_picks": 17,
+      "week_eliminated": null,
+      "survived_full_season": true
     },
     {
       "season": 2010,
@@ -58,8 +58,8 @@
       "season": 2010,
       "method": "montecarlo",
       "cheating": false,
-      "n_picks": 2,
-      "week_eliminated": 2,
+      "n_picks": 4,
+      "week_eliminated": 4,
       "survived_full_season": false
     },
     {
@@ -74,8 +74,8 @@
       "season": 2011,
       "method": "vegas",
       "cheating": false,
-      "n_picks": 3,
-      "week_eliminated": 3,
+      "n_picks": 5,
+      "week_eliminated": 5,
       "survived_full_season": false
     },
     {
@@ -122,24 +122,24 @@
       "season": 2012,
       "method": "montecarlo",
       "cheating": false,
-      "n_picks": 3,
-      "week_eliminated": 3,
+      "n_picks": 2,
+      "week_eliminated": 2,
       "survived_full_season": false
     },
     {
       "season": 2012,
       "method": "montecarlo",
       "cheating": true,
-      "n_picks": 1,
-      "week_eliminated": 1,
+      "n_picks": 2,
+      "week_eliminated": 2,
       "survived_full_season": false
     },
     {
       "season": 2013,
       "method": "vegas",
       "cheating": false,
-      "n_picks": 3,
-      "week_eliminated": 3,
+      "n_picks": 12,
+      "week_eliminated": 12,
       "survived_full_season": false
     },
     {
@@ -162,16 +162,16 @@
       "season": 2013,
       "method": "montecarlo",
       "cheating": true,
-      "n_picks": 5,
-      "week_eliminated": 5,
+      "n_picks": 9,
+      "week_eliminated": 9,
       "survived_full_season": false
     },
     {
       "season": 2014,
       "method": "vegas",
       "cheating": false,
-      "n_picks": 7,
-      "week_eliminated": 7,
+      "n_picks": 6,
+      "week_eliminated": 6,
       "survived_full_season": false
     },
     {
@@ -186,8 +186,8 @@
       "season": 2014,
       "method": "montecarlo",
       "cheating": false,
-      "n_picks": 2,
-      "week_eliminated": 2,
+      "n_picks": 7,
+      "week_eliminated": 7,
       "survived_full_season": false
     },
     {
@@ -266,8 +266,8 @@
       "season": 2017,
       "method": "vegas",
       "cheating": false,
-      "n_picks": 5,
-      "week_eliminated": 5,
+      "n_picks": 4,
+      "week_eliminated": 4,
       "survived_full_season": false
     },
     {
@@ -282,8 +282,8 @@
       "season": 2017,
       "method": "montecarlo",
       "cheating": false,
-      "n_picks": 5,
-      "week_eliminated": 5,
+      "n_picks": 3,
+      "week_eliminated": 3,
       "survived_full_season": false
     },
     {
@@ -346,8 +346,8 @@
       "season": 2019,
       "method": "montecarlo",
       "cheating": false,
-      "n_picks": 3,
-      "week_eliminated": 3,
+      "n_picks": 1,
+      "week_eliminated": 1,
       "survived_full_season": false
     },
     {

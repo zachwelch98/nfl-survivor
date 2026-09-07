@@ -11,10 +11,13 @@
       "vegas_home_win_prob": 0.6149602694459987,
       "vegas_away_win_prob": 0.38297815826153286,
       "vegas_tie_prob": 0.002061572292468389,
-      "mc_home_win_prob": 0.4671407300304398,
-      "mc_away_win_prob": 0.5304942699695603,
-      "mc_tie_prob": 0.0023650000000000003,
-      "mc_simulated_spread": -0.9972
+      "mc_home_win_prob": 0.47002188371605325,
+      "mc_away_win_prob": 0.5276631162839467,
+      "mc_tie_prob": 0.0023150000000000002,
+      "mc_simulated_spread": -0.9077,
+      "ml_home_win_prob": null,
+      "ml_away_win_prob": null,
+      "ml_tie_prob": null
     },
     {
       "game_id": "2026_01_SF_LA",
@@ -25,10 +28,13 @@
       "vegas_home_win_prob": 0.6179681535137829,
       "vegas_away_win_prob": 0.3799702741937488,
       "vegas_tie_prob": 0.002061572292468389,
-      "mc_home_win_prob": 0.6500327948691209,
-      "mc_away_win_prob": 0.3479122051308791,
-      "mc_tie_prob": 0.002055,
-      "mc_simulated_spread": 5.0944
+      "mc_home_win_prob": 0.6532696031746031,
+      "mc_away_win_prob": 0.3446103968253968,
+      "mc_tie_prob": 0.00212,
+      "mc_simulated_spread": 5.1899,
+      "ml_home_win_prob": null,
+      "ml_away_win_prob": null,
+      "ml_tie_prob": null
     },
     {
       "game_id": "2026_01_CHI_CAR",
@@ -39,10 +45,13 @@
       "vegas_home_win_prob": 0.4072929340715269,
       "vegas_away_win_prob": 0.5906454936360047,
       "vegas_tie_prob": 0.002061572292468389,
-      "mc_home_win_prob": 0.3629505228077484,
-      "mc_away_win_prob": 0.6350594771922516,
-      "mc_tie_prob": 0.00199,
-      "mc_simulated_spread": -4.4888
+      "mc_home_win_prob": 0.36512304693178277,
+      "mc_away_win_prob": 0.6330319530682172,
+      "mc_tie_prob": 0.0018450000000000003,
+      "mc_simulated_spread": -4.4256,
+      "ml_home_win_prob": null,
+      "ml_away_win_prob": null,
+      "ml_tie_prob": null
     },
     {
       "game_id": "2026_01_TB_CIN",
@@ -53,10 +62,13 @@
       "vegas_home_win_prob": 0.6290765189758848,
       "vegas_away_win_prob": 0.3688619087316468,
       "vegas_tie_prob": 0.002061572292468389,
-      "mc_home_win_prob": 0.44192279089199915,
-      "mc_away_win_prob": 0.5559472091080008,
-      "mc_tie_prob": 0.00213,
-      "mc_simulated_spread": -1.7386
+      "mc_home_win_prob": 0.44564377220480667,
+      "mc_away_win_prob": 0.5522062277951932,
+      "mc_tie_prob": 0.00215,
+      "mc_simulated_spread": -1.6035,
+      "ml_home_win_prob": null,
+      "ml_away_win_prob": null,
+      "ml_tie_prob": null
     },
     {
       "game_id": "2026_01_NO_DET",
@@ -67,10 +79,13 @@
       "vegas_home_win_prob": 0.7180393309329902,
       "vegas_away_win_prob": 0.2798990967745414,
       "vegas_tie_prob": 0.002061572292468389,
-      "mc_home_win_prob": 0.6223985284280936,
-      "mc_away_win_prob": 0.3754414715719063,
+      "mc_home_win_prob": 0.6195827173913043,
+      "mc_away_win_prob": 0.3782572826086957,
       "mc_tie_prob": 0.00216,
-      "mc_simulated_spread": 3.8629
+      "mc_simulated_spread": 3.7818,
+      "ml_home_win_prob": null,
+      "ml_away_win_prob": null,
+      "ml_tie_prob": null
     },
     {
       "game_id": "2026_01_BUF_HOU",
@@ -81,10 +96,13 @@
       "vegas_home_win_prob": 0.5222847494583339,
       "vegas_away_win_prob": 0.47565367824919763,
       "vegas_tie_prob": 0.002061572292468389,
-      "mc_home_win_prob": 0.4704235605348375,
-      "mc_away_win_prob": 0.5274414394651624,
-      "mc_tie_prob": 0.002135,
-      "mc_simulated_spread": -0.8674
+      "mc_home_win_prob": 0.46899433041301625,
+      "mc_away_win_prob": 0.5289456695869837,
+      "mc_tie_prob": 0.00206,
+      "mc_simulated_spread": -0.8956,
+      "ml_home_win_prob": null,
+      "ml_away_win_prob": null,
+      "ml_tie_prob": null
     },
     {
       "game_id": "2026_01_BAL_IND",
@@ -95,10 +113,13 @@
       "vegas_home_win_prob": 0.3803614531779637,
       "vegas_away_win_prob": 0.6175769745295678,
       "vegas_tie_prob": 0.002061572292468389,
-      "mc_home_win_prob": 0.5849489619286685,
-      "mc_away_win_prob": 0.4128560380713315,
-      "mc_tie_prob": 0.0021950000000000003,
-      "mc_simulated_spread": 2.7599
+      "mc_home_win_prob": 0.5834653244035161,
+      "mc_away_win_prob": 0.4143146755964839,
+      "mc_tie_prob": 0.00222,
+      "mc_simulated_spread": 2.7077,
+      "ml_home_win_prob": null,
+      "ml_away_win_prob": null,
+      "ml_tie_prob": null
     },
     {
       "game_id": "2026_01_CLE_JAX",
@@ -109,10 +130,13 @@
       "vegas_home_win_prob": 0.7723533868122601,
       "vegas_away_win_prob": 0.22558504089527154,
       "vegas_tie_prob": 0.002061572292468389,
-      "mc_home_win_prob": 0.7385562610275038,
-      "mc_away_win_prob": 0.2596187389724961,
-      "mc_tie_prob": 0.001825,
-      "mc_simulated_spread": 8.1052
+      "mc_home_win_prob": 0.7401223754152824,
+      "mc_away_win_prob": 0.25803762458471763,
+      "mc_tie_prob": 0.00184,
+      "mc_simulated_spread": 8.226,
+      "ml_home_win_prob": null,
+      "ml_away_win_prob": null,
+      "ml_tie_prob": null
     },
     {
       "game_id": "2026_01_ATL_PIT",
@@ -123,10 +147,13 @@
       "vegas_home_win_prob": 0.6149602694459987,
       "vegas_away_win_prob": 0.38297815826153286,
       "vegas_tie_prob": 0.002061572292468389,
-      "mc_home_win_prob": 0.5248376631402535,
-      "mc_away_win_prob": 0.47289733685974655,
-      "mc_tie_prob": 0.002265,
-      "mc_simulated_spread": 0.8663
+      "mc_home_win_prob": 0.526454799121155,
+      "mc_away_win_prob": 0.47133520087884495,
+      "mc_tie_prob": 0.00221,
+      "mc_simulated_spread": 0.9218,
+      "ml_home_win_prob": null,
+      "ml_away_win_prob": null,
+      "ml_tie_prob": null
     },
     {
       "game_id": "2026_01_NYJ_TEN",
@@ -137,10 +164,13 @@
       "vegas_home_win_prob": 0.5384850486094303,
       "vegas_away_win_prob": 0.45945337909810136,
       "vegas_tie_prob": 0.002061572292468389,
-      "mc_home_win_prob": 0.501146282815605,
-      "mc_away_win_prob": 0.4966587171843949,
-      "mc_tie_prob": 0.0021950000000000003,
-      "mc_simulated_spread": 0.0349
+      "mc_home_win_prob": 0.49564187604690113,
+      "mc_away_win_prob": 0.5021181239530988,
+      "mc_tie_prob": 0.0022400000000000002,
+      "mc_simulated_spread": -0.0906,
+      "ml_home_win_prob": null,
+      "ml_away_win_prob": null,
+      "ml_tie_prob": null
     },
     {
       "game_id": "2026_01_ARI_LAC",
@@ -151,10 +181,13 @@
       "vegas_home_win_prob": 0.7994204646093197,
       "vegas_away_win_prob": 0.1985179630982119,
       "vegas_tie_prob": 0.002061572292468389,
-      "mc_home_win_prob": 0.6867165246823578,
-      "mc_away_win_prob": 0.3112934753176422,
-      "mc_tie_prob": 0.00199,
-      "mc_simulated_spread": 6.0294
+      "mc_home_win_prob": 0.6927393865318462,
+      "mc_away_win_prob": 0.30522561346815386,
+      "mc_tie_prob": 0.002035,
+      "mc_simulated_spread": 6.2354,
+      "ml_home_win_prob": null,
+      "ml_away_win_prob": null,
+      "ml_tie_prob": null
     },
     {
       "game_id": "2026_01_MIA_LV",
@@ -165,10 +198,13 @@
       "vegas_home_win_prob": 0.6179681535137829,
       "vegas_away_win_prob": 0.3799702741937488,
       "vegas_tie_prob": 0.002061572292468389,
-      "mc_home_win_prob": 0.4009884181741691,
-      "mc_away_win_prob": 0.5965515818258309,
-      "mc_tie_prob": 0.0024600000000000004,
-      "mc_simulated_spread": -3.0618
+      "mc_home_win_prob": 0.3991298155909472,
+      "mc_away_win_prob": 0.5985901844090528,
+      "mc_tie_prob": 0.0022800000000000003,
+      "mc_simulated_spread": -3.1153,
+      "ml_home_win_prob": null,
+      "ml_away_win_prob": null,
+      "ml_tie_prob": null
     },
     {
       "game_id": "2026_01_GB_MIN",
@@ -179,10 +215,13 @@
       "vegas_home_win_prob": 0.5353011523985034,
       "vegas_away_win_prob": 0.4626372753090282,
       "vegas_tie_prob": 0.002061572292468389,
-      "mc_home_win_prob": 0.49602075697211157,
-      "mc_away_win_prob": 0.5016692430278885,
-      "mc_tie_prob": 0.00231,
-      "mc_simulated_spread": -0.1321
+      "mc_home_win_prob": 0.49535509483390966,
+      "mc_away_win_prob": 0.5023599051660903,
+      "mc_tie_prob": 0.002285,
+      "mc_simulated_spread": -0.1919,
+      "ml_home_win_prob": null,
+      "ml_away_win_prob": null,
+      "ml_tie_prob": null
     },
     {
       "game_id": "2026_01_WAS_PHI",
@@ -193,10 +232,13 @@
       "vegas_home_win_prob": 0.6456080432090323,
       "vegas_away_win_prob": 0.3523303844984993,
       "vegas_tie_prob": 0.002061572292468389,
-      "mc_home_win_prob": 0.627844338618819,
-      "mc_away_win_prob": 0.3700856613811809,
-      "mc_tie_prob": 0.0020700000000000002,
-      "mc_simulated_spread": 4.192
+      "mc_home_win_prob": 0.6301755337781485,
+      "mc_away_win_prob": 0.3677844662218515,
+      "mc_tie_prob": 0.00204,
+      "mc_simulated_spread": 4.2814,
+      "ml_home_win_prob": null,
+      "ml_away_win_prob": null,
+      "ml_tie_prob": null
     },
     {
       "game_id": "2026_01_DAL_NYG",
@@ -207,10 +249,13 @@
       "vegas_home_win_prob": 0.3966598409470733,
       "vegas_away_win_prob": 0.6012785867604583,
       "vegas_tie_prob": 0.002061572292468389,
-      "mc_home_win_prob": 0.5207755532380852,
-      "mc_away_win_prob": 0.4771694467619147,
-      "mc_tie_prob": 0.002055,
-      "mc_simulated_spread": 0.7048
+      "mc_home_win_prob": 0.5162634054954205,
+      "mc_away_win_prob": 0.4817765945045795,
+      "mc_tie_prob": 0.00196,
+      "mc_simulated_spread": 0.5048,
+      "ml_home_win_prob": null,
+      "ml_away_win_prob": null,
+      "ml_tie_prob": null
     },
     {
       "game_id": "2026_01_DEN_KC",
@@ -221,10 +266,13 @@
       "vegas_home_win_prob": 0.5843335151842334,
       "vegas_away_win_prob": 0.41360491252329823,
       "vegas_tie_prob": 0.002061572292468389,
-      "mc_home_win_prob": 0.47291769291173696,
-      "mc_away_win_prob": 0.5248373070882629,
-      "mc_tie_prob": 0.002245,
-      "mc_simulated_spread": -0.8145
+      "mc_home_win_prob": 0.4738506276150628,
+      "mc_away_win_prob": 0.5239493723849372,
+      "mc_tie_prob": 0.0022,
+      "mc_simulated_spread": -0.7909,
+      "ml_home_win_prob": null,
+      "ml_away_win_prob": null,
+      "ml_tie_prob": null
     }
   ],
   "recommended_pick": "LAC",

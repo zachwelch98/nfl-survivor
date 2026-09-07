@@ -108,8 +108,8 @@
     }
   },
   "montecarlo": {
-    "brier": 0.24655948031438485,
-    "log_loss": 0.7111750803750333,
+    "brier": 0.24657878492861737,
+    "log_loss": 0.7112198149001523,
     "reliability": [
       {
         "bin_low": 0.0,
@@ -129,49 +129,49 @@
         "bin_low": 0.2,
         "bin_high": 0.30000000000000004,
         "n": 108,
-        "mean_predicted": 0.25394299900403144,
+        "mean_predicted": 0.253721070634711,
         "empirical_rate": 0.4166666666666667
       },
       {
         "bin_low": 0.30000000000000004,
         "bin_high": 0.4,
         "n": 139,
-        "mean_predicted": 0.36014557037518496,
+        "mean_predicted": 0.3598295506072466,
         "empirical_rate": 0.37410071942446044
       },
       {
         "bin_low": 0.4,
         "bin_high": 0.5,
         "n": 176,
-        "mean_predicted": 0.4480200886743454,
-        "empirical_rate": 0.5284090909090909
+        "mean_predicted": 0.4479553166694552,
+        "empirical_rate": 0.5340909090909091
       },
       {
         "bin_low": 0.5,
         "bin_high": 0.6000000000000001,
         "n": 159,
-        "mean_predicted": 0.551050014726697,
-        "empirical_rate": 0.5471698113207547
+        "mean_predicted": 0.5510566292843337,
+        "empirical_rate": 0.5408805031446541
       },
       {
         "bin_low": 0.6000000000000001,
         "bin_high": 0.7000000000000001,
-        "n": 149,
-        "mean_predicted": 0.6498488595778653,
-        "empirical_rate": 0.6174496644295302
+        "n": 148,
+        "mean_predicted": 0.649582523193068,
+        "empirical_rate": 0.6216216216216216
       },
       {
         "bin_low": 0.7000000000000001,
         "bin_high": 0.8,
-        "n": 103,
-        "mean_predicted": 0.7463917100121559,
-        "empirical_rate": 0.7087378640776699
+        "n": 104,
+        "mean_predicted": 0.7461223179180292,
+        "empirical_rate": 0.7019230769230769
       },
       {
         "bin_low": 0.8,
         "bin_high": 0.9,
         "n": 87,
-        "mean_predicted": 0.8422576218972838,
+        "mean_predicted": 0.842380302838048,
         "empirical_rate": 0.7931034482758621
       },
       {
@@ -194,8 +194,8 @@
     "by_week_bucket": {
       "wk1-4": {
         "n": 254,
-        "brier": 0.2962655842166813,
-        "log_loss": 0.87490523864323
+        "brier": 0.2963479708380515,
+        "log_loss": 0.8750961529157849
       },
       "wk10-14": {
         "n": 286,
@@ -214,23 +214,138 @@
       }
     }
   },
-  "mc_vs_vegas_brier_skill_score": -0.17347404024928825,
+  "mc_vs_vegas_brier_skill_score": -0.1735659185401981,
   "mc_vs_vegas_bootstrap": {
-    "point_estimate": -0.036448756210077676,
-    "ci_low": -0.04650602487572188,
-    "ci_high": -0.02649219670247849,
+    "point_estimate": -0.0364680608243102,
+    "ci_low": -0.046520060403594715,
+    "ci_high": -0.0265043637896999,
     "mc_significantly_better": false,
     "vegas_significantly_better": true
   },
+  "ml": {
+    "brier": 0.22357886063439014,
+    "log_loss": 0.6362061873477777,
+    "reliability": [
+      {
+        "bin_low": 0.1,
+        "bin_high": 0.2,
+        "n": 3,
+        "mean_predicted": 0.165252752946435,
+        "empirical_rate": 0.0
+      },
+      {
+        "bin_low": 0.2,
+        "bin_high": 0.30000000000000004,
+        "n": 14,
+        "mean_predicted": 0.2556844394750407,
+        "empirical_rate": 0.2857142857142857
+      },
+      {
+        "bin_low": 0.30000000000000004,
+        "bin_high": 0.4,
+        "n": 120,
+        "mean_predicted": 0.3611355713546453,
+        "empirical_rate": 0.38333333333333336
+      },
+      {
+        "bin_low": 0.4,
+        "bin_high": 0.5,
+        "n": 258,
+        "mean_predicted": 0.45409882202184065,
+        "empirical_rate": 0.4069767441860465
+      },
+      {
+        "bin_low": 0.5,
+        "bin_high": 0.6000000000000001,
+        "n": 304,
+        "mean_predicted": 0.5486045901551011,
+        "empirical_rate": 0.5164473684210527
+      },
+      {
+        "bin_low": 0.6000000000000001,
+        "bin_high": 0.7000000000000001,
+        "n": 207,
+        "mean_predicted": 0.6447314048979401,
+        "empirical_rate": 0.6714975845410628
+      },
+      {
+        "bin_low": 0.7000000000000001,
+        "bin_high": 0.8,
+        "n": 112,
+        "mean_predicted": 0.7464429236734337,
+        "empirical_rate": 0.75
+      },
+      {
+        "bin_low": 0.8,
+        "bin_high": 0.9,
+        "n": 41,
+        "mean_predicted": 0.8409138961087677,
+        "empirical_rate": 0.8536585365853658
+      },
+      {
+        "bin_low": 0.9,
+        "bin_high": 1.0,
+        "n": 25,
+        "mean_predicted": 0.9499794164720947,
+        "empirical_rate": 0.92
+      }
+    ],
+    "high_confidence_slice": {
+      "threshold_low": 0.85,
+      "threshold_high": 0.99,
+      "n": 36,
+      "brier": 0.07683854371526927,
+      "log_loss": 0.2857671116912296,
+      "empirical_win_rate": 0.9166666666666666,
+      "mean_predicted": 0.9214724388478643
+    },
+    "by_week_bucket": {
+      "wk1-4": {
+        "n": 254,
+        "brier": 0.2334388793557215,
+        "log_loss": 0.6577450262536104
+      },
+      "wk10-14": {
+        "n": 286,
+        "brier": 0.21402066140575624,
+        "log_loss": 0.6147495100467296
+      },
+      "wk15+": {
+        "n": 255,
+        "brier": 0.21901179628615047,
+        "log_loss": 0.6264924335091774
+      },
+      "wk5-9": {
+        "n": 289,
+        "brier": 0.22840170365505535,
+        "log_loss": 0.6470807612400314
+      }
+    }
+  },
+  "ml_vs_vegas_brier_skill_score": -0.06410018616373359,
+  "ml_vs_vegas_bootstrap": {
+    "point_estimate": -0.01346813653008297,
+    "ci_low": -0.019928381518133472,
+    "ci_high": -0.007006291087506707,
+    "ml_significantly_better": false,
+    "vegas_significantly_better": true
+  },
+  "ml_vs_mc_bootstrap": {
+    "point_estimate": 0.02299992429422723,
+    "ci_low": 0.013339437312647584,
+    "ci_high": 0.032755962732259544,
+    "ml_significantly_better": true,
+    "mc_significantly_better": false
+  },
   "blend": {
     "n_games": 977,
-    "brier": 0.21126030011200886,
-    "log_loss": 0.6098081058566868,
+    "brier": 0.21126454429315134,
+    "log_loss": 0.6098126515701395,
     "vegas_on_same_subset_brier": 0.20666312586779587,
     "blend_vs_vegas_bootstrap": {
-      "point_estimate": -0.004597174244212993,
-      "ci_low": -0.009822738853582274,
-      "ci_high": 0.0006294389698283584,
+      "point_estimate": -0.004601418425355469,
+      "ci_low": -0.009807359820685136,
+      "ci_high": 0.0006339938928136524,
       "blend_significantly_better": false
     }
   }

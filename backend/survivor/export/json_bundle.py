@@ -272,6 +272,8 @@ def export_all(
     comparison_predictions: pl.DataFrame | None = None,
     backtest_results: pl.DataFrame | None = None,
     strategy_summary: dict | None = None,
+    team_game_table: pl.DataFrame | None = None,
+    depth_charts: pl.DataFrame | None = None,
 ) -> None:
     """Writes every JSON file the frontend consumes. `comparison_predictions`,
     `backtest_results`, and `strategy_summary` are optional pre-computed
@@ -285,8 +287,20 @@ def export_all(
     drive_table = build_drive_table(pbp)
 
     _write_json(out_dir / "season_meta.json", build_season_meta(season, current_week, used_teams))
-    _write_json(out_dir / f"week_{current_week:02d}_board.json", build_week_board(schedules, drive_table, season, current_week, used_teams))
-    _write_json(out_dir / "season_plan.json", build_season_plan(schedules, drive_table, season, current_week, used_teams))
+    _write_json(
+        out_dir / f"week_{current_week:02d}_board.json",
+        build_week_board(
+            schedules, drive_table, season, current_week, used_teams,
+            team_game_table=team_game_table, depth_charts=depth_charts,
+        ),
+    )
+    _write_json(
+        out_dir / "season_plan.json",
+        build_season_plan(
+            schedules, drive_table, season, current_week, used_teams,
+            team_game_table=team_game_table, depth_charts=depth_charts,
+        ),
+    )
 
     if comparison_predictions is not None and comparison_predictions.height > 0:
         _write_json(out_dir / "calibration.json", summarize_comparison(comparison_predictions))

@@ -10,12 +10,52 @@ probability.
 2. [x] Method 1: Vegas-implied win probability (baseline)
 3. [x] As-of feature store: team ratings, drive rates, situational adjustments
 4. [x] Method 2: drive-level Monte Carlo game simulator (challenger)
+4b. [x] Method 3: supervised, calibrated classifier (107 features, walk-forward)
 5. [x] Model evaluation: Brier score, log loss, calibration
 6. [x] Season-sequencing optimizer (exact assignment solve)
 7. [x] Backtest harness (2010–2025, no-leakage + real-lookahead variants)
 8. [x] Season & pool simulation
 9. [x] JSON export for the frontend
 10. [x] React app (Vite + TS + Tailwind + Recharts)
+
+## Method 3, and what it changed
+
+A supervised classifier (`models/ml.py`) trained on 107 as-of features:
+opponent-adjusted ridge EPA, drive-rate matchup distributions, last-3/last-5
+rolling form, trajectory, rest/travel/weather, and starting-QB continuity. The
+classifier and calibration were chosen by a walk-forward grid
+(`evaluate/ml_model_selection.py`, expanding window: fit 2011..N-1, score
+season N, for N in 2015..2025) rather than assumed — `hist_gb` + isotonic won
+on calibration in the 0.85–0.99 band after no combination separated on Brier.
+
+Head-to-head on identical games (2022–25, n=1084, walk-forward):
+
+| method | Brier | high-confidence band (0.85–0.99) |
+|---|---|---|
+| Vegas | **0.2101** | predicted 87.5% → actual 96.1% |
+| ML (Method 3) | 0.2234 | predicted 90.9% → actual 87.8% |
+| Monte Carlo | 0.2465 | predicted 90.7% → actual 77.1% |
+
+Both gaps are real (bootstrap CI excludes zero). So Method 3 **loses to Vegas**
+and does not touch the current week — `primary_method` stays `vegas`. But it
+**beats Monte Carlo by 0.0231**, and that is the matchup that matters: future
+weeks have no posted line, so Method 2 was previously running unopposed there.
+
+Future weeks now use a *fitted* blend of Methods 2 and 3. Fitted, not a fixed
+average — a 50/50 logit blend scores 0.2304, significantly *worse* than ML
+alone, because it re-admits the weaker model at a weight it hasn't earned. The
+fitted blend scores 0.2242 with the best high-confidence calibration measured
+(predicted 91.4% → actual 90.2%).
+
+**Leakage prevention** is the property everything else rests on, so it's worth
+being explicit: one gate (`AsOf.visible()`), season-cadence expanding-window
+training (a model never sees the season it scores), as-of features even inside
+the training set, calibration cross-validated only within training seasons, and
+the QB train/inference asymmetry isolated to `resolve_starter`'s single null
+check. `tests/test_ml_features.py::test_no_leakage_from_future_results` erases
+every future result and asserts identical features — and it was verified to
+actually fail when leakage is deliberately injected, rather than passing
+vacuously.
 
 ## The headline empirical finding
 
@@ -36,7 +76,7 @@ building Method 2 rigorously is what let the finding be trusted at all.
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -e ".[dev]"
-pytest                    # 177 tests
+pytest                    # 207 tests
 ```
 
 Use `make recommend` / `make export` / `make backtest` (see Makefile) rather
@@ -49,7 +89,7 @@ at interpreter startup, so the Makefile invokes `python -m survivor.cli` with
 make recommend                          # this week's pick, current season
 make export                             # write the JSON bundle (fast)
 make export-full                        # also refresh calibration/backtest/simulation (~90s)
-make backtest                           # replay 2010-2025 for both methods
+make backtest                           # replay 2010-2025 for all three methods
 make test                               # run the Python test suite
 make web                                # cd frontend && npm run dev
 ```
@@ -75,13 +115,22 @@ data to show by the time it existed.
   `optimize/kbest.py` adds Murty's algorithm for the k best alternate plans
   and a cost-of-deviation figure for every team playable in a given week.
 - **Future weeks never touch a real posted line.** Beyond the current week,
-  probabilities come from Method 2's simulation with confidence decay toward
-  a coin flip as the horizon grows (`optimize/projection.py`) — using a
+  probabilities come from a fitted blend of Methods 2 and 3 with confidence
+  decay toward a coin flip as the horizon grows (`optimize/projection.py`;
+  Method 2 alone before Method 3 existed) — using a
   future week's actual closing line, even in a historical backtest, would be
   lookahead (that value bakes in information — injury news, sharp money —
   that didn't exist yet at decision time). The backtest harness also runs a
   deliberately-cheating variant that *does* use real closing lines throughout,
   purely to quantify what that lookahead would be worth.
+- **A relocated-franchise join bug, found late and worth knowing about.**
+  nflverse's play-by-play uses each franchise's *current* abbreviation for all
+  of its history while `games.csv` uses the period-correct one, so `STL`/`SD`/
+  `OAK` never matched `LA`/`LAC`/`LV`. Since the consuming code treats a
+  missing team profile as "skip this game," every Rams, Chargers and Raiders
+  game silently vanished from backtest seasons before each relocation — 48 of
+  256 games in 2011. `load_schedules()` now normalizes to the pbp convention.
+  Any `backtest.json` generated before this fix understates those seasons.
 - **The frontend is a thin, swappable read layer.** Every view fetches through
   `frontend/src/data/source.ts`; nothing else calls `fetch`. Swapping static
   JSON for a live API later is a one-file change.

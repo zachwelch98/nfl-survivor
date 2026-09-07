@@ -32,7 +32,7 @@ def _default_pbp_seasons(season: int, schedules) -> list[int]:
     return [season - 1, season]
 
 
-def _ml_pbp_seasons(season: int) -> list[int]:
+def _ml_pbp_seasons(season: int, schedules=None) -> list[int]:
     """Seasons of play-by-play Method 3 needs loaded.
 
     Unlike Methods 1 and 2 — which only ever look back one season from each
@@ -44,7 +44,15 @@ def _ml_pbp_seasons(season: int) -> list[int]:
     prior-season baseline.
     """
     floor = CONFIG.model.ml.train_floor_season
-    return list(range(floor - 1, season + 1))
+    seasons = list(range(floor - 1, season + 1))
+    # Same guard as _default_pbp_seasons: nflreadpy rejects a season with no
+    # games played yet (the normal state before kickoff), and drive_rates.py
+    # would find nothing there anyway.
+    if schedules is not None:
+        played = schedules.filter((pl.col("season") == season) & pl.col("home_score").is_not_null())
+        if played.height == 0:
+            seasons = [s for s in seasons if s != season]
+    return seasons
 
 
 def _parse_used(used: str | None) -> list[str]:
@@ -92,7 +100,7 @@ def recommend(season: int, week: int, used: str, pbp_seasons: str | None) -> Non
 
     used_teams = _parse_used(used)
     schedules = load_schedules()
-    seasons = [int(s) for s in pbp_seasons.split(",")] if pbp_seasons else _ml_pbp_seasons(season)
+    seasons = [int(s) for s in pbp_seasons.split(",")] if pbp_seasons else _ml_pbp_seasons(season, schedules)
     pbp = load_pbp(seasons)
     drive_table = build_drive_table(pbp)
     team_game_table = build_team_game_table(pbp)
@@ -134,8 +142,9 @@ def export(season: int, week: int, used: str, pbp_seasons: str | None, with_anal
 
     used_teams = _parse_used(used)
     schedules = load_schedules()
-    seasons = [int(s) for s in pbp_seasons.split(",")] if pbp_seasons else _ml_pbp_seasons(season)
+    seasons = [int(s) for s in pbp_seasons.split(",")] if pbp_seasons else _ml_pbp_seasons(season, schedules)
     pbp = load_pbp(seasons)
+    team_game_table = build_team_game_table(pbp)
 
     comparison_predictions = None
     backtest_results = None
@@ -152,15 +161,14 @@ def export(season: int, week: int, used: str, pbp_seasons: str | None, with_anal
         # to just the recommendation) isn't wide enough for this.
         # Widened for Method 3: it trains from train_floor_season forward,
         # while the model comparison itself only needs the last few seasons.
-        analysis_pbp = load_pbp(_ml_pbp_seasons(season - 1))
+        analysis_pbp = load_pbp(_ml_pbp_seasons(season - 1, schedules))
 
         click.echo("Computing model comparison (this takes a while)...")
         comparison_weeks = [(s, w) for s in range(season - 4, season) for w in range(1, 19)]
+        analysis_team_game_table = build_team_game_table(analysis_pbp)
+        analysis_drive_table = build_drive_table(analysis_pbp)
         comparison_predictions = collect_predictions(
-            analysis_pbp,
-            schedules,
-            comparison_weeks,
-            team_game_table=build_team_game_table(analysis_pbp),
+            analysis_pbp, schedules, comparison_weeks, team_game_table=analysis_team_game_table
         )
         comparison_predictions = add_walkforward_blend(comparison_predictions)
 
@@ -168,9 +176,18 @@ def export(season: int, week: int, used: str, pbp_seasons: str | None, with_anal
         rows = []
         for bt_season in range(CONFIG.season.backtest_seasons[0], CONFIG.season.backtest_seasons[1] + 1):
             bt_pbp = load_pbp([bt_season - 1, bt_season])
-            for method in ["vegas", "montecarlo"]:
+            # Method 3 is fit once per backtest season from the wide analysis
+            # tables (it trains across every prior season, unlike Methods 1-2
+            # which only look back one from each as-of point).
+            bt_ml_model = _fit_backtest_ml_model(
+                analysis_team_game_table, analysis_drive_table, schedules, bt_season
+            )
+            bt_methods = ["vegas", "montecarlo"] + (["ml"] if bt_ml_model is not None else [])
+            for method in bt_methods:
                 for cheating in [False, True]:
-                    result = run_season_backtest(bt_pbp, schedules, bt_season, method, cheating)
+                    result = run_season_backtest(
+                        bt_pbp, schedules, bt_season, method, cheating, ml_model=bt_ml_model
+                    )
                     rows.append({
                         "season": bt_season, "method": method, "cheating": cheating,
                         "n_picks": len(result.picks),
@@ -191,6 +208,7 @@ def export(season: int, week: int, used: str, pbp_seasons: str | None, with_anal
         comparison_predictions=comparison_predictions,
         backtest_results=backtest_results,
         strategy_summary=strategy_summary,
+        team_game_table=team_game_table,
     )
     click.echo(f"Exported JSON bundle to {CONFIG.paths.resolve('frontend_data')}")
 
@@ -213,7 +231,7 @@ def backtest(start: int | None, end: int | None) -> None:
     # out via AsOf.visible() before anything reads them.
     from survivor.models.ml import MLWinProbModel
 
-    wide_pbp = load_pbp(_ml_pbp_seasons(end))
+    wide_pbp = load_pbp(_ml_pbp_seasons(end, schedules))
     wide_drive_table = build_drive_table(wide_pbp)
     wide_team_game_table = build_team_game_table(wide_pbp)
 
