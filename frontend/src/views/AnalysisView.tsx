@@ -7,6 +7,7 @@ import type { BacktestMethodSummary, Calibration, ConfidenceSlice } from "../dat
 
 const VEGAS_COLOR = "#2563eb";
 const MC_COLOR = "#f59e0b";
+const ML_COLOR = "#16a34a";
 
 export default function AnalysisView() {
   const calibration = useAsync(() => getCalibration(), []);
@@ -25,8 +26,8 @@ export default function AnalysisView() {
             <Card title="Overall calibration" subtitle={`${c.n_games.toLocaleString()} decisive games, walk-forward (no lookahead)`}>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4">
                 <StatTile label="Vegas Brier" value={c.vegas.brier.toFixed(4)} tone="good" />
+                <StatTile label="ML model Brier" value={c.ml ? c.ml.brier.toFixed(4) : "—"} />
                 <StatTile label="Monte Carlo Brier" value={c.montecarlo.brier.toFixed(4)} tone="bad" />
-                <StatTile label="Brier skill score (MC vs Vegas)" value={c.mc_vs_vegas_brier_skill_score.toFixed(3)} tone="bad" />
                 <StatTile
                   label="Statistically significant?"
                   value={c.mc_vs_vegas_bootstrap.vegas_significantly_better ? "Vegas wins" : c.mc_vs_vegas_bootstrap.mc_significantly_better ? "MC wins" : "No"}
@@ -34,9 +35,21 @@ export default function AnalysisView() {
                 />
               </div>
               <p className="text-xs text-slate-500">
-                Bootstrap 95% CI on the Brier difference: [{c.mc_vs_vegas_bootstrap.ci_low.toFixed(4)}, {c.mc_vs_vegas_bootstrap.ci_high.toFixed(4)}]. The
-                bar is "does the CI exclude zero", not which point estimate looks bigger.
+                Lower Brier is better. Bootstrap 95% CI on the MC-vs-Vegas Brier difference: [{c.mc_vs_vegas_bootstrap.ci_low.toFixed(4)},{" "}
+                {c.mc_vs_vegas_bootstrap.ci_high.toFixed(4)}]. The bar is "does the CI exclude zero", not which point estimate looks bigger.
               </p>
+              {c.ml_vs_mc_bootstrap && (
+                <p className="text-xs text-slate-500 mt-2">
+                  <strong>The comparison that drives the season plan:</strong> future weeks have no posted line, so the ML model's real
+                  competition is Monte Carlo, not Vegas.{" "}
+                  {c.ml_vs_mc_bootstrap.ml_significantly_better
+                    ? "The ML model wins that matchup with the CI excluding zero, which is why weeks beyond this one blend the two rather than using Monte Carlo alone."
+                    : c.ml_vs_mc_bootstrap.mc_significantly_better
+                      ? "Monte Carlo currently wins that matchup — worth re-checking before trusting ML-weighted future weeks."
+                      : "Neither separates from the other yet on this sample."}{" "}
+                  CI [{c.ml_vs_mc_bootstrap.ci_low.toFixed(4)}, {c.ml_vs_mc_bootstrap.ci_high.toFixed(4)}].
+                </p>
+              )}
             </Card>
 
             <Card title="Reliability diagram" subtitle="Predicted probability vs. what actually happened, by decile — the closer to the diagonal, the better calibrated">
@@ -44,8 +57,9 @@ export default function AnalysisView() {
             </Card>
 
             <Card title="High-confidence band (0.85–0.99)" subtitle="Exactly where survivor picks live — a model can look fine overall and still be overconfident here">
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <ConfSliceTile label="Vegas" slice={c.vegas.high_confidence_slice} color={VEGAS_COLOR} />
+                <ConfSliceTile label="ML model" slice={c.ml?.high_confidence_slice ?? null} color={ML_COLOR} />
                 <ConfSliceTile label="Monte Carlo" slice={c.montecarlo.high_confidence_slice} color={MC_COLOR} />
               </div>
             </Card>
@@ -71,6 +85,7 @@ export default function AnalysisView() {
 function ReliabilityChart({ calibration }: { calibration: Calibration }) {
   const vegasPoints = calibration.vegas.reliability.map((b) => ({ x: b.mean_predicted, y: b.empirical_rate, n: b.n }));
   const mcPoints = calibration.montecarlo.reliability.map((b) => ({ x: b.mean_predicted, y: b.empirical_rate, n: b.n }));
+  const mlPoints = calibration.ml?.reliability.map((b) => ({ x: b.mean_predicted, y: b.empirical_rate, n: b.n })) ?? [];
   const diagonal = [
     { x: 0, y: 0 },
     { x: 1, y: 1 },
@@ -86,18 +101,21 @@ function ReliabilityChart({ calibration }: { calibration: Calibration }) {
         <Line data={diagonal} dataKey="y" stroke="#cbd5e1" strokeDasharray="4 4" dot={false} activeDot={false} name="Perfect calibration" />
         <Scatter data={vegasPoints} fill={VEGAS_COLOR} name="Vegas" />
         <Scatter data={mcPoints} fill={MC_COLOR} name="Monte Carlo" />
+        {mlPoints.length > 0 && <Scatter data={mlPoints} fill={ML_COLOR} name="ML model" />}
       </ScatterChart>
     </ResponsiveContainer>
   );
 }
 
-function ConfSliceTile({ label, slice, color }: { label: string; slice: ConfidenceSlice; color: string }) {
+function ConfSliceTile({ label, slice, color }: { label: string; slice: ConfidenceSlice | null | undefined; color: string }) {
   return (
     <div className="rounded-lg border border-slate-200 p-3">
       <div className="text-sm font-medium mb-1" style={{ color }}>
         {label}
       </div>
-      {slice.n === 0 ? (
+      {!slice ? (
+        <div className="text-sm text-slate-400">Not in this export</div>
+      ) : slice.n === 0 ? (
         <div className="text-sm text-slate-400">No predictions in this band</div>
       ) : (
         <div className="text-sm text-slate-600 space-y-0.5">
@@ -116,6 +134,7 @@ function WeekBucketChart({ calibration }: { calibration: Calibration }) {
     bucket: b,
     Vegas: calibration.vegas.by_week_bucket[b]?.brier ?? null,
     "Monte Carlo": calibration.montecarlo.by_week_bucket[b]?.brier ?? null,
+    "ML model": calibration.ml?.by_week_bucket[b]?.brier ?? null,
   }));
   return (
     <ResponsiveContainer width="100%" height={260}>
@@ -126,6 +145,7 @@ function WeekBucketChart({ calibration }: { calibration: Calibration }) {
         <Tooltip />
         <Legend />
         <Bar dataKey="Vegas" fill={VEGAS_COLOR} radius={[4, 4, 0, 0]} />
+        <Bar dataKey="ML model" fill={ML_COLOR} radius={[4, 4, 0, 0]} />
         <Bar dataKey="Monte Carlo" fill={MC_COLOR} radius={[4, 4, 0, 0]} />
       </BarChart>
     </ResponsiveContainer>

@@ -3,7 +3,7 @@
 // deliberate scope cut) -- `make export` regenerates the JSON files, so a
 // shape mismatch surfaces at review/build time rather than silently.
 
-export type Method = "vegas" | "montecarlo" | "blend";
+export type Method = "vegas" | "montecarlo" | "blend" | "ml" | "blend3";
 
 export interface SeasonMeta {
   season: number;
@@ -27,6 +27,11 @@ export interface BoardGame {
   mc_away_win_prob: number | null;
   mc_tie_prob: number | null;
   mc_simulated_spread: number | null;
+  // Method 3. Null when the model couldn't be fit for this week (e.g. the
+  // pipeline ran without play-by-play reaching back to its training floor).
+  ml_home_win_prob: number | null;
+  ml_away_win_prob: number | null;
+  ml_tie_prob: number | null;
 }
 
 export interface WeekBoard {
@@ -95,6 +100,7 @@ export interface BootstrapComparison {
   mc_significantly_better?: boolean;
   vegas_significantly_better?: boolean;
   blend_significantly_better?: boolean;
+  ml_significantly_better?: boolean;
 }
 
 export interface BlendCalibration {
@@ -111,6 +117,14 @@ export interface Calibration {
   montecarlo: MethodCalibration;
   mc_vs_vegas_brier_skill_score: number;
   mc_vs_vegas_bootstrap: BootstrapComparison;
+  // Method 3 -- optional because a bundle exported before it existed, or
+  // without play-by-play deep enough to fit it, simply won't carry these.
+  ml?: MethodCalibration;
+  ml_vs_vegas_brier_skill_score?: number;
+  ml_vs_vegas_bootstrap?: BootstrapComparison;
+  // The comparison that decides the season plan: future weeks have no Vegas
+  // line, so Method 3's real competition is Monte Carlo.
+  ml_vs_mc_bootstrap?: BootstrapComparison;
   blend?: BlendCalibration;
 }
 

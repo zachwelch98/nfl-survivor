@@ -31,7 +31,7 @@ export default function Dashboard() {
               </h1>
               <p className="text-sm text-slate-500 mt-1">
                 Primary method: <span className="font-medium text-ink">{m.primary_method}</span> (backtesting shows this
-                is currently the best-calibrated of the two — see Analysis). Generated {new Date(m.generated_at).toLocaleString()}.
+                is currently the best-calibrated method for the current week — see Analysis). Generated {new Date(m.generated_at).toLocaleString()}.
               </p>
             </div>
 

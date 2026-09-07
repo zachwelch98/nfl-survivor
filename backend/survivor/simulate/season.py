@@ -57,6 +57,7 @@ def precompute_weekly_survival_tables(
     decay_rate: float = 0.05,
     mc_config: DriveSimConfig | None = None,
     blend_model: BlendModel | None = None,
+    ml_model=None,
 ) -> dict[int, dict[tuple[int, str], float]]:
     """weekly_tables[W] is the full (target_week, team) -> survival_prob
     table as known at decision week W — current week from `method`, every
@@ -74,7 +75,7 @@ def precompute_weekly_survival_tables(
         target_this_week = season_games.filter(pl.col("week") == week)
         current_probs = _current_week_probs(
             method, season, week, schedules, drive_table, target_this_week,
-            shrink_k, prior_blend_prev_season, prior_blend_league_mean, mc_config, blend_model,
+            shrink_k, prior_blend_prev_season, prior_blend_league_mean, mc_config, blend_model, ml_model,
         )
         future_weeks = [w for w in weeks_played if w > week]
         future_games = season_games.filter(pl.col("week").is_in(future_weeks)).select(["game_id", "week", "home_team", "away_team"])

@@ -25,16 +25,59 @@ from survivor.features.drive_rates import build_drive_table
 from survivor.models.montecarlo import DriveSimConfig, combine_matchup_rates, combined_n_drives, simulate_game
 from survivor.features.drive_rates import compute_defense_profiles, compute_offense_profiles, league_average_profile
 from survivor.models.base import pick_survival_prob
+from survivor.models.ml import MLWinProbModel
 from survivor.models.vegas import VegasModel
 from survivor.optimize.assignment import InfeasibleSeasonError, solve_optimal_assignment
 from survivor.optimize.kbest import cost_of_deviation_by_team, k_best_season_plans
-from survivor.optimize.projection import build_survival_prob_table, simulate_all_remaining_games
+from survivor.optimize.projection import (
+    build_survival_prob_table,
+    predict_all_remaining_games_ml,
+    simulate_all_remaining_games,
+)
 
 
 def _write_json(path: Path, data: dict) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     with open(path, "w") as f:
         json.dump(data, f, indent=2, default=str)
+
+
+def _fit_ml_model(
+    team_game_table: pl.DataFrame | None,
+    drive_table: pl.DataFrame,
+    schedules: pl.DataFrame,
+    train: pl.DataFrame,
+    depth_charts: pl.DataFrame | None = None,
+) -> MLWinProbModel | None:
+    """Method 3, fit on `train`, or None if it can't be.
+
+    Returns None rather than raising on any of the ordinary reasons a fit is
+    impossible (no team_game_table passed, play-by-play too narrow to cover
+    the training seasons, too few usable rows). Method 3 is an addition to
+    the board, not a prerequisite for producing one — the same posture
+    build_week_board already takes toward a missing Monte Carlo profile.
+    """
+    if team_game_table is None:
+        return None
+    cfg = CONFIG.model.ml
+    try:
+        return MLWinProbModel(
+            team_game_table,
+            drive_table,
+            schedules,
+            depth_charts,
+            classifier=cfg.classifier,
+            calibration_method=cfg.calibration_method,
+            shrink_k=cfg.rating_shrink_k,
+            prior_blend_prev_season=cfg.prior_blend_prev_season,
+            prior_blend_league_mean=cfg.prior_blend_league_mean,
+            opp_adj_alpha=cfg.opp_adj_alpha,
+            rolling_windows=tuple(cfg.rolling_windows),
+            rolling_min_games_floor=cfg.rolling_min_games_floor,
+            min_train_games=cfg.min_train_games,
+        ).fit(train)
+    except ValueError:
+        return None
 
 
 def build_season_meta(season: int, current_week: int, used_teams: list[str]) -> dict:
@@ -55,6 +98,8 @@ def build_week_board(
     week: int,
     used_teams: list[str],
     mc_config: DriveSimConfig | None = None,
+    team_game_table: pl.DataFrame | None = None,
+    depth_charts: pl.DataFrame | None = None,
 ) -> dict:
     """Per-game Vegas vs. Monte Carlo win probability, plus the optimizer's
     recommended pick (and every available team's cost-of-deviation) among
@@ -69,6 +114,14 @@ def build_week_board(
 
     vegas = VegasModel().fit(train)
     vegas_preds = vegas.predict_proba(target)
+
+    # Method 3 is shown alongside for comparison; the recommended pick still
+    # comes from Vegas, which beats it on the current week by 0.0133 Brier
+    # with the CI excluding zero (see models/ml.py and config.yaml).
+    ml_model = _fit_ml_model(team_game_table, drive_table, schedules, train, depth_charts)
+    ml_by_game: dict[str, dict] = {}
+    if ml_model is not None:
+        ml_by_game = {row["game_id"]: row for row in ml_model.predict_proba(target).iter_rows(named=True)}
 
     off = compute_offense_profiles(drive_table, as_of, CONFIG.model.montecarlo.rating_shrink_k, CONFIG.model.montecarlo.prior_blend_prev_season, CONFIG.model.montecarlo.prior_blend_league_mean)
     deff = compute_defense_profiles(drive_table, as_of, CONFIG.model.montecarlo.rating_shrink_k, CONFIG.model.montecarlo.prior_blend_prev_season, CONFIG.model.montecarlo.prior_blend_league_mean)
@@ -85,6 +138,7 @@ def build_week_board(
             n_drives = combined_n_drives(off[home].drives_per_game, off[away].drives_per_game, league.drives_per_game)
             mc_result = simulate_game(home_rates, away_rates, n_drives, mc_config)
 
+        ml_row = ml_by_game.get(row["game_id"])
         games.append({
             "game_id": row["game_id"],
             "home_team": home,
@@ -98,6 +152,9 @@ def build_week_board(
             "mc_away_win_prob": mc_result.away_win_prob if mc_result else None,
             "mc_tie_prob": mc_result.tie_prob if mc_result else None,
             "mc_simulated_spread": mc_result.simulated_spread if mc_result else None,
+            "ml_home_win_prob": ml_row["home_win_prob"] if ml_row else None,
+            "ml_away_win_prob": ml_row["away_win_prob"] if ml_row else None,
+            "ml_tie_prob": ml_row["tie_prob"] if ml_row else None,
         })
 
         if home not in used_teams:
@@ -137,6 +194,9 @@ def build_season_plan(
     used_teams: list[str],
     mc_config: DriveSimConfig | None = None,
     k_alternates: int = 3,
+    team_game_table: pl.DataFrame | None = None,
+    depth_charts: pl.DataFrame | None = None,
+    future_blend_model=None,
 ) -> dict:
     """The full remaining-season recommended sequence, plus the k best
     alternate season paths — plan §4's "season plan" view."""
@@ -154,12 +214,31 @@ def build_season_plan(
     current_target = season_games.filter(pl.col("week") == current_week)
     current_probs = vegas.predict_proba(current_target)
 
-    future_games = season_games.filter(pl.col("week").is_in([w for w in remaining_weeks if w != current_week])).select(["game_id", "week", "home_team", "away_team"])
+    # Method 2 only needs the four key columns; Method 3's feature builder
+    # needs the full schedule row (rest, roof, weather, stadium, qb ids), so
+    # keep both rather than re-selecting.
+    future_games_full = season_games.filter(
+        pl.col("week").is_in([w for w in remaining_weeks if w != current_week])
+    )
+    future_games = future_games_full.select(["game_id", "week", "home_team", "away_team"])
     mc_results = simulate_all_remaining_games(
         drive_table, schedules, as_of, future_games,
         CONFIG.model.montecarlo.rating_shrink_k, CONFIG.model.montecarlo.prior_blend_prev_season, CONFIG.model.montecarlo.prior_blend_league_mean, mc_config,
     )
-    table = build_survival_prob_table(current_probs, future_games, mc_results, CONFIG.pool.tie_counts_as_loss)
+    # Future weeks: Method 2 + Method 3 (see optimize/projection.py for the
+    # walk-forward evidence that ml beats mc there, and that a *fitted* blend
+    # beats a fixed average). Current week stays Vegas.
+    ml_model = _fit_ml_model(team_game_table, drive_table, schedules, train, depth_charts)
+    ml_results = predict_all_remaining_games_ml(ml_model, future_games_full) if ml_model else {}
+
+    table = build_survival_prob_table(
+        current_probs,
+        future_games,
+        mc_results,
+        CONFIG.pool.tie_counts_as_loss,
+        ml_results_by_game=ml_results,
+        future_blend_model=future_blend_model,
+    )
     table = {(w, t): p for (w, t), p in table.items() if t in available_teams}
 
     try:

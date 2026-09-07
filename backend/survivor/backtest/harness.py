@@ -42,7 +42,7 @@ REGULAR_SEASON_WEEKS = tuple(range(1, 19))
 @dataclass(frozen=True)
 class SeasonResult:
     season: int
-    method: str  # "vegas" | "montecarlo" | "blend"
+    method: str  # "vegas" | "montecarlo" | "ml" | "blend"
     cheating: bool
     picks: tuple[WeekPick, ...]  # actual picks made, in order, up to elimination or season end
     week_eliminated: int | None  # None = survived every played week
@@ -60,6 +60,7 @@ def _current_week_probs(
     prior_blend_league_mean: float,
     mc_config: DriveSimConfig,
     blend_model: BlendModel | None,
+    ml_model=None,
 ) -> pl.DataFrame:
     """Returns target_games with home_win_prob/away_win_prob/tie_prob added,
     using only data visible before this week — the method actually being
@@ -70,6 +71,14 @@ def _current_week_probs(
     if method == "vegas":
         model = VegasModel().fit(train)
         return model.predict_proba(target_games)
+
+    if method == "ml":
+        # Arrives pre-fit from the caller, exactly like blend_model: Method 3
+        # trains across many prior seasons, while this function's own
+        # drive_table is deliberately scoped to one season for Method 2.
+        if ml_model is None:
+            raise ValueError("ml method requires a fitted ml_model")
+        return ml_model.predict_proba(target_games)
 
     mc_results = simulate_all_remaining_games(
         drive_table, schedules, as_of, target_games.select(["game_id", "home_team", "away_team"]),
@@ -126,6 +135,7 @@ def run_season_backtest(
     decay_rate: float = 0.05,
     mc_config: DriveSimConfig | None = None,
     blend_model: BlendModel | None = None,
+    ml_model=None,
 ) -> SeasonResult:
     """Replay one season week by week, picking the optimizer's choice each
     week from among not-yet-used teams, resolving against the real result."""
@@ -148,7 +158,7 @@ def run_season_backtest(
 
         current_probs = _current_week_probs(
             method, season, week, schedules, drive_table, target_this_week,
-            shrink_k, prior_blend_prev_season, prior_blend_league_mean, mc_config, blend_model,
+            shrink_k, prior_blend_prev_season, prior_blend_league_mean, mc_config, blend_model, ml_model,
         )
 
         future_weeks = [w for w in remaining_weeks if w != week]

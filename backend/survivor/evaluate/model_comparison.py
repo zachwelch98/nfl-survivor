@@ -37,15 +37,26 @@ def collect_predictions(
     prior_blend_league_mean: float = 0.4,
     mc_config: DriveSimConfig | None = None,
     min_train_games: int = 20,
+    team_game_table: pl.DataFrame | None = None,
+    depth_charts: pl.DataFrame | None = None,
 ) -> pl.DataFrame:
     """One row per decisive REG game across the given (season, week) list:
-    vegas_home_win_prob, mc_home_win_prob, home_win (0/1). Ties are
-    excluded (both methods' win-share metrics are only meaningful among
-    decisive outcomes; tie handling is evaluated separately — see
-    models/base.py's pick_survival_prob).
+    vegas_home_win_prob, mc_home_win_prob, home_win (0/1), and — when
+    `team_game_table` is supplied — ml_home_win_prob. Ties are excluded
+    (these win-share metrics are only meaningful among decisive outcomes;
+    tie handling is evaluated separately — see models/base.py's
+    pick_survival_prob).
+
+    Method 3 is refit once per *season* rather than once per week, unlike
+    Vegas and Monte Carlo: a classifier retrain is far more expensive than a
+    one-feature logistic fit, and team ratings don't move fast enough within
+    a season to repay it. Per-game features are still rebuilt as-of every
+    week, so only the fit is season-cadence. See models/ml.py.
     """
     mc_config = mc_config or DriveSimConfig()
     drive_table = build_drive_table(pbp)
+    ml_model = None
+    ml_fitted_for_season: int | None = None
     rows = []
 
     for season, week in weeks:
@@ -64,6 +75,20 @@ def collect_predictions(
             continue
         vegas = VegasModel().fit(train_games)
         vegas_preds = vegas.predict_proba(target)
+
+        if team_game_table is not None and season != ml_fitted_for_season:
+            from survivor.export.json_bundle import _fit_ml_model
+
+            season_start = AsOf(season=season, week=1, game_type="REG")
+            ml_model = _fit_ml_model(
+                team_game_table, drive_table, schedules, season_start.visible(schedules), depth_charts
+            )
+            ml_fitted_for_season = season
+        ml_by_game: dict[str, float] = {}
+        if ml_model is not None:
+            for ml_row in ml_model.predict_proba(target).iter_rows(named=True):
+                total = ml_row["home_win_prob"] + ml_row["away_win_prob"]
+                ml_by_game[ml_row["game_id"]] = ml_row["home_win_prob"] / total if total > 0 else 0.5
 
         off = compute_offense_profiles(drive_table, as_of, shrink_k, prior_blend_prev_season, prior_blend_league_mean)
         deff = compute_defense_profiles(drive_table, as_of, shrink_k, prior_blend_prev_season, prior_blend_league_mean)
@@ -89,6 +114,7 @@ def collect_predictions(
                     "home_win": int(row["home_score"] > row["away_score"]),
                     "vegas_home_win_prob": vegas_home_share,
                     "mc_home_win_prob": mc_home_share,
+                    "ml_home_win_prob": ml_by_game.get(row["game_id"]),
                 }
             )
 
@@ -97,6 +123,7 @@ def collect_predictions(
             schema={
                 "season": pl.Int64, "week": pl.Int64, "home_team": pl.Utf8, "away_team": pl.Utf8,
                 "home_win": pl.Int64, "vegas_home_win_prob": pl.Float64, "mc_home_win_prob": pl.Float64,
+                "ml_home_win_prob": pl.Float64,
             }
         )
     return pl.DataFrame(rows)
@@ -184,6 +211,50 @@ def summarize_comparison(predictions: pl.DataFrame, n_boot: int = 3000, seed: in
             "vegas_significantly_better": boot.excludes_zero and boot.point_estimate < 0,
         },
     }
+
+    # Method 3, scored only over the rows where it produced a prediction --
+    # the same null-filtered treatment the blend already gets, since a model
+    # that couldn't be fit for some weeks must not be credited or blamed for
+    # games it never saw.
+    if "ml_home_win_prob" in predictions.columns:
+        ml_rows = predictions.filter(pl.col("ml_home_win_prob").is_not_null())
+        if ml_rows.height > 0:
+            ml = ml_rows["ml_home_win_prob"].to_numpy()
+            ml_outcome = ml_rows["home_win"].to_numpy().astype(float)
+            ml_vegas = ml_rows["vegas_home_win_prob"].to_numpy()
+            ml_mc = ml_rows["mc_home_win_prob"].to_numpy()
+            ml_weeks = ml_rows["week"].to_numpy()
+            ml_bucket = np.select(
+                [ml_weeks <= 4, ml_weeks <= 9, ml_weeks <= 14],
+                ["wk1-4", "wk5-9", "wk10-14"],
+                default="wk15+",
+            )
+            ml_vs_vegas = bootstrap_metric_diff(ml, ml_vegas, ml_outcome, metric_fn=brier_score, n_boot=n_boot, seed=seed)
+            ml_vs_mc = bootstrap_metric_diff(ml, ml_mc, ml_outcome, metric_fn=brier_score, n_boot=n_boot, seed=seed)
+            result["ml"] = {
+                "brier": brier_score(ml, ml_outcome),
+                "log_loss": log_loss(ml, ml_outcome),
+                "reliability": [b.__dict__ for b in reliability_curve(ml, ml_outcome)],
+                "high_confidence_slice": high_confidence_slice(ml, ml_outcome).__dict__,
+                "by_week_bucket": metrics_by_group(ml, ml_outcome, ml_bucket),
+            }
+            result["ml_vs_vegas_brier_skill_score"] = brier_skill_score(ml, ml_outcome, reference_prob=ml_vegas)
+            result["ml_vs_vegas_bootstrap"] = {
+                "point_estimate": ml_vs_vegas.point_estimate,
+                "ci_low": ml_vs_vegas.ci_low,
+                "ci_high": ml_vs_vegas.ci_high,
+                "ml_significantly_better": ml_vs_vegas.excludes_zero and ml_vs_vegas.point_estimate > 0,
+                "vegas_significantly_better": ml_vs_vegas.excludes_zero and ml_vs_vegas.point_estimate < 0,
+            }
+            # The comparison that actually decides the season plan: future
+            # weeks have no Vegas line, so ml's real competition is mc.
+            result["ml_vs_mc_bootstrap"] = {
+                "point_estimate": ml_vs_mc.point_estimate,
+                "ci_low": ml_vs_mc.ci_low,
+                "ci_high": ml_vs_mc.ci_high,
+                "ml_significantly_better": ml_vs_mc.excludes_zero and ml_vs_mc.point_estimate > 0,
+                "mc_significantly_better": ml_vs_mc.excludes_zero and ml_vs_mc.point_estimate < 0,
+            }
 
     if "blend_home_win_prob" in predictions.columns:
         blend_eval = predictions.filter(pl.col("blend_home_win_prob").is_not_null())

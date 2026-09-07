@@ -71,3 +71,30 @@ def test_season_plan_respects_used_teams(real_data):
     assert "KC" not in teams_used
     assert "BUF" not in teams_used
     assert len(plan["recommended_sequence"]) == 14  # weeks 5-18
+
+
+def test_week_board_carries_ml_fields(real_data):
+    """Method 3 appears on the board for comparison. It is optional by
+    design -- without a team_game_table the fields are present but null,
+    which is exactly what a bundle exported from a narrow pbp load looks
+    like, and the frontend renders that as an em dash rather than breaking.
+    """
+    from survivor.features.team_ratings import build_team_game_table
+
+    pbp, schedules, drive_table = real_data
+
+    without = build_week_board(schedules, drive_table, 2026, 1, [])
+    assert all("ml_home_win_prob" in g for g in without["games"])
+    assert all(g["ml_home_win_prob"] is None for g in without["games"])
+
+    with_ml = build_week_board(
+        schedules, drive_table, 2026, 1, [], team_game_table=build_team_game_table(pbp)
+    )
+    scored = [g for g in with_ml["games"] if g["ml_home_win_prob"] is not None]
+    assert len(scored) == len(with_ml["games"])
+    for g in scored:
+        total = g["ml_home_win_prob"] + g["ml_away_win_prob"] + g["ml_tie_prob"]
+        assert total == pytest.approx(1.0, abs=1e-6)
+
+    # The recommendation still comes from Vegas -- Method 3 is shown, not obeyed.
+    assert with_ml["recommended_pick"] == without["recommended_pick"]

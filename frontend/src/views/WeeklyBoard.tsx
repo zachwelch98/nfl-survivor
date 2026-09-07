@@ -64,6 +64,7 @@ function BoardTable({ week, usedByUser }: { week: number; usedByUser: Set<string
                   <th className="py-2 px-3">Spread</th>
                   <th className="py-2 px-3">Vegas home %</th>
                   <th className="py-2 px-3">MC home %</th>
+                  <th className="py-2 px-3">ML home %</th>
                   <th className="py-2 px-3">MC spread</th>
                   <th className="py-2 pl-3">Deviation cost</th>
                 </tr>
@@ -87,6 +88,9 @@ function BoardTable({ week, usedByUser }: { week: number; usedByUser: Set<string
                       </td>
                       <td className="py-2 px-3">
                         <ProbPill value={g.mc_home_win_prob} />
+                      </td>
+                      <td className="py-2 px-3">
+                        <ProbPill value={g.ml_home_win_prob ?? null} />
                       </td>
                       <td className="py-2 px-3 tabular-nums text-slate-500">{g.mc_simulated_spread !== null ? g.mc_simulated_spread.toFixed(1) : "—"}</td>
                       <td className="py-2 pl-3 tabular-nums text-slate-500">
