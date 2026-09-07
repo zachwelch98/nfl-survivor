@@ -106,11 +106,25 @@ def test_build_cost_matrix_missing_pair_is_infinite():
     assert cost[1, 1] == pytest.approx(-np.log(0.6))
 
 
-def test_build_cost_matrix_rejects_invalid_probability():
+def test_build_cost_matrix_rejects_out_of_range_probability():
     with pytest.raises(ValueError):
         build_cost_matrix([1], ["A"], {(1, "A"): 1.5})
     with pytest.raises(ValueError):
-        build_cost_matrix([1], ["A"], {(1, "A"): 0.0})
+        build_cost_matrix([1], ["A"], {(1, "A"): -0.1})
+
+
+def test_build_cost_matrix_accepts_zero_as_a_legitimate_guaranteed_loss():
+    """A team the model gives literally no chance is a valid (if rare)
+    input — it must map to +inf cost, not raise. This is a real edge case
+    a Monte Carlo simulation with finitely many sims can actually produce."""
+    cost = build_cost_matrix([1], ["A", "B"], {(1, "A"): 0.0, (1, "B"): 0.5})
+    assert np.isinf(cost[0, 0])
+    assert cost[0, 1] == pytest.approx(-np.log(0.5))
+
+
+def test_solve_optimal_assignment_avoids_a_zero_probability_team_when_an_alternative_exists():
+    plan = solve_optimal_assignment([1], ["A", "B"], {(1, "A"): 0.0, (1, "B"): 0.5})
+    assert plan.team_for_week(1) == "B"
 
 
 def test_solve_optimal_assignment_empty_weeks():

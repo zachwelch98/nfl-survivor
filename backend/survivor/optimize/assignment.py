@@ -54,16 +54,20 @@ class SeasonPlan:
 def build_cost_matrix(weeks: list[int], teams: list[str], survival_prob: dict[tuple[int, str], float]) -> np.ndarray:
     """cost[i,j] = -log(survival_prob[weeks[i], teams[j]]), or +inf if that
     pair is absent from `survival_prob` (infeasible: team unavailable that
-    week for any reason) or the probability is <= 0."""
+    week for any reason). A probability of exactly 0.0 is a legitimate (if
+    rare) value — a team the model gives literally no chance — and maps to
+    cost=+inf (an available-but-guaranteed-losing option) rather than
+    raising; only a value outside [0, 1] indicates an actual caller bug."""
     cost = np.full((len(weeks), len(teams)), np.inf)
     for i, w in enumerate(weeks):
         for j, t in enumerate(teams):
             p = survival_prob.get((w, t))
             if p is None:
                 continue
-            if not (0.0 < p <= 1.0):
-                raise ValueError(f"survival_prob for (week={w}, team={t}) must be in (0, 1], got {p}")
-            cost[i, j] = -np.log(p)
+            if not (0.0 <= p <= 1.0):
+                raise ValueError(f"survival_prob for (week={w}, team={t}) must be in [0, 1], got {p}")
+            if p > 0.0:
+                cost[i, j] = -np.log(p)
     return cost
 
 
