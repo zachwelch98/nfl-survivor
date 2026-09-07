@@ -56,6 +56,13 @@ function BoardTable({ week, usedByUser }: { week: number; usedByUser: Set<string
               ⭐ Optimizer recommends <strong>{b.recommended_pick}</strong> ({teamName(b.recommended_pick)}) this week
             </div>
           )}
+          {b.recommendation_source && b.recommendation_source !== "vegas" && (
+            <div className="mb-4 rounded-lg bg-amber-50 border border-amber-200 px-3 py-2 text-xs text-amber-800">
+              {b.recommendation_source === "model"
+                ? "No betting lines are posted for this week yet, so every number here comes from the models (Monte Carlo and ML), not the market — and the market is the most accurate of the three when it exists. Treat this as a projection, not a recommendation to act on."
+                : `Only ${b.n_games_with_line ?? 0} of ${b.games.length} games have a posted line. Rows without one show “—” for Vegas and fall back to the ML model.`}
+            </div>
+          )}
           <div className="overflow-x-auto">
             <table className="w-full text-sm border-collapse">
               <thead>
@@ -84,7 +91,7 @@ function BoardTable({ week, usedByUser }: { week: number; usedByUser: Set<string
                       </td>
                       <td className="py-2 px-3 tabular-nums text-slate-500">{g.spread_line !== null ? g.spread_line.toFixed(1) : "—"}</td>
                       <td className="py-2 px-3">
-                        <ProbPill value={g.vegas_home_win_prob} />
+                        <ProbPill value={g.vegas_home_win_prob ?? null} />
                       </td>
                       <td className="py-2 px-3">
                         <ProbPill value={g.mc_home_win_prob} />

@@ -309,5 +309,7 @@
     "TB": 0.7734647029921169,
     "TEN": 0.3951273145851738,
     "WAS": 0.8193177181901425
-  }
+  },
+  "n_games_with_line": 16,
+  "recommendation_source": "vegas"
 }

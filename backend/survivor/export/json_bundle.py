@@ -100,6 +100,7 @@ def build_week_board(
     mc_config: DriveSimConfig | None = None,
     team_game_table: pl.DataFrame | None = None,
     depth_charts: pl.DataFrame | None = None,
+    ml_model: MLWinProbModel | None = None,
 ) -> dict:
     """Per-game Vegas vs. Monte Carlo win probability, plus the optimizer's
     recommended pick (and every available team's cost-of-deviation) among
@@ -118,7 +119,10 @@ def build_week_board(
     # Method 3 is shown alongside for comparison; the recommended pick still
     # comes from Vegas, which beats it on the current week by 0.0133 Brier
     # with the CI excluding zero (see models/ml.py and config.yaml).
-    ml_model = _fit_ml_model(team_game_table, drive_table, schedules, train, depth_charts)
+    # Method 3 is fit per season, not per week, so a multi-week export fits
+    # once and passes the same model in rather than paying for it 18 times.
+    if ml_model is None:
+        ml_model = _fit_ml_model(team_game_table, drive_table, schedules, train, depth_charts)
     ml_by_game: dict[str, dict] = {}
     if ml_model is not None:
         ml_by_game = {row["game_id"]: row for row in ml_model.predict_proba(target).iter_rows(named=True)}
@@ -139,15 +143,25 @@ def build_week_board(
             mc_result = simulate_game(home_rates, away_rates, n_drives, mc_config)
 
         ml_row = ml_by_game.get(row["game_id"])
+
+        # No posted line means no market opinion -- VegasModel falls back to
+        # an even split internally, and reporting that 50% as though it were
+        # a prediction would be a lie of presentation. Emit null so the board
+        # shows an em dash. Lines for late-season games genuinely don't exist
+        # yet: as of 2026 week 1, week 12 has 5 of 16 posted and week 18 has
+        # none.
+        has_line = row["spread_line"] is not None or (
+            row.get("home_moneyline") is not None and row.get("away_moneyline") is not None
+        )
         games.append({
             "game_id": row["game_id"],
             "home_team": home,
             "away_team": away,
             "gameday": row["gameday"],
             "spread_line": row["spread_line"],
-            "vegas_home_win_prob": vrow["home_win_prob"],
-            "vegas_away_win_prob": vrow["away_win_prob"],
-            "vegas_tie_prob": vrow["tie_prob"],
+            "vegas_home_win_prob": vrow["home_win_prob"] if has_line else None,
+            "vegas_away_win_prob": vrow["away_win_prob"] if has_line else None,
+            "vegas_tie_prob": vrow["tie_prob"] if has_line else None,
             "mc_home_win_prob": mc_result.home_win_prob if mc_result else None,
             "mc_away_win_prob": mc_result.away_win_prob if mc_result else None,
             "mc_tie_prob": mc_result.tie_prob if mc_result else None,
@@ -157,10 +171,25 @@ def build_week_board(
             "ml_tie_prob": ml_row["tie_prob"] if ml_row else None,
         })
 
-        if home not in used_teams:
-            survival_prob[(week, home)] = pick_survival_prob(vrow["home_win_prob"], vrow["away_win_prob"], vrow["tie_prob"], True, CONFIG.pool.tie_counts_as_loss)
-        if away not in used_teams:
-            survival_prob[(week, away)] = pick_survival_prob(vrow["home_win_prob"], vrow["away_win_prob"], vrow["tie_prob"], False, CONFIG.pool.tie_counts_as_loss)
+        # Which method drives this board's recommendation: Vegas where a line
+        # exists (it beats both others outright), otherwise Method 3, then
+        # Method 2. Without this, a future week with no lines would rank every
+        # team off VegasModel's internal coin flip and then star an
+        # essentially arbitrary "recommended" pick.
+        if has_line:
+            probs = (vrow["home_win_prob"], vrow["away_win_prob"], vrow["tie_prob"])
+        elif ml_row is not None:
+            probs = (ml_row["home_win_prob"], ml_row["away_win_prob"], ml_row["tie_prob"])
+        elif mc_result is not None:
+            probs = (mc_result.home_win_prob, mc_result.away_win_prob, mc_result.tie_prob)
+        else:
+            probs = None
+
+        if probs is not None:
+            if home not in used_teams:
+                survival_prob[(week, home)] = pick_survival_prob(*probs, True, CONFIG.pool.tie_counts_as_loss)
+            if away not in used_teams:
+                survival_prob[(week, away)] = pick_survival_prob(*probs, False, CONFIG.pool.tie_counts_as_loss)
 
     available_teams = list(survival_prob_teams(survival_prob, week))
     recommended = None
@@ -173,12 +202,18 @@ def build_week_board(
         except InfeasibleSeasonError:
             pass
 
+    n_with_line = sum(1 for g in games if g["vegas_home_win_prob"] is not None)
     return {
         "season": season,
         "week": week,
         "games": games,
         "recommended_pick": recommended,
         "cost_of_deviation": deviations,
+        # How many games actually have a posted line, so the frontend can say
+        # plainly when a future week's board is model-driven rather than
+        # market-driven.
+        "n_games_with_line": n_with_line,
+        "recommendation_source": "vegas" if n_with_line == len(games) else ("mixed" if n_with_line else "model"),
     }
 
 
@@ -287,13 +322,38 @@ def export_all(
     drive_table = build_drive_table(pbp)
 
     _write_json(out_dir / "season_meta.json", build_season_meta(season, current_week, used_teams))
-    _write_json(
-        out_dir / f"week_{current_week:02d}_board.json",
-        build_week_board(
-            schedules, drive_table, season, current_week, used_teams,
-            team_game_table=team_game_table, depth_charts=depth_charts,
-        ),
+    # A board per remaining week, not just the current one: the frontend's
+    # week selector offers every week of the season, and a missing file there
+    # surfaces as an error rather than an empty state.
+    #
+    # Showing a future week's posted line is legitimate here in a way it is
+    # NOT in the backtest. The distinction is when the number existed: a line
+    # posted today for week 5 is real, currently-available market information,
+    # whereas games.csv's value for a *historical* future week is that week's
+    # eventual closing line, which absorbed injury news and sharp money that
+    # hadn't happened at the simulated decision point. Live board, real line;
+    # backtest, no line. See optimize/projection.py.
+    season_weeks = sorted(
+        schedules.filter((pl.col("season") == season) & (pl.col("game_type") == "REG"))["week"]
+        .unique()
+        .to_list()
     )
+    board_weeks = [w for w in season_weeks if w >= current_week]
+
+    # Fit Method 3 once for the whole season (season cadence) and reuse it for
+    # every week's board, rather than refitting per week.
+    season_start_train = AsOf(season=season, week=current_week, game_type="REG").visible(schedules)
+    shared_ml_model = _fit_ml_model(team_game_table, drive_table, schedules, season_start_train, depth_charts)
+
+    for board_week in board_weeks:
+        _write_json(
+            out_dir / f"week_{board_week:02d}_board.json",
+            build_week_board(
+                schedules, drive_table, season, board_week, used_teams,
+                team_game_table=team_game_table, depth_charts=depth_charts,
+                ml_model=shared_ml_model,
+            ),
+        )
     _write_json(
         out_dir / "season_plan.json",
         build_season_plan(

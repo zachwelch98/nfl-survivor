@@ -62,7 +62,10 @@ function RecommendedPickCard({ season, week, refreshNonce }: { season: number; w
   return (
     <AsyncView state={board}>
       {(b) => {
-        const top = [...b.games].sort((a, z) => Math.max(z.vegas_home_win_prob, 1 - z.vegas_home_win_prob) - Math.max(a.vegas_home_win_prob, 1 - a.vegas_home_win_prob));
+        // A game with no posted line has a null Vegas probability; treat it
+        // as a coin flip for ordering only, never for display.
+        const edge = (p: number | null) => (p === null ? 0.5 : Math.max(p, 1 - p));
+        const top = [...b.games].sort((a, z) => edge(z.vegas_home_win_prob) - edge(a.vegas_home_win_prob));
         return (
           <Card title={`Week ${week} recommended pick`} subtitle="Optimized for full-season survival, not just this week's win probability">
             {b.recommended_pick ? (
@@ -91,9 +94,13 @@ function RecommendedPickCard({ season, week, refreshNonce }: { season: number; w
                     {g.away_team} @ {g.home_team}
                   </span>
                   <div className="flex items-center gap-2">
-                    <ProbPill value={g.vegas_home_win_prob >= 0.5 ? g.vegas_home_win_prob : 1 - g.vegas_home_win_prob} />
+                    <ProbPill
+                      value={g.vegas_home_win_prob === null ? null : Math.max(g.vegas_home_win_prob, 1 - g.vegas_home_win_prob)}
+                    />
                     <span className="text-xs text-slate-400 w-20 text-right">
-                      {g.vegas_home_win_prob >= 0.5 ? g.home_team : g.away_team} favored
+                      {g.vegas_home_win_prob === null
+                        ? "no line yet"
+                        : `${g.vegas_home_win_prob >= 0.5 ? g.home_team : g.away_team} favored`}
                     </span>
                   </div>
                 </div>

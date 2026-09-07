@@ -14,6 +14,17 @@ async function getJSON<T>(path: string): Promise<T> {
   if (!res.ok) {
     throw new Error(`Failed to load ${path}: ${res.status} ${res.statusText}`);
   }
+  // A missing file under /data does NOT 404: the dev server answers unknown
+  // paths with index.html (the SPA fallback) at status 200, so res.ok is
+  // true and the JSON parse then fails on "<!doctype" with a message that
+  // says nothing about what actually went wrong. Check the content type and
+  // report the real problem instead.
+  const contentType = res.headers.get("content-type") ?? "";
+  if (!contentType.includes("json")) {
+    throw new Error(
+      `No data file for ${path}. It hasn't been generated yet — run \`make export\` (or use the Dashboard's pipeline controls) to create it.`,
+    );
+  }
   return (await res.json()) as T;
 }
 

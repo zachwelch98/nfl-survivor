@@ -20,9 +20,11 @@ export interface BoardGame {
   away_team: string;
   gameday: string;
   spread_line: number | null;
-  vegas_home_win_prob: number;
-  vegas_away_win_prob: number;
-  vegas_tie_prob: number;
+  // Null when no line has been posted for this game yet — common for
+  // late-season weeks. Not a 50/50 prediction; an absence of one.
+  vegas_home_win_prob: number | null;
+  vegas_away_win_prob: number | null;
+  vegas_tie_prob: number | null;
   mc_home_win_prob: number | null;
   mc_away_win_prob: number | null;
   mc_tie_prob: number | null;
@@ -40,6 +42,11 @@ export interface WeekBoard {
   games: BoardGame[];
   recommended_pick: string | null;
   cost_of_deviation: Record<string, number>;
+  // How many of this week's games have a posted line yet, and therefore
+  // whether the recommendation is market-driven or model-driven. Optional:
+  // bundles exported before these existed simply won't carry them.
+  n_games_with_line?: number;
+  recommendation_source?: "vegas" | "mixed" | "model";
 }
 
 export interface WeekPick {
