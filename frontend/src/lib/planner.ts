@@ -147,3 +147,60 @@ export function solveScenario(
 
   return { baseline, scenario, costOfLocks, error };
 }
+
+export interface PlanChange {
+  week: number;
+  from: string;
+  fromProb: number;
+  to: string;
+  toProb: number;
+}
+
+export interface PlanDiff {
+  /** Weeks whose pick differs from the unconstrained plan, in week order. */
+  changes: PlanChange[];
+  /** Teams the unconstrained plan used that this scenario doesn't. */
+  dropped: string[];
+  /** Teams this scenario uses that the unconstrained plan didn't. */
+  added: string[];
+}
+
+/**
+ * What a set of locks actually did to the plan.
+ *
+ * This exists because the intuitive story is usually wrong. Lock JAX into
+ * week 1 and the natural expectation is "LAC is now free, so it moves to a
+ * later week" — but with 32 teams and 18 weeks, 14 teams go unused in any
+ * plan, and the displaced team often just leaves. The real knock-on is
+ * elsewhere: JAX vacates the week it *was* being used in, and something else
+ * takes that slot. Showing only the final table leaves the user to diff two
+ * 18-row lists by eye to find that out.
+ */
+export function diffPlans(
+  baseline: AssignmentResult,
+  scenario: AssignmentResult,
+): PlanDiff {
+  const baseByWeek = new Map(baseline.picks.map((p) => [p.week, p]));
+  const changes: PlanChange[] = [];
+
+  for (const p of scenario.picks) {
+    const before = baseByWeek.get(p.week);
+    if (!before || before.team === p.team) continue;
+    changes.push({
+      week: p.week,
+      from: before.team,
+      fromProb: before.survivalProb,
+      to: p.team,
+      toProb: p.survivalProb,
+    });
+  }
+  changes.sort((a, b) => a.week - b.week);
+
+  const baseTeams = new Set(baseline.picks.map((p) => p.team));
+  const scenarioTeams = new Set(scenario.picks.map((p) => p.team));
+  return {
+    changes,
+    dropped: [...baseTeams].filter((t) => !scenarioTeams.has(t)).sort(),
+    added: [...scenarioTeams].filter((t) => !baseTeams.has(t)).sort(),
+  };
+}

@@ -16,7 +16,7 @@ import { getSeasonMeta, getSeasonPlan, getSurvivalMatrix } from "../data/source"
 import { burnedTeams, locksForSeason } from "../data/scenario";
 import type { SeasonMeta, SeasonPlan, SurvivalEntry, SurvivalMatrix } from "../data/types";
 import { costOfLocking, probKey, solveOptimalAssignment } from "../lib/assignment";
-import { applyLocks, solveScenario, validateLocks } from "../lib/planner";
+import { applyLocks, diffPlans, solveScenario, validateLocks } from "../lib/planner";
 import { teamName } from "../lib/teams";
 import { useAsync } from "../lib/useAsync";
 import { useScenarioState } from "../lib/useScenarioState";
@@ -163,6 +163,15 @@ function Planner({ bundle }: { bundle: Bundle }) {
     [validLocks],
   );
 
+  const diff = useMemo(
+    () => (solved.baseline && solved.scenario ? diffPlans(solved.baseline, solved.scenario) : null),
+    [solved.baseline, solved.scenario],
+  );
+  const changedByWeek = useMemo(
+    () => new Map((diff?.changes ?? []).map((c) => [c.week, c])),
+    [diff],
+  );
+
   const { baseline, scenario: scenarioPlan, costOfLocks, error } = solved;
   const pendingImportable = userState.picks.some(
     (p) => p.season === season && p.week >= currentWeek && p.outcome === "pending",
@@ -231,6 +240,66 @@ function Planner({ bundle }: { bundle: Bundle }) {
         </div>
       )}
 
+      {diff && diff.changes.length > 0 && baseline && scenarioPlan && (
+        <Card
+          title="What your locks changed"
+          subtitle="Every week not listed here is unaffected."
+        >
+          <ul className="space-y-1.5 text-sm">
+            {diff.changes.map((c) => (
+              <li key={c.week} className="flex flex-wrap items-baseline gap-x-2">
+                <span className="text-slate-500 w-16 shrink-0">Week {c.week}</span>
+                <span className="text-slate-400 line-through">
+                  {c.from} {Math.round(c.fromProb * 100)}%
+                </span>
+                <span className="text-slate-400">→</span>
+                <span className="font-medium">
+                  {c.to} {Math.round(c.toProb * 100)}%
+                </span>
+                <span className="text-slate-400 text-xs">{teamName(c.to)}</span>
+                {lockedByWeek.get(c.week) === c.to ? (
+                  <span className="text-xs text-amber-700">your lock</span>
+                ) : (
+                  <span className="text-xs text-slate-400">knock-on effect</span>
+                )}
+              </li>
+            ))}
+          </ul>
+
+          {(diff.dropped.length > 0 || diff.added.length > 0) && (
+            <div className="mt-3 pt-3 border-t border-slate-100 text-sm text-slate-600 space-y-1">
+              {diff.dropped.length > 0 && (
+                <div>
+                  <span className="font-medium">Leaves the plan:</span> {diff.dropped.join(", ")}
+                </div>
+              )}
+              {diff.added.length > 0 && (
+                <div>
+                  <span className="font-medium">Enters the plan:</span> {diff.added.join(", ")}
+                </div>
+              )}
+              <p className="text-xs text-slate-400 pt-1">
+                A team leaving the plan isn't wasted — there are {matrix.teams.length} teams and only{" "}
+                {weeks.length} weeks, so {matrix.teams.length - weeks.length} go unused in any plan.
+                It simply wasn't better than what already had each remaining slot.
+              </p>
+            </div>
+          )}
+
+          <div className="mt-3 pt-3 border-t border-slate-100 text-sm">
+            Season survival: <span className="tabular-nums">{pct(baseline.totalSurvivalProb)}</span>{" "}
+            <span className="text-slate-400">→</span>{" "}
+            <span className="tabular-nums font-medium">{pct(scenarioPlan.totalSurvivalProb)}</span>
+            {costOfLocks !== null && costOfLocks > 1e-12 && (
+              <span className="text-loss">
+                {" "}— giving up {((costOfLocks / baseline.totalSurvivalProb) * 100).toFixed(1)}% of
+                your odds
+              </span>
+            )}
+          </div>
+        </Card>
+      )}
+
       <Card
         title="Your season"
         subtitle="Locked weeks are yours; the rest is the optimal fill given those commitments."
@@ -265,6 +334,7 @@ function Planner({ bundle }: { bundle: Bundle }) {
               <tr className="text-left text-xs uppercase tracking-wide text-slate-400 border-b border-slate-200">
                 <th className="py-2 pr-3">Week</th>
                 <th className="py-2 px-3">Team</th>
+                <th className="py-2 px-3">Change</th>
                 <th className="py-2 px-3">Matchup</th>
                 <th className="py-2 px-3">Survival</th>
                 <th className="py-2 pl-3">Lock</th>
@@ -273,6 +343,7 @@ function Planner({ bundle }: { bundle: Bundle }) {
             <tbody className="divide-y divide-slate-100">
               {weeks.map((w) => {
                 const lockedTeam = lockedByWeek.get(w);
+                const changed = changedByWeek.get(w);
                 const pick = scenarioPlan?.picks.find((p) => p.week === w);
                 const team = lockedTeam ?? pick?.team ?? null;
                 const entry = team ? entryByKey.get(probKey(w, team)) : undefined;
@@ -285,7 +356,12 @@ function Planner({ bundle }: { bundle: Bundle }) {
                   .sort((a, b) => (a.cost ?? Infinity) - (b.cost ?? Infinity) || b.e.survival_prob - a.e.survival_prob);
 
                 return (
-                  <tr key={w} className={lockedTeam ? "bg-amber-50/60" : undefined}>
+                  <tr
+                    key={w}
+                    className={
+                      lockedTeam ? "bg-amber-50/60" : changed ? "bg-blue-50/40" : undefined
+                    }
+                  >
                     <td className="py-1.5 pr-3 text-slate-500 whitespace-nowrap">Week {w}</td>
                     <td className="py-1.5 px-3">
                       <select
@@ -309,6 +385,13 @@ function Planner({ bundle }: { bundle: Bundle }) {
                           </option>
                         ))}
                       </select>
+                    </td>
+                    <td className="py-1.5 px-3 whitespace-nowrap">
+                      {changed && (
+                        <div className="text-xs text-slate-400">
+                          was {changed.from} ({Math.round(changed.fromProb * 100)}%)
+                        </div>
+                      )}
                     </td>
                     <td className="py-1.5 px-3 text-slate-500 whitespace-nowrap">
                       {entry ? (

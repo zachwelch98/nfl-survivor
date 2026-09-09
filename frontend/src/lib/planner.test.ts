@@ -2,7 +2,8 @@ import { describe, expect, it } from "vitest";
 import matrixJson from "../../public/data/survival_matrix.json";
 import type { ScenarioLock, SurvivalEntry, SurvivalMatrix } from "../data/types";
 import { probKey, solveOptimalAssignment } from "./assignment";
-import { applyLocks, solveScenario, validateLocks } from "./planner";
+import type { AssignmentResult } from "./assignment";
+import { applyLocks, diffPlans, solveScenario, validateLocks } from "./planner";
 
 const matrix = matrixJson as unknown as SurvivalMatrix;
 
@@ -194,5 +195,92 @@ describe("solveScenario on the real exported season", () => {
     const s = solveScenario(entries, weeks, teams, locks);
     const direct = solveOptimalAssignment(weeks, teams, applyLocks(entries, locks));
     expect(s.scenario?.totalLogSurvival).toBeCloseTo(direct.totalLogSurvival, 12);
+  });
+});
+
+describe("diffPlans", () => {
+  const entries = matrix.entries;
+  const weeks = matrix.weeks;
+  const teams = matrix.teams;
+
+  it("reports no changes when there are no locks", () => {
+    const s = solveScenario(entries, weeks, teams, []);
+    const d = diffPlans(s.baseline as AssignmentResult, s.scenario as AssignmentResult);
+    expect(d.changes).toEqual([]);
+    expect(d.dropped).toEqual([]);
+    expect(d.added).toEqual([]);
+  });
+
+  it("names the locked week and the knock-on week, not just the locked one", () => {
+    // The motivating case: locking a team into week 1 that the plan was
+    // already using in a later week frees that later week too.
+    const base = solveScenario(entries, weeks, teams, []);
+    const basePicks = base.scenario as AssignmentResult;
+    const week1Team = basePicks.picks.find((p) => p.week === 1)?.team as string;
+
+    // Find a team used later in the plan that also plays in week 1.
+    const laterPick = basePicks.picks.find(
+      (p) => p.week > 1 && entries.some((e) => e.week === 1 && e.team === p.team),
+    );
+    if (!laterPick) return; // schedule-dependent; nothing to assert
+
+    const s = solveScenario(entries, weeks, teams, [
+      { season: 2026, week: 1, team: laterPick.team },
+    ]);
+    const d = diffPlans(base.scenario as AssignmentResult, s.scenario as AssignmentResult);
+
+    const changedWeeks = d.changes.map((c) => c.week);
+    expect(changedWeeks).toContain(1);
+    expect(changedWeeks).toContain(laterPick.week); // the knock-on
+    expect(d.changes.find((c) => c.week === 1)?.from).toBe(week1Team);
+    expect(d.changes.find((c) => c.week === 1)?.to).toBe(laterPick.team);
+  });
+
+  it("reports the displaced team as dropped when it isn't redeployed", () => {
+    const base = solveScenario(entries, weeks, teams, []);
+    const basePicks = base.scenario as AssignmentResult;
+    const laterPick = basePicks.picks.find(
+      (p) => p.week > 1 && entries.some((e) => e.week === 1 && e.team === p.team),
+    );
+    if (!laterPick) return;
+
+    const s = solveScenario(entries, weeks, teams, [
+      { season: 2026, week: 1, team: laterPick.team },
+    ]);
+    const d = diffPlans(base.scenario as AssignmentResult, s.scenario as AssignmentResult);
+
+    // Whatever leaves the plan must actually be gone from it, and whatever
+    // arrives must actually be in it -- the counts have to balance.
+    expect(d.dropped.length).toBe(d.added.length);
+    for (const t of d.dropped) {
+      expect(s.scenario?.picks.some((p) => p.team === t)).toBe(false);
+    }
+    for (const t of d.added) {
+      expect(basePicks.picks.some((p) => p.team === t)).toBe(false);
+    }
+  });
+
+  it("every changed week is a real swap, and unchanged weeks are omitted", () => {
+    const base = solveScenario(entries, weeks, teams, []);
+    const pick7 = (base.scenario as AssignmentResult).picks.find((p) => p.week === 7);
+    const other = entries.find(
+      (e) => e.week === 7 && e.team !== pick7?.team && e.survival_prob > 0.5,
+    ) as SurvivalEntry;
+    const s = solveScenario(entries, weeks, teams, [{ season: 2026, week: 7, team: other.team }]);
+    const d = diffPlans(base.scenario as AssignmentResult, s.scenario as AssignmentResult);
+
+    expect(d.changes.length).toBeGreaterThan(0);
+    for (const c of d.changes) {
+      expect(c.from).not.toBe(c.to);
+      expect(s.scenario?.picks.find((p) => p.week === c.week)?.team).toBe(c.to);
+      expect(base.scenario?.picks.find((p) => p.week === c.week)?.team).toBe(c.from);
+    }
+    const changedWeeks = new Set(d.changes.map((c) => c.week));
+    for (const w of weeks) {
+      if (changedWeeks.has(w)) continue;
+      expect(s.scenario?.picks.find((p) => p.week === w)?.team).toBe(
+        base.scenario?.picks.find((p) => p.week === w)?.team,
+      );
+    }
   });
 });
