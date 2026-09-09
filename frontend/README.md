@@ -11,6 +11,7 @@ later is a change to that file only).
 npm install
 npm run dev      # http://localhost:5173
 npm run build    # type-checks (tsc -b) then builds to dist/
+npm run test     # vitest: the in-browser assignment solver
 ```
 
 ## Structure
@@ -24,8 +25,21 @@ npm run build    # type-checks (tsc -b) then builds to dist/
   pipeline-control API (see below).
 - `src/data/storage.ts` — localStorage persistence for picks/outcomes
   (zod-validated on read).
-- `src/views/` — the six views: Dashboard, Odds Board, Season Plan, My
-  Picks, Analysis, Simulation.
+- `src/data/scenario.ts` — localStorage persistence for What-If locks, under
+  a **separate key** from picks. Deliberate: `storage.ts` pins
+  `version: z.literal(1)` and silently resets on a parse failure, so widening
+  that schema would wipe every recorded pick on first load. Nothing here ever
+  writes back to My Picks — a what-if is a scratchpad.
+- `src/lib/assignment.ts` — a port of
+  `backend/survivor/optimize/assignment.py` (rectangular Jonker-Volgenant).
+  Locks don't change any probability, only which cells are usable, so the
+  expensive pipeline work is exported once and the re-solve happens here in
+  microseconds. Checked against scipy-generated fixtures *and* against the
+  live exported plan — see `crosscheck.test.ts`.
+- `src/lib/planner.ts` — what a lock means, which locks can be honored (with
+  a specific reason for each that can't), and what a scenario costs.
+- `src/views/` — the seven views: Dashboard, Odds Board, Season Plan, My
+  Picks, What-If, Analysis, Simulation.
 - `src/components/` — shared presentational pieces (Card, ProbBar,
   CommandRunner, etc).
 

@@ -5,12 +5,14 @@ import SeasonPlanView from "./views/SeasonPlanView";
 import MyPicks from "./views/MyPicks";
 import AnalysisView from "./views/AnalysisView";
 import SimulationView from "./views/SimulationView";
+import ScenarioView from "./views/ScenarioView";
 
 const NAV = [
   { to: "/", label: "Dashboard", end: true },
   { to: "/board", label: "Odds Board" },
   { to: "/plan", label: "Season Plan" },
   { to: "/picks", label: "My Picks" },
+  { to: "/whatif", label: "What-If" },
   { to: "/analysis", label: "Analysis" },
   { to: "/simulation", label: "Simulation" },
 ];
@@ -48,6 +50,7 @@ export default function App() {
           <Route path="/picks" element={<MyPicks />} />
           <Route path="/analysis" element={<AnalysisView />} />
           <Route path="/simulation" element={<SimulationView />} />
+          <Route path="/whatif" element={<ScenarioView />} />
         </Routes>
       </main>
 

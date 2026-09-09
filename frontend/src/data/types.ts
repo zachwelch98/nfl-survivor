@@ -168,6 +168,37 @@ export interface StrategyOutcomeSummary {
 
 export type Simulation = Record<string, StrategyOutcomeSummary>;
 
+// --- survival_matrix.json: the what-if planner's only pipeline input ---
+//
+// The full (week, team) -> survival probability table for every remaining
+// week, exported *unfiltered* (used teams included). Availability is applied
+// in the browser from localStorage, so the planner is never stale relative to
+// whatever USED= happened to be passed to `make export`.
+
+export interface SurvivalEntry {
+  week: number;
+  team: string;
+  opponent: string;
+  is_home: boolean;
+  game_id: string;
+  survival_prob: number;
+  weeks_ahead: number;
+  /** "vegas" for the current week's posted lines, "model" for the MC+ML blend. */
+  source: "vegas" | "model";
+}
+
+export interface SurvivalMatrix {
+  season: number;
+  current_week: number;
+  /** Horizon decay already applied to `survival_prob`; carried for display. */
+  decay_rate: number;
+  tie_counts_as_loss: boolean;
+  weeks: number[];
+  teams: string[];
+  /** A (week, team) pair absent from this list is unavailable, not zero. */
+  entries: SurvivalEntry[];
+}
+
 // --- localStorage-persisted user state (not part of the pipeline export) ---
 
 export interface UserPick {
@@ -180,4 +211,16 @@ export interface UserPick {
 export interface UserState {
   version: 1;
   picks: UserPick[];
+}
+
+/** A what-if commitment: "whatever else happens, I take this team this week." */
+export interface ScenarioLock {
+  season: number;
+  week: number;
+  team: string;
+}
+
+export interface ScenarioState {
+  version: 1;
+  locks: ScenarioLock[];
 }

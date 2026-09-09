@@ -56,7 +56,14 @@ from survivor.models.base import pick_survival_prob
 from survivor.models.montecarlo import DriveSimConfig, SimResult, combine_matchup_rates, combined_n_drives, simulate_game
 
 
-def shrink_future_prob_to_half(p: float, weeks_ahead: int, decay_rate: float = 0.05) -> float:
+DEFAULT_DECAY_RATE = 0.05
+"""Horizon confidence decay. Not in config.yaml because it is a property of
+the projection method rather than a tuning knob anyone has evidence to move;
+named here so the export layer can report the rate it actually used instead
+of restating the literal."""
+
+
+def shrink_future_prob_to_half(p: float, weeks_ahead: int, decay_rate: float = DEFAULT_DECAY_RATE) -> float:
     """weeks_ahead=0 (the current week) returns p unchanged; larger
     horizons blend p toward 0.5 with weight exp(-decay_rate * weeks_ahead).
     """
@@ -166,7 +173,7 @@ def build_survival_prob_table(
     future_games: pl.DataFrame,
     mc_results_by_game: dict[str, SimResult],
     tie_counts_as_loss: bool,
-    decay_rate: float = 0.05,
+    decay_rate: float = DEFAULT_DECAY_RATE,
     ml_results_by_game: dict[str, tuple[float, float, float]] | None = None,
     future_blend_model=None,
 ) -> dict[tuple[int, str], float]:

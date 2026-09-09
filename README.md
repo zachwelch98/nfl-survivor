@@ -17,6 +17,7 @@ probability.
 8. [x] Season & pool simulation
 9. [x] JSON export for the frontend
 10. [x] React app (Vite + TS + Tailwind + Recharts)
+11. [x] What-If planner: lock picks into weeks, re-solve the rest in-browser
 
 ## Method 3, and what it changed
 
@@ -90,13 +91,57 @@ make recommend                          # this week's pick, current season
 make export                             # write the JSON bundle (fast)
 make export-full                        # also refresh calibration/backtest/simulation (~90s)
 make backtest                           # replay 2010-2025 for all three methods
-make test                               # run the Python test suite
+make test                               # run the Python test suite (211 tests)
+make test-web                           # run the browser solver's test suite (52 tests)
 make web                                # cd frontend && npm run dev
 ```
 
 `frontend/public/data/*.json` is committed as a live snapshot (not gitignored
 mock data) — the pipeline was built before the frontend, so there was real
 data to show by the time it existed.
+
+## The What-If planner
+
+`/whatif` lets you commit a team to a week — "I'm saving DAL for week 12" —
+and the optimizer re-solves every other week around it, reporting what the
+commitment costs. A lock is expressed by *removing cells* from the
+probability table (the locked week may only use its locked team; the locked
+team may only be used in its locked week), which is exactly the contract
+`optimize/assignment.py` already committed to: the solver is agnostic about
+why a `(week, team)` pair is unavailable.
+
+**The whole solve runs in the browser**, and the reason is worth stating
+because it drove the design: locks don't change any win probability. They
+change only which cells the optimizer may use. So the expensive half — Monte
+Carlo over every remaining game, plus one Method 3 fit — happens once at
+`make export` time and ships as `survival_matrix.json` (the full
+`(week, team) -> survival_prob` table, ~540 rows, exported *unfiltered*).
+Everything after that is combinatorics over 18x32 numbers, so a lock toggle
+is instant rather than a ~2s Python round-trip, and the cost of committing
+*every* team to *every* week can be recomputed live (~600 assignment solves
+per keystroke).
+
+That means the exact optimizer now exists in two languages, so it is
+checked in both directions:
+
+- `tests/test_optimizer.py` generates
+  `frontend/src/lib/__fixtures__/assignment_cases.json` from scipy's own
+  answers, covering square, rectangular, sparse, all-ties and infeasible
+  instances. `make test` regenerates it, so it cannot drift.
+- `frontend/src/lib/crosscheck.test.ts` runs the TypeScript solver over the
+  **actual exported bundle** and requires it to reproduce `season_plan.json`
+  exactly — the real 18x32 instance, real byes, real ties.
+
+Both compare *total cost*, not the assignment itself: ties mean several
+distinct assignments can be equally optimal, so cell-for-cell agreement with
+scipy would be a flaky test wearing a strict test's clothes. Validity plus
+equal total is the property that actually matters. Both were canary-checked
+by deliberately breaking the solver, rather than trusted for passing.
+
+Exported probabilities are shipped unfiltered so the browser applies its own
+availability from localStorage. That also fixes a live inconsistency: `/plan`
+reflects whatever `USED=` was passed to `make export`, while every other view
+reads used teams from localStorage, and the two could disagree.
 
 ## Key design decisions
 
@@ -131,6 +176,11 @@ data to show by the time it existed.
   game silently vanished from backtest seasons before each relocation — 48 of
   256 games in 2011. `load_schedules()` now normalizes to the pbp convention.
   Any `backtest.json` generated before this fix understates those seasons.
+- **Costs are reported as a share of your season odds, not in log points.**
+  The optimizer works in log space because that is what it sums, but "0.41
+  log-points" means nothing to a person. A cost of `c` multiplies total season
+  survival by `exp(-c)`, so the planner shows `1 - exp(-c)` — an actual
+  percentage of the odds you're giving up.
 - **The frontend is a thin, swappable read layer.** Every view fetches through
   `frontend/src/data/source.ts`; nothing else calls `fetch`. Swapping static
   JSON for a live API later is a one-file change.
@@ -153,8 +203,10 @@ backend/survivor/
   optimize/             exact assignment solver, k-best, cost-of-deviation, projection
   backtest/             replay real seasons week-by-week
   simulate/             strategy comparison (season.py), pool-field simulation (pool.py)
-  export/               JSON bundle for the frontend
+  export/               JSON bundle for the frontend (incl. survival_matrix.json)
   cli.py                survivor refresh|recommend|export|backtest
 frontend/               Vite + React + TS + Tailwind + Recharts
-tests/                  177 tests, pytest
+  src/lib/assignment.ts   the exact optimizer, ported for in-browser what-ifs
+  src/lib/planner.ts      lock semantics, validation, scenario cost
+tests/                  211 tests, pytest (+52 vitest in frontend/)
 ```

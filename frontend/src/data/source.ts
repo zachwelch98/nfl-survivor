@@ -3,7 +3,7 @@
 // generated JSON files for a live API later is a one-file change here --
 // no component needs to change.
 
-import type { Backtest, Calibration, SeasonMeta, SeasonPlan, Simulation, WeekBoard } from "./types";
+import type { Backtest, Calibration, SeasonMeta, SeasonPlan, Simulation, SurvivalMatrix, WeekBoard } from "./types";
 
 const BASE = "/data";
 
@@ -50,4 +50,8 @@ export function getBacktest(): Promise<Backtest> {
 
 export function getSimulation(): Promise<Simulation> {
   return getJSON<Simulation>("simulation.json");
+}
+
+export function getSurvivalMatrix(): Promise<SurvivalMatrix> {
+  return getJSON<SurvivalMatrix>("survival_matrix.json");
 }

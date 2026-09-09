@@ -1,4 +1,4 @@
-.PHONY: refresh recommend export export-full backtest test web
+.PHONY: refresh recommend export export-full backtest test test-web web
 
 SEASON ?= 2026
 WEEK ?= 1
@@ -27,6 +27,11 @@ backtest:
 
 test:
 	.venv/bin/python -m pytest tests/ -q
+
+# The browser-side assignment solver, checked against fixtures that `make test`
+# generates from scipy. Run `make test` first if those fixtures are stale.
+test-web:
+	cd frontend && npm run test
 
 web:
 	cd frontend && npm run dev

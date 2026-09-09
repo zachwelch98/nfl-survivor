@@ -5,12 +5,21 @@ from __future__ import annotations
 
 import json
 
+import polars as pl
 import pytest
 
+from survivor.config import CONFIG
 from survivor.data.nflverse import load_pbp, load_schedules
-from survivor.export.json_bundle import build_season_meta, build_season_plan, build_week_board
+from survivor.export.json_bundle import (
+    build_season_meta,
+    build_season_plan,
+    build_survival_matrix,
+    build_week_board,
+)
 from survivor.features.drive_rates import build_drive_table
 from survivor.models.montecarlo import DriveSimConfig
+from survivor.optimize.assignment import solve_optimal_assignment
+from survivor.optimize.projection import DEFAULT_DECAY_RATE
 
 FAST_MC = DriveSimConfig(n_simulations=1000, seed=0)
 
@@ -98,3 +107,76 @@ def test_week_board_carries_ml_fields(real_data):
 
     # The recommendation still comes from Vegas -- Method 3 is shown, not obeyed.
     assert with_ml["recommended_pick"] == without["recommended_pick"]
+
+
+def test_survival_matrix_structure(real_data):
+    """survival_matrix.json is the what-if planner's only input: the whole
+    (week, team) -> survival_prob table, unfiltered, annotated with the
+    matchup each probability refers to."""
+    pbp, schedules, drive_table = real_data
+    table, payload = build_survival_matrix(schedules, drive_table, 2026, 1, mc_config=FAST_MC)
+
+    assert payload["season"] == 2026 and payload["current_week"] == 1
+    assert payload["weeks"] == list(range(1, 19))
+    assert len(payload["teams"]) == 32
+    assert payload["tie_counts_as_loss"] == CONFIG.pool.tie_counts_as_loss
+    assert payload["decay_rate"] == DEFAULT_DECAY_RATE
+
+    # Every table key round-trips into an entry, and nothing is invented.
+    assert {(e["week"], e["team"]) for e in payload["entries"]} == set(table.keys())
+
+    for e in payload["entries"]:
+        assert 0.0 <= e["survival_prob"] <= 1.0
+        assert e["weeks_ahead"] == e["week"] - 1
+        assert e["source"] == ("vegas" if e["week"] == 1 else "model")
+        assert e["opponent"] != e["team"]
+    json.dumps(payload)
+
+
+def test_survival_matrix_entries_match_the_real_schedule(real_data):
+    """Each entry claims a specific game and a specific side of it. If those
+    were wrong the frontend would show a pick against the wrong opponent, so
+    check them against the schedule rather than trusting the join."""
+    pbp, schedules, drive_table = real_data
+    _, payload = build_survival_matrix(schedules, drive_table, 2026, 1, mc_config=FAST_MC)
+
+    games = {
+        row["game_id"]: (row["home_team"], row["away_team"])
+        for row in schedules.filter(
+            (pl.col("season") == 2026) & (pl.col("game_type") == "REG")
+        ).iter_rows(named=True)
+    }
+    for e in payload["entries"]:
+        home, away = games[e["game_id"]]
+        if e["is_home"]:
+            assert (e["team"], e["opponent"]) == (home, away)
+        else:
+            assert (e["team"], e["opponent"]) == (away, home)
+
+
+def test_survival_matrix_is_unfiltered_and_reproduces_the_season_plan(real_data):
+    """The contract the TypeScript solver must also satisfy: filtering the
+    exported matrix by used teams and solving it reproduces season_plan.json
+    exactly. This is what lets the browser re-solve locally instead of
+    round-tripping to Python for every what-if."""
+    pbp, schedules, drive_table = real_data
+    used = ["KC", "BUF"]
+
+    table, payload = build_survival_matrix(schedules, drive_table, 2026, 1, mc_config=FAST_MC)
+    # Unfiltered: used teams are still present, because availability is the
+    # consumer's decision, not the matrix's.
+    assert any(t in used for (_, t) in table.keys())
+
+    plan = build_season_plan(
+        schedules, drive_table, 2026, 1, used_teams=used,
+        mc_config=FAST_MC, k_alternates=1, survival_prob=table,
+    )
+
+    available = [t for t in payload["teams"] if t not in used]
+    restricted = {(w, t): p for (w, t), p in table.items() if t in available}
+    solved = solve_optimal_assignment(payload["weeks"], available, restricted)
+
+    assert [(p.week, p.team) for p in solved.picks] == [
+        (p["week"], p["team"]) for p in plan["recommended_sequence"]
+    ]
+    assert solved.total_survival_prob == pytest.approx(plan["total_survival_prob"], rel=1e-12)

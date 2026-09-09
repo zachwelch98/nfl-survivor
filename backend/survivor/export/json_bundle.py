@@ -8,7 +8,7 @@ least caught at review time rather than silently.
 
 Files written into frontend/public/data/:
   season_meta.json, week_{NN}_board.json, season_plan.json,
-  calibration.json, backtest.json, simulation.json
+  survival_matrix.json, calibration.json, backtest.json, simulation.json
 """
 
 from __future__ import annotations
@@ -30,6 +30,7 @@ from survivor.models.vegas import VegasModel
 from survivor.optimize.assignment import InfeasibleSeasonError, solve_optimal_assignment
 from survivor.optimize.kbest import cost_of_deviation_by_team, k_best_season_plans
 from survivor.optimize.projection import (
+    DEFAULT_DECAY_RATE,
     build_survival_prob_table,
     predict_all_remaining_games_ml,
     simulate_all_remaining_games,
@@ -221,30 +222,41 @@ def survival_prob_teams(survival_prob: dict[tuple[int, str], float], week: int) 
     return sorted({t for (w, t) in survival_prob.keys() if w == week})
 
 
-def build_season_plan(
+def build_survival_matrix(
     schedules: pl.DataFrame,
     drive_table: pl.DataFrame,
     season: int,
     current_week: int,
-    used_teams: list[str],
     mc_config: DriveSimConfig | None = None,
-    k_alternates: int = 3,
     team_game_table: pl.DataFrame | None = None,
     depth_charts: pl.DataFrame | None = None,
     future_blend_model=None,
-) -> dict:
-    """The full remaining-season recommended sequence, plus the k best
-    alternate season paths — plan §4's "season plan" view."""
+    ml_model: MLWinProbModel | None = None,
+    decay_rate: float = DEFAULT_DECAY_RATE,
+) -> tuple[dict[tuple[int, str], float], dict]:
+    """The (week, team) -> survival_prob table for every remaining week, plus
+    a JSON payload of the same numbers annotated with their matchup context.
+
+    Returns the table **unfiltered** — no used-teams exclusion. Two callers
+    want it for different reasons: `build_season_plan` filters it to the
+    available teams and solves, while `survival_matrix.json` ships the whole
+    thing so the frontend's what-if planner can apply its own availability
+    (which lives in localStorage and can legitimately differ from whatever
+    `USED=` was passed to `make export`).
+
+    This is the expensive half of the season plan — one Monte Carlo pass over
+    every remaining game plus one Method 3 fit — and it does not depend on
+    which teams are used or locked. So it is computed once and shared, which
+    is also why `ml_model` arrives pre-fit rather than being fit here.
+    """
     mc_config = mc_config or DriveSimConfig(n_simulations=CONFIG.model.montecarlo.n_simulations, seed=CONFIG.model.montecarlo.seed)
     season_games = schedules.filter((pl.col("season") == season) & (pl.col("game_type") == "REG"))
     all_weeks = sorted(season_games["week"].unique().to_list())
     remaining_weeks = [w for w in all_weeks if w >= current_week]
     all_teams = sorted(set(season_games["home_team"].to_list()) | set(season_games["away_team"].to_list()))
-    available_teams = [t for t in all_teams if t not in used_teams]
 
     as_of = AsOf(season=season, week=current_week, game_type="REG")
-    train = as_of.visible(schedules)
-    vegas = VegasModel().fit(train)
+    vegas = VegasModel().fit(as_of.visible(schedules))
 
     current_target = season_games.filter(pl.col("week") == current_week)
     current_probs = vegas.predict_proba(current_target)
@@ -263,7 +275,6 @@ def build_season_plan(
     # Future weeks: Method 2 + Method 3 (see optimize/projection.py for the
     # walk-forward evidence that ml beats mc there, and that a *fitted* blend
     # beats a fixed average). Current week stays Vegas.
-    ml_model = _fit_ml_model(team_game_table, drive_table, schedules, train, depth_charts)
     ml_results = predict_all_remaining_games_ml(ml_model, future_games_full) if ml_model else {}
 
     table = build_survival_prob_table(
@@ -271,10 +282,85 @@ def build_season_plan(
         future_games,
         mc_results,
         CONFIG.pool.tie_counts_as_loss,
+        decay_rate=decay_rate,
         ml_results_by_game=ml_results,
         future_blend_model=future_blend_model,
     )
-    table = {(w, t): p for (w, t), p in table.items() if t in available_teams}
+
+    # Matchup context for each (week, team), so the frontend can show who the
+    # pick would be playing without re-deriving it from 18 week boards.
+    context: dict[tuple[int, str], dict] = {}
+    for row in season_games.filter(pl.col("week").is_in(remaining_weeks)).iter_rows(named=True):
+        w, home, away = row["week"], row["home_team"], row["away_team"]
+        context[(w, home)] = {"game_id": row["game_id"], "opponent": away, "is_home": True}
+        context[(w, away)] = {"game_id": row["game_id"], "opponent": home, "is_home": False}
+
+    entries = []
+    for (w, team), prob in sorted(table.items()):
+        ctx = context.get((w, team))
+        if ctx is None:
+            # A probability with no scheduled game would mean the table and the
+            # schedule disagree; skip rather than emit an entry the frontend
+            # cannot explain.
+            continue
+        entries.append({
+            "week": w,
+            "team": team,
+            "opponent": ctx["opponent"],
+            "is_home": ctx["is_home"],
+            "game_id": ctx["game_id"],
+            "survival_prob": prob,
+            "weeks_ahead": w - current_week,
+            "source": "vegas" if w == current_week else "model",
+        })
+
+    payload = {
+        "season": season,
+        "current_week": current_week,
+        "decay_rate": decay_rate,
+        "tie_counts_as_loss": CONFIG.pool.tie_counts_as_loss,
+        "weeks": remaining_weeks,
+        "teams": all_teams,
+        "entries": entries,
+    }
+    return table, payload
+
+
+def build_season_plan(
+    schedules: pl.DataFrame,
+    drive_table: pl.DataFrame,
+    season: int,
+    current_week: int,
+    used_teams: list[str],
+    mc_config: DriveSimConfig | None = None,
+    k_alternates: int = 3,
+    team_game_table: pl.DataFrame | None = None,
+    depth_charts: pl.DataFrame | None = None,
+    future_blend_model=None,
+    survival_prob: dict[tuple[int, str], float] | None = None,
+) -> dict:
+    """The full remaining-season recommended sequence, plus the k best
+    alternate season paths — plan §4's "season plan" view.
+
+    `survival_prob` is the unfiltered table from `build_survival_matrix`. Pass
+    it when it has already been computed (as `export_all` does) to skip the
+    Monte Carlo pass and the Method 3 fit; omit it and this computes its own.
+    """
+    season_games = schedules.filter((pl.col("season") == season) & (pl.col("game_type") == "REG"))
+    all_weeks = sorted(season_games["week"].unique().to_list())
+    remaining_weeks = [w for w in all_weeks if w >= current_week]
+    all_teams = sorted(set(season_games["home_team"].to_list()) | set(season_games["away_team"].to_list()))
+    available_teams = [t for t in all_teams if t not in used_teams]
+
+    if survival_prob is None:
+        train = AsOf(season=season, week=current_week, game_type="REG").visible(schedules)
+        survival_prob, _ = build_survival_matrix(
+            schedules, drive_table, season, current_week,
+            mc_config=mc_config, team_game_table=team_game_table, depth_charts=depth_charts,
+            future_blend_model=future_blend_model,
+            ml_model=_fit_ml_model(team_game_table, drive_table, schedules, train, depth_charts),
+        )
+    table = {(w, t): p for (w, t), p in survival_prob.items() if t in available_teams}
 
     try:
         plan = solve_optimal_assignment(remaining_weeks, available_teams, table)
@@ -354,11 +440,22 @@ def export_all(
                 ml_model=shared_ml_model,
             ),
         )
+    # The expensive half of the season plan — one Monte Carlo pass over every
+    # remaining game — is computed once here and shared by season_plan.json and
+    # survival_matrix.json, reusing the Method 3 fit made above for the boards.
+    # (Before this, build_season_plan fit Method 3 a second time on its own.)
+    survival_prob, matrix_payload = build_survival_matrix(
+        schedules, drive_table, season, current_week,
+        team_game_table=team_game_table, depth_charts=depth_charts,
+        ml_model=shared_ml_model,
+    )
+    _write_json(out_dir / "survival_matrix.json", matrix_payload)
     _write_json(
         out_dir / "season_plan.json",
         build_season_plan(
             schedules, drive_table, season, current_week, used_teams,
             team_game_table=team_game_table, depth_charts=depth_charts,
+            survival_prob=survival_prob,
         ),
     )
 

@@ -267,3 +267,130 @@ def test_cost_of_deviation_only_includes_playable_teams():
     del del_prob[(1, "D")]  # D not playable in week 1 (e.g. on bye)
     deviations = cost_of_deviation_by_team(weeks, teams, del_prob, current_week=1)
     assert "D" not in deviations
+
+
+# --- Cross-language fixtures -------------------------------------------------
+#
+# The what-if planner re-solves the assignment in the browser so that locking a
+# team into a week is instant instead of a Python round-trip. That means the
+# exact optimizer now exists in two languages, and the README's claim that it
+# is "exact, not heuristic" has to hold in both. This test is the bridge: it
+# generates instances here, solves them with scipy, and writes the *optimal
+# total cost* for the TypeScript suite to check itself against.
+#
+# Cost, not the assignment. Ties are common (and one case below is built
+# entirely of them), so several distinct assignments can be equally optimal.
+# Demanding cell-for-cell agreement with scipy would be a flaky test wearing a
+# strict test's clothes; the TS side asserts validity *and* equal total cost,
+# which is the property that actually matters.
+
+FIXTURE_PATH = "frontend/src/lib/__fixtures__/assignment_cases.json"
+
+
+def _fixture_cases() -> list[dict]:
+    rng = np.random.default_rng(20260908)
+    cases: list[dict] = []
+
+    def add(name: str, n_weeks: int, n_teams: int, drop_frac: float, quantize: int | None = None):
+        weeks = list(range(1, n_weeks + 1))
+        teams = [f"T{j:02d}" for j in range(n_teams)]
+        probs: dict[tuple[int, str], float] = {}
+        for w in weeks:
+            for t in teams:
+                if rng.random() < drop_frac:
+                    continue  # unavailable: bye, no game, no model output
+                p = float(rng.uniform(0.35, 0.99))
+                if quantize:
+                    p = round(p, quantize)
+                probs[(w, t)] = p
+        cases.append({"name": name, "weeks": weeks, "teams": teams, "probs": probs})
+
+    add("square_dense", 6, 6, 0.0)
+    add("rectangular_like_a_real_season", 18, 32, 0.0)
+    add("sparse_with_byes", 10, 14, 0.25)
+    add("very_sparse", 8, 12, 0.5)
+    add("single_week", 1, 32, 0.0)
+    # Deliberate ties: two decimal places over 12x16 guarantees repeats, so the
+    # optimum is reached by many different assignments.
+    add("ties_everywhere", 12, 16, 0.0, quantize=2)
+
+    # Exactly-square-and-forced: one feasible team per week, so there is a
+    # unique answer and any bug shows immediately.
+    forced_probs = {(w, f"T{w - 1:02d}"): 0.5 + 0.01 * w for w in range(1, 6)}
+    cases.append({
+        "name": "forced_unique",
+        "weeks": list(range(1, 6)),
+        "teams": [f"T{j:02d}" for j in range(5)],
+        "probs": forced_probs,
+    })
+    return cases
+
+
+def test_write_assignment_fixtures_for_the_typescript_solver(tmp_path):
+    """Regenerates frontend/src/lib/__fixtures__/assignment_cases.json.
+
+    Runs as part of the normal suite so the fixtures can never drift from the
+    Python solver: if scipy's answer changes, this file changes, and the
+    TypeScript suite starts failing until it is reconciled.
+    """
+    import json
+    from pathlib import Path
+
+    repo_root = Path(__file__).resolve().parent.parent
+    out: list[dict] = []
+
+    for case in _fixture_cases():
+        weeks, teams, probs = case["weeks"], case["teams"], case["probs"]
+        try:
+            plan = solve_optimal_assignment(weeks, teams, probs)
+            expected = {
+                "feasible": True,
+                "total_log_survival": plan.total_log_survival,
+                "total_survival_prob": plan.total_survival_prob,
+            }
+        except InfeasibleSeasonError:
+            expected = {"feasible": False, "total_log_survival": None, "total_survival_prob": None}
+
+        out.append({
+            "name": case["name"],
+            "weeks": weeks,
+            "teams": teams,
+            # JSON has no tuple keys; the TS side rebuilds a Map from "week:team".
+            "probs": {f"{w}:{t}": p for (w, t), p in sorted(probs.items())},
+            "expected": expected,
+        })
+
+    # An all-infeasible row: available in principle, but zero probability, which
+    # build_cost_matrix maps to +inf. No complete assignment exists.
+    hopeless = {(1, "A"): 0.9, (1, "B"): 0.8, (2, "A"): 0.0, (2, "B"): 0.0}
+    out.append({
+        "name": "infeasible_zero_row",
+        "weeks": [1, 2],
+        "teams": ["A", "B"],
+        "probs": {f"{w}:{t}": p for (w, t), p in sorted(hopeless.items())},
+        "expected": {"feasible": False, "total_log_survival": None, "total_survival_prob": None},
+    })
+    # Fewer teams than weeks.
+    out.append({
+        "name": "infeasible_too_few_teams",
+        "weeks": [1, 2, 3],
+        "teams": ["A", "B"],
+        "probs": {"1:A": 0.9, "1:B": 0.8, "2:A": 0.7, "2:B": 0.6, "3:A": 0.5, "3:B": 0.4},
+        "expected": {"feasible": False, "total_log_survival": None, "total_survival_prob": None},
+    })
+
+    path = repo_root / FIXTURE_PATH
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(out, indent=2) + "\n")
+
+    # Sanity-check what we just wrote rather than only that we wrote it.
+    written = json.loads(path.read_text())
+    assert len(written) == 9
+    assert {c["name"] for c in written} >= {"rectangular_like_a_real_season", "ties_everywhere", "forced_unique"}
+    feasible = [c for c in written if c["expected"]["feasible"]]
+    assert len(feasible) == 7
+    assert all(0.0 < c["expected"]["total_survival_prob"] <= 1.0 for c in feasible)
+
+    forced = next(c for c in written if c["name"] == "forced_unique")
+    expected_log = sum(np.log(0.5 + 0.01 * w) for w in range(1, 6))
+    assert forced["expected"]["total_log_survival"] == pytest.approx(expected_log, abs=1e-12)
