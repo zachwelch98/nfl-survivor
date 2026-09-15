@@ -18,20 +18,6 @@ from survivor.features.drive_rates import build_drive_table
 from survivor.features.team_ratings import build_team_game_table
 
 
-def _default_pbp_seasons(season: int, schedules) -> list[int]:
-    """[season-1, season] normally, but nflverse has no play-by-play for a
-    season with zero games played yet (e.g. recommending for next week's
-    season before it kicks off), and nflreadpy rejects such a season
-    outright — drop it from the request in that case, since drive_rates.py
-    would find nothing there to use anyway."""
-    import polars as pl
-
-    played = schedules.filter((pl.col("season") == season) & pl.col("home_score").is_not_null())
-    if played.height == 0:
-        return [season - 1]
-    return [season - 1, season]
-
-
 def _ml_pbp_seasons(season: int, schedules=None) -> list[int]:
     """Seasons of play-by-play Method 3 needs loaded.
 
@@ -43,15 +29,14 @@ def _ml_pbp_seasons(season: int, schedules=None) -> list[int]:
     One extra season below the floor gives the first training season its
     prior-season baseline.
     """
+    from survivor.data.nflverse import has_played_games
+
     floor = CONFIG.model.ml.train_floor_season
     seasons = list(range(floor - 1, season + 1))
-    # Same guard as _default_pbp_seasons: nflreadpy rejects a season with no
-    # games played yet (the normal state before kickoff), and drive_rates.py
-    # would find nothing there anyway.
-    if schedules is not None:
-        played = schedules.filter((pl.col("season") == season) & pl.col("home_score").is_not_null())
-        if played.height == 0:
-            seasons = [s for s in seasons if s != season]
+    # nflreadpy rejects a season with no games played yet (the normal state
+    # before kickoff), and drive_rates.py would find nothing there anyway.
+    if schedules is not None and not has_played_games(schedules, season):
+        seasons = [s for s in seasons if s != season]
     return seasons
 
 
@@ -78,14 +63,18 @@ def cli() -> None:
 
 
 @cli.command()
-@click.option("--pbp-seasons", default=None, help="Comma-separated seasons to refresh play-by-play for (e.g. 2024,2025). Defaults to none (schedules/teams/injuries/depth charts only).")
-def refresh(pbp_seasons: str | None) -> None:
+@click.option("--pbp-seasons", default=None, help="Comma-separated seasons to refresh play-by-play for (e.g. 2024,2025). Defaults to the season in progress and the one before it.")
+@click.option("--no-pbp", is_flag=True, help="Refresh schedules/teams/injuries/depth charts only, skipping play-by-play.")
+def refresh(pbp_seasons: str | None, no_pbp: bool) -> None:
     """Force-refetch all cached nflverse data."""
     from survivor.data.nflverse import refresh_all
 
-    seasons = [int(s) for s in pbp_seasons.split(",")] if pbp_seasons else None
-    refresh_all(pbp_seasons=seasons)
-    click.echo("Refreshed schedules, teams, injuries, depth charts" + (f", and pbp for {seasons}" if seasons else "."))
+    explicit = [int(s) for s in pbp_seasons.split(",")] if pbp_seasons else None
+    refreshed = refresh_all(pbp_seasons=explicit, skip_pbp=no_pbp)
+    click.echo(
+        "Refreshed schedules, teams, injuries, depth charts"
+        + (f", and play-by-play for {refreshed}." if refreshed else ".")
+    )
 
 
 @cli.command()

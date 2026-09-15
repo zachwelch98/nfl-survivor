@@ -87,11 +87,12 @@ at interpreter startup, so the Makefile invokes `python -m survivor.cli` with
 `PYTHONPATH=backend` set explicitly instead.
 
 ```bash
+make refresh                            # re-fetch nflverse data (pbp seasons auto-detected)
 make recommend                          # this week's pick, current season
 make export                             # write the JSON bundle (fast)
 make export-full                        # also refresh calibration/backtest/simulation (~90s)
 make backtest                           # replay 2010-2025 for all three methods
-make test                               # run the Python test suite (211 tests)
+make test                               # run the Python test suite (214 tests)
 make test-web                           # run the browser solver's test suite (52 tests)
 make web                                # cd frontend && npm run dev
 ```
@@ -145,6 +146,14 @@ reads used teams from localStorage, and the two could disagree.
 
 ## Key design decisions
 
+- **`make refresh` works out which seasons to fetch.** The play-by-play
+  seasons were hardcoded in the Makefile, which went stale every September:
+  the moment a new season's play-by-play began to exist was the moment the
+  refresh stopped fetching it. `refresh_all()` now derives them from the
+  schedule (season in progress plus the one before), dropping the current
+  season until it has actually kicked off — nflreadpy rejects a request for a
+  season with no games rather than returning an empty frame. Override with
+  `make refresh PBP=2024,2025`, or skip play-by-play with `--no-pbp`.
 - **No paid odds API.** nflverse's `games.csv` (via `nflreadpy`) already
   carries closing spreads (1999+) and moneylines (2010+), which is what both
   the Vegas baseline and the backtest harness use — zero cost, zero keys,

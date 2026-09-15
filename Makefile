@@ -3,6 +3,10 @@
 SEASON ?= 2026
 WEEK ?= 1
 USED ?=
+# Play-by-play seasons to refresh. Empty means "let the CLI decide from the
+# schedule" (season in progress + the one before it) -- don't hardcode years
+# here, that is exactly what used to go stale every September.
+PBP ?=
 
 # The editable install's console script (`survivor`) depends on a .pth file
 # that this Python 3.14 venv doesn't reliably process at startup — invoking
@@ -11,7 +15,7 @@ USED ?=
 PY := PYTHONPATH=backend .venv/bin/python -m survivor.cli
 
 refresh:
-	$(PY) refresh --pbp-seasons 2024,2025
+	$(PY) refresh $(if $(PBP),--pbp-seasons "$(PBP)")
 
 recommend:
 	$(PY) recommend --season $(SEASON) --week $(WEEK) --used "$(USED)"

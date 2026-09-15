@@ -148,11 +148,55 @@ def load_pbp(seasons: list[int], refresh: bool = False) -> pl.DataFrame:
     return pl.concat(frames, how="diagonal_relaxed").sort(["season", "week", "game_id"])
 
 
-def refresh_all(pbp_seasons: list[int] | None = None) -> None:
-    """Force-refetch every cached dataset. Backs `make refresh`."""
-    load_schedules(refresh=True)
+def current_season(schedules: pl.DataFrame) -> int:
+    """The season the schedule covers — the latest one with games on it.
+
+    nflverse publishes a season's schedule months before kickoff, so this
+    rolls over in the spring. That is fine for every caller here because they
+    all guard separately on whether games have actually been *played*.
+    """
+    return int(schedules["season"].max())
+
+
+def has_played_games(schedules: pl.DataFrame, season: int) -> bool:
+    """Whether `season` has any final score yet.
+
+    Worth naming because nflreadpy *rejects* a play-by-play request for a
+    season with no games rather than returning an empty frame, so every
+    caller assembling a season list has to check this first.
+    """
+    return (
+        schedules.filter((pl.col("season") == season) & pl.col("home_score").is_not_null()).height > 0
+    )
+
+
+def default_pbp_seasons(schedules: pl.DataFrame, season: int | None = None) -> list[int]:
+    """The season in progress and the one before it — what Methods 1 and 2
+    need, and what a routine refresh should keep warm. Drops the current
+    season until it has actually started (see `has_played_games`)."""
+    season = season if season is not None else current_season(schedules)
+    return [season - 1, season] if has_played_games(schedules, season) else [season - 1]
+
+
+def refresh_all(pbp_seasons: list[int] | None = None, skip_pbp: bool = False) -> list[int]:
+    """Force-refetch every cached dataset. Backs `make refresh`. Returns the
+    play-by-play seasons actually refreshed.
+
+    `pbp_seasons=None` means "work it out from the schedule" rather than
+    "skip play-by-play". The distinction matters: the seasons used to be
+    hardcoded in the Makefile, which went stale every September — the moment
+    the new season's play-by-play started existing was the moment the refresh
+    stopped fetching it. Schedules are refreshed first so the decision is
+    made against today's results, not yesterday's cache.
+    """
+    schedules = load_schedules(refresh=True)
     load_teams(refresh=True)
     load_injuries(refresh=True)
     load_depth_charts(refresh=True)
+    if skip_pbp:
+        return []
+    if pbp_seasons is None:
+        pbp_seasons = default_pbp_seasons(schedules)
     if pbp_seasons:
         load_pbp(pbp_seasons, refresh=True)
+    return pbp_seasons

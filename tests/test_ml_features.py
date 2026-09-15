@@ -260,11 +260,26 @@ def test_feature_table_drops_ties_and_labels_decisive_games(real_data):
 
 
 def test_feature_table_labels_unplayed_games_null(real_data):
-    """Inference on a future season: features are built, label is null."""
+    """Inference on genuinely future games: features are built, label is null.
+
+    The week is found rather than hardcoded. This test used to name 2026
+    week 1, which quietly stopped being a future week once that season
+    kicked off -- a test that passes only until the calendar moves past it
+    is a test that will fail for a reason unrelated to the code.
+    """
     schedules, team_game_table, drive_table = real_data
-    games = schedules.filter(
-        (pl.col("season") == 2026) & (pl.col("game_type") == "REG") & (pl.col("week") == 1)
+    season_games = schedules.filter(
+        (pl.col("season") == 2026) & (pl.col("game_type") == "REG")
     )
+    unplayed_weeks = (
+        season_games.group_by("week")
+        .agg(pl.col("home_score").is_null().all().alias("all_unplayed"))
+        .filter(pl.col("all_unplayed"))["week"]
+        .to_list()
+    )
+    assert unplayed_weeks, "no fully-unplayed 2026 week left to test inference against"
+
+    games = season_games.filter(pl.col("week") == min(unplayed_weeks))
     table = build_feature_table(games, team_game_table, drive_table, schedules, drop_ties=False)
     assert table.height > 0
     assert table["home_win"].null_count() == table.height
