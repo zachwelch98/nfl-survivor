@@ -467,8 +467,31 @@ function CostGrid({
   return (
     <Card
       title="Cost-to-lock grid"
-      subtitle="The share of your total season odds you give up by committing each team to each week, holding your other locks fixed. Darker is worse; blank means no game."
+      subtitle="The share of your total season odds you give up by committing each team to each week, holding your other locks fixed."
     >
+      <div className="flex flex-wrap items-center gap-x-4 gap-y-1 mb-3 text-xs text-slate-500">
+        <span className="inline-flex items-center gap-1.5">
+          <span className="inline-block w-5 h-4 rounded-sm bg-win/20 border border-win/30 text-win text-[10px] font-semibold text-center leading-4">
+            0
+          </span>
+          the optimal choice — costs nothing
+        </span>
+        <span className="inline-flex items-center gap-1.5">
+          <span className="inline-block w-5 h-4 rounded-sm text-[10px] text-center leading-4 text-white" style={{ backgroundColor: "rgba(220,38,38,0.6)" }}>
+            24
+          </span>
+          % of season odds given up
+        </span>
+        <span className="inline-flex items-center gap-1.5">
+          <span className="inline-block w-5 h-4 rounded-sm bg-slate-100 text-slate-300 text-[10px] text-center leading-4">–</span>
+          no game that week
+        </span>
+        <span className="inline-flex items-center gap-1.5">
+          <span className="inline-block w-5 h-4 rounded-sm ring-1 ring-amber-500" />
+          your lock
+        </span>
+      </div>
+
       <div className="overflow-x-auto">
         <table className="text-[10px] tabular-nums border-separate border-spacing-0.5">
           <thead>
@@ -488,21 +511,51 @@ function CostGrid({
                 {teams.map((t) => {
                   const c = costs.get(probKey(w, t));
                   const isLocked = lockedByWeek.get(w) === t;
+                  const ring = isLocked ? "ring-1 ring-amber-500" : "";
+
+                  // No game: absence, not a good option. Must not look like a
+                  // zero -- these two used to render as the same grey dot,
+                  // which hid the single most useful thing on the grid.
                   if (c === undefined) {
-                    return <td key={t} className="text-center text-slate-200">·</td>;
+                    return (
+                      <td
+                        key={t}
+                        title={`Week ${w} · ${t}: no game`}
+                        className={`text-center rounded-sm bg-slate-100 text-slate-300 ${ring}`}
+                      >
+                        –
+                      </td>
+                    );
                   }
+
+                  // Cost nothing: this cell is in the optimal plan. Green, so
+                  // the recommended path reads as a trail across the grid.
+                  if (costShare(c) < 5e-5) {
+                    return (
+                      <td
+                        key={t}
+                        title={`Week ${w} · ${t}: the optimal choice — costs nothing`}
+                        className={`text-center rounded-sm bg-win/20 text-win font-semibold ${ring}`}
+                      >
+                        0
+                      </td>
+                    );
+                  }
+
                   const intensity = Math.min(1, costShare(c) / max);
                   return (
                     <td
                       key={t}
-                      title={`Week ${w} · ${t}: ${c === 0 ? "optimal choice" : `gives up ${(costShare(c) * 100).toFixed(1)}% of your season odds`}`}
-                      className={`text-center rounded-sm ${isLocked ? "ring-1 ring-amber-500" : ""}`}
+                      title={`Week ${w} · ${t}: gives up ${(costShare(c) * 100).toFixed(1)}% of your season odds`}
+                      className={`text-center rounded-sm ${ring}`}
                       style={{
                         backgroundColor: `rgba(220, 38, 38, ${(intensity * 0.85).toFixed(3)})`,
                         color: intensity > 0.5 ? "white" : "#475569",
                       }}
                     >
-                      {c < 1e-9 ? "·" : (costShare(c) * 100).toFixed(0)}
+                      {/* A real cost that rounds to zero must not read as one:
+                          only the green cells are actually free. */}
+                      {costShare(c) < 0.005 ? "<1" : (costShare(c) * 100).toFixed(0)}
                     </td>
                   );
                 })}

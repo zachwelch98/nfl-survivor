@@ -1,382 +1,362 @@
 {
   "season": 2026,
-  "current_week": 1,
+  "current_week": 2,
   "recommended_sequence": [
     {
-      "week": 1,
-      "team": "LAC",
-      "survival_prob": 0.7994204646093197
-    },
-    {
       "week": 2,
-      "team": "TB",
-      "survival_prob": 0.7615580209067508
+      "team": "SF",
+      "survival_prob": 0.8691984527070835
     },
     {
       "week": 3,
-      "team": "BUF",
-      "survival_prob": 0.6581486688748484
+      "team": "KC",
+      "survival_prob": 0.6453361575183266
     },
     {
       "week": 4,
-      "team": "KC",
-      "survival_prob": 0.7079461486965795
+      "team": "BAL",
+      "survival_prob": 0.7623765253172539
     },
     {
       "week": 5,
       "team": "NE",
-      "survival_prob": 0.7921889461780716
+      "survival_prob": 0.6607089755362061
     },
     {
       "week": 6,
-      "team": "SF",
-      "survival_prob": 0.6187625459684204
+      "team": "IND",
+      "survival_prob": 0.7003138862772
     },
     {
       "week": 7,
       "team": "LA",
-      "survival_prob": 0.7123252924497433
+      "survival_prob": 0.5945997848687747
     },
     {
       "week": 8,
-      "team": "PIT",
-      "survival_prob": 0.6877459306816329
+      "team": "CIN",
+      "survival_prob": 0.7392293746146311
     },
     {
       "week": 9,
       "team": "NO",
-      "survival_prob": 0.6517680241400517
+      "survival_prob": 0.659866343360398
     },
     {
       "week": 10,
-      "team": "SEA",
-      "survival_prob": 0.6848926596908564
+      "team": "GB",
+      "survival_prob": 0.6332426045502143
     },
     {
       "week": 11,
-      "team": "DEN",
-      "survival_prob": 0.6559894993438351
+      "team": "DAL",
+      "survival_prob": 0.7116913249213279
     },
     {
       "week": 12,
       "team": "JAX",
-      "survival_prob": 0.59474756425155
+      "survival_prob": 0.6739269518227158
     },
     {
       "week": 13,
       "team": "CHI",
-      "survival_prob": 0.5881431197585708
+      "survival_prob": 0.6099826143516363
     },
     {
       "week": 14,
       "team": "DET",
-      "survival_prob": 0.590692756084971
+      "survival_prob": 0.660479099754695
     },
     {
       "week": 15,
       "team": "NYG",
-      "survival_prob": 0.578506773615874
+      "survival_prob": 0.6879414329623048
     },
     {
       "week": 16,
-      "team": "BAL",
-      "survival_prob": 0.5820621992504902
+      "team": "PHI",
+      "survival_prob": 0.5949583740043997
     },
     {
       "week": 17,
-      "team": "MIN",
-      "survival_prob": 0.5775141490302187
+      "team": "ARI",
+      "survival_prob": 0.6198711491392497
     },
     {
       "week": 18,
-      "team": "CIN",
-      "survival_prob": 0.62378340550818
+      "team": "DEN",
+      "survival_prob": 0.6059951492648823
     }
   ],
-  "total_survival_prob": 0.0004999490607986698,
+  "total_survival_prob": 0.001079685139760892,
   "alternates": [
     {
-      "total_survival_prob": 0.0004999490607986698,
+      "total_survival_prob": 0.001079685139760893,
       "picks": [
         {
-          "week": 1,
-          "team": "LAC",
-          "survival_prob": 0.7994204646093197
-        },
-        {
           "week": 2,
-          "team": "TB",
-          "survival_prob": 0.7615580209067508
+          "team": "SF",
+          "survival_prob": 0.8691984527070835
         },
         {
           "week": 3,
-          "team": "BUF",
-          "survival_prob": 0.6581486688748484
+          "team": "KC",
+          "survival_prob": 0.6453361575183266
         },
         {
           "week": 4,
-          "team": "KC",
-          "survival_prob": 0.7079461486965795
+          "team": "BAL",
+          "survival_prob": 0.7623765253172539
         },
         {
           "week": 5,
           "team": "NE",
-          "survival_prob": 0.7921889461780716
+          "survival_prob": 0.6607089755362061
         },
         {
           "week": 6,
-          "team": "SF",
-          "survival_prob": 0.6187625459684204
-        },
-        {
-          "week": 7,
-          "team": "LA",
-          "survival_prob": 0.7123252924497433
-        },
-        {
-          "week": 8,
-          "team": "PIT",
-          "survival_prob": 0.6877459306816329
-        },
-        {
-          "week": 9,
-          "team": "NO",
-          "survival_prob": 0.6517680241400517
-        },
-        {
-          "week": 10,
-          "team": "SEA",
-          "survival_prob": 0.6848926596908564
-        },
-        {
-          "week": 11,
-          "team": "DEN",
-          "survival_prob": 0.6559894993438351
-        },
-        {
-          "week": 12,
-          "team": "JAX",
-          "survival_prob": 0.59474756425155
-        },
-        {
-          "week": 13,
-          "team": "CHI",
-          "survival_prob": 0.5881431197585708
-        },
-        {
-          "week": 14,
-          "team": "DET",
-          "survival_prob": 0.590692756084971
-        },
-        {
-          "week": 15,
-          "team": "NYG",
-          "survival_prob": 0.578506773615874
-        },
-        {
-          "week": 16,
-          "team": "BAL",
-          "survival_prob": 0.5820621992504902
-        },
-        {
-          "week": 17,
-          "team": "MIN",
-          "survival_prob": 0.5775141490302187
-        },
-        {
-          "week": 18,
-          "team": "CIN",
-          "survival_prob": 0.62378340550818
-        }
-      ]
-    },
-    {
-      "total_survival_prob": 0.000497684538467327,
-      "picks": [
-        {
-          "week": 1,
-          "team": "LAC",
-          "survival_prob": 0.7994204646093197
-        },
-        {
-          "week": 2,
-          "team": "TB",
-          "survival_prob": 0.7615580209067508
-        },
-        {
-          "week": 3,
-          "team": "BUF",
-          "survival_prob": 0.6581486688748484
-        },
-        {
-          "week": 4,
-          "team": "KC",
-          "survival_prob": 0.7079461486965795
-        },
-        {
-          "week": 5,
-          "team": "NE",
-          "survival_prob": 0.7921889461780716
-        },
-        {
-          "week": 6,
-          "team": "SF",
-          "survival_prob": 0.6187625459684204
-        },
-        {
-          "week": 7,
-          "team": "LA",
-          "survival_prob": 0.7123252924497433
-        },
-        {
-          "week": 8,
-          "team": "PIT",
-          "survival_prob": 0.6877459306816329
-        },
-        {
-          "week": 9,
-          "team": "NO",
-          "survival_prob": 0.6517680241400517
-        },
-        {
-          "week": 10,
-          "team": "SEA",
-          "survival_prob": 0.6848926596908564
-        },
-        {
-          "week": 11,
-          "team": "DEN",
-          "survival_prob": 0.6559894993438351
-        },
-        {
-          "week": 12,
-          "team": "JAX",
-          "survival_prob": 0.59474756425155
-        },
-        {
-          "week": 13,
-          "team": "CHI",
-          "survival_prob": 0.5881431197585708
-        },
-        {
-          "week": 14,
-          "team": "DET",
-          "survival_prob": 0.590692756084971
-        },
-        {
-          "week": 15,
-          "team": "GB",
-          "survival_prob": 0.5758864236434318
-        },
-        {
-          "week": 16,
-          "team": "BAL",
-          "survival_prob": 0.5820621992504902
-        },
-        {
-          "week": 17,
-          "team": "MIN",
-          "survival_prob": 0.5775141490302187
-        },
-        {
-          "week": 18,
-          "team": "CIN",
-          "survival_prob": 0.62378340550818
-        }
-      ]
-    },
-    {
-      "total_survival_prob": 0.0004930918209704694,
-      "picks": [
-        {
-          "week": 1,
-          "team": "LAC",
-          "survival_prob": 0.7994204646093197
-        },
-        {
-          "week": 2,
-          "team": "TB",
-          "survival_prob": 0.7615580209067508
-        },
-        {
-          "week": 3,
-          "team": "BUF",
-          "survival_prob": 0.6581486688748484
-        },
-        {
-          "week": 4,
-          "team": "KC",
-          "survival_prob": 0.7079461486965795
-        },
-        {
-          "week": 5,
-          "team": "NE",
-          "survival_prob": 0.7921889461780716
-        },
-        {
-          "week": 6,
-          "team": "SF",
-          "survival_prob": 0.6187625459684204
-        },
-        {
-          "week": 7,
-          "team": "LA",
-          "survival_prob": 0.7123252924497433
-        },
-        {
-          "week": 8,
-          "team": "PIT",
-          "survival_prob": 0.6877459306816329
-        },
-        {
-          "week": 9,
-          "team": "NO",
-          "survival_prob": 0.6517680241400517
-        },
-        {
-          "week": 10,
-          "team": "SEA",
-          "survival_prob": 0.6848926596908564
-        },
-        {
-          "week": 11,
-          "team": "DEN",
-          "survival_prob": 0.6559894993438351
-        },
-        {
-          "week": 12,
-          "team": "JAX",
-          "survival_prob": 0.59474756425155
-        },
-        {
-          "week": 13,
-          "team": "CHI",
-          "survival_prob": 0.5881431197585708
-        },
-        {
-          "week": 14,
-          "team": "DET",
-          "survival_prob": 0.590692756084971
-        },
-        {
-          "week": 15,
-          "team": "NYG",
-          "survival_prob": 0.578506773615874
-        },
-        {
-          "week": 16,
-          "team": "BAL",
-          "survival_prob": 0.5820621992504902
-        },
-        {
-          "week": 17,
           "team": "IND",
-          "survival_prob": 0.5695930359917163
+          "survival_prob": 0.7003138862772
+        },
+        {
+          "week": 7,
+          "team": "LA",
+          "survival_prob": 0.5945997848687747
+        },
+        {
+          "week": 8,
+          "team": "CIN",
+          "survival_prob": 0.7392293746146311
+        },
+        {
+          "week": 9,
+          "team": "NO",
+          "survival_prob": 0.659866343360398
+        },
+        {
+          "week": 10,
+          "team": "GB",
+          "survival_prob": 0.6332426045502143
+        },
+        {
+          "week": 11,
+          "team": "DAL",
+          "survival_prob": 0.7116913249213279
+        },
+        {
+          "week": 12,
+          "team": "JAX",
+          "survival_prob": 0.6739269518227158
+        },
+        {
+          "week": 13,
+          "team": "CHI",
+          "survival_prob": 0.6099826143516363
+        },
+        {
+          "week": 14,
+          "team": "DET",
+          "survival_prob": 0.660479099754695
+        },
+        {
+          "week": 15,
+          "team": "NYG",
+          "survival_prob": 0.6879414329623048
+        },
+        {
+          "week": 16,
+          "team": "PHI",
+          "survival_prob": 0.5949583740043997
+        },
+        {
+          "week": 17,
+          "team": "ARI",
+          "survival_prob": 0.6198711491392497
         },
         {
           "week": 18,
+          "team": "DEN",
+          "survival_prob": 0.6059951492648823
+        }
+      ]
+    },
+    {
+      "total_survival_prob": 0.0010780397404734675,
+      "picks": [
+        {
+          "week": 2,
+          "team": "SF",
+          "survival_prob": 0.8691984527070835
+        },
+        {
+          "week": 3,
+          "team": "KC",
+          "survival_prob": 0.6453361575183266
+        },
+        {
+          "week": 4,
+          "team": "BAL",
+          "survival_prob": 0.7623765253172539
+        },
+        {
+          "week": 5,
+          "team": "NE",
+          "survival_prob": 0.6607089755362061
+        },
+        {
+          "week": 6,
+          "team": "IND",
+          "survival_prob": 0.7003138862772
+        },
+        {
+          "week": 7,
+          "team": "MIN",
+          "survival_prob": 0.5936936373019543
+        },
+        {
+          "week": 8,
           "team": "CIN",
-          "survival_prob": 0.62378340550818
+          "survival_prob": 0.7392293746146311
+        },
+        {
+          "week": 9,
+          "team": "NO",
+          "survival_prob": 0.659866343360398
+        },
+        {
+          "week": 10,
+          "team": "GB",
+          "survival_prob": 0.6332426045502143
+        },
+        {
+          "week": 11,
+          "team": "DAL",
+          "survival_prob": 0.7116913249213279
+        },
+        {
+          "week": 12,
+          "team": "JAX",
+          "survival_prob": 0.6739269518227158
+        },
+        {
+          "week": 13,
+          "team": "CHI",
+          "survival_prob": 0.6099826143516363
+        },
+        {
+          "week": 14,
+          "team": "DET",
+          "survival_prob": 0.660479099754695
+        },
+        {
+          "week": 15,
+          "team": "NYG",
+          "survival_prob": 0.6879414329623048
+        },
+        {
+          "week": 16,
+          "team": "PHI",
+          "survival_prob": 0.5949583740043997
+        },
+        {
+          "week": 17,
+          "team": "ARI",
+          "survival_prob": 0.6198711491392497
+        },
+        {
+          "week": 18,
+          "team": "DEN",
+          "survival_prob": 0.6059951492648823
+        }
+      ]
+    },
+    {
+      "total_survival_prob": 0.0010679696398429937,
+      "picks": [
+        {
+          "week": 2,
+          "team": "TB",
+          "survival_prob": 0.7600814778999896
+        },
+        {
+          "week": 3,
+          "team": "KC",
+          "survival_prob": 0.6453361575183266
+        },
+        {
+          "week": 4,
+          "team": "BAL",
+          "survival_prob": 0.7623765253172539
+        },
+        {
+          "week": 5,
+          "team": "NE",
+          "survival_prob": 0.6607089755362061
+        },
+        {
+          "week": 6,
+          "team": "IND",
+          "survival_prob": 0.7003138862772
+        },
+        {
+          "week": 7,
+          "team": "LA",
+          "survival_prob": 0.5945997848687747
+        },
+        {
+          "week": 8,
+          "team": "CIN",
+          "survival_prob": 0.7392293746146311
+        },
+        {
+          "week": 9,
+          "team": "SF",
+          "survival_prob": 0.7464084638631773
+        },
+        {
+          "week": 10,
+          "team": "GB",
+          "survival_prob": 0.6332426045502143
+        },
+        {
+          "week": 11,
+          "team": "DAL",
+          "survival_prob": 0.7116913249213279
+        },
+        {
+          "week": 12,
+          "team": "JAX",
+          "survival_prob": 0.6739269518227158
+        },
+        {
+          "week": 13,
+          "team": "CHI",
+          "survival_prob": 0.6099826143516363
+        },
+        {
+          "week": 14,
+          "team": "DET",
+          "survival_prob": 0.660479099754695
+        },
+        {
+          "week": 15,
+          "team": "NYG",
+          "survival_prob": 0.6879414329623048
+        },
+        {
+          "week": 16,
+          "team": "PHI",
+          "survival_prob": 0.5949583740043997
+        },
+        {
+          "week": 17,
+          "team": "ARI",
+          "survival_prob": 0.6198711491392497
+        },
+        {
+          "week": 18,
+          "team": "DEN",
+          "survival_prob": 0.6059951492648823
         }
       ]
     }
