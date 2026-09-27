@@ -90,6 +90,15 @@ describe("solveScenario on the real exported season", () => {
   const weeks = matrix.weeks;
   const teams = matrix.teams;
 
+  // Weeks are taken from the matrix, never named. The exported bundle only
+  // covers weeks from the current one forward, so a literal week number is a
+  // fixture with an expiry date -- these tests were pinned to weeks 2, 4, 7
+  // and 11, and started failing the moment the season moved past week 2.
+  const firstWeek = weeks[0];
+  const secondWeek = weeks[1];
+  const midWeek = weeks[Math.floor(weeks.length / 2)];
+  const lateWeek = weeks[weeks.length - 2];
+
   it("with no locks, matches the unconstrained optimum", () => {
     const s = solveScenario(entries, weeks, teams, []);
     expect(s.error).toBeNull();
@@ -99,17 +108,17 @@ describe("solveScenario on the real exported season", () => {
 
   it("honors a lock, and never reports it as free money", () => {
     const base = solveScenario(entries, weeks, teams, []);
-    const optimalWeek7 = base.scenario?.picks.find((p) => p.week === 7)?.team;
+    const optimalMid = base.scenario?.picks.find((p) => p.week === midWeek)?.team;
 
     // Lock a different team into week 7 than the one the optimizer wanted.
     const alternative = entries.find(
-      (e) => e.week === 7 && e.team !== optimalWeek7 && e.survival_prob > 0.5,
+      (e) => e.week === midWeek && e.team !== optimalMid && e.survival_prob > 0.5,
     ) as SurvivalEntry;
-    const locks: ScenarioLock[] = [{ season: 2026, week: 7, team: alternative.team }];
+    const locks: ScenarioLock[] = [{ season: 2026, week: midWeek, team: alternative.team }];
 
     const s = solveScenario(entries, weeks, teams, locks);
     expect(s.error).toBeNull();
-    expect(s.scenario?.picks.find((p) => p.week === 7)?.team).toBe(alternative.team);
+    expect(s.scenario?.picks.find((p) => p.week === midWeek)?.team).toBe(alternative.team);
 
     // A lock can only ever cost you probability: the locked problem is the
     // unlocked one with cells removed, so its optimum cannot be higher.
@@ -133,19 +142,19 @@ describe("solveScenario on the real exported season", () => {
 
   it("locking the team the optimizer already chose is free", () => {
     const base = solveScenario(entries, weeks, teams, []);
-    const pick = base.scenario?.picks.find((p) => p.week === 4);
+    const pick = base.scenario?.picks.find((p) => p.week === secondWeek);
     const s = solveScenario(entries, weeks, teams, [
-      { season: 2026, week: 4, team: pick?.team as string },
+      { season: 2026, week: secondWeek, team: pick?.team as string },
     ]);
     expect(s.costOfLocks).toBeCloseTo(0, 15);
   });
 
   it("stacks multiple locks and still fills every other week", () => {
-    const w2 = entries.find((e) => e.week === 2)?.team as string;
-    const w11 = entries.find((e) => e.week === 11 && e.team !== w2)?.team as string;
+    const a = entries.find((e) => e.week === firstWeek)?.team as string;
+    const b = entries.find((e) => e.week === lateWeek && e.team !== a)?.team as string;
     const locks: ScenarioLock[] = [
-      { season: 2026, week: 2, team: w2 },
-      { season: 2026, week: 11, team: w11 },
+      { season: 2026, week: firstWeek, team: a },
+      { season: 2026, week: lateWeek, team: b },
     ];
     const s = solveScenario(entries, weeks, teams, locks);
     expect(s.error).toBeNull();
@@ -167,10 +176,10 @@ describe("solveScenario on the real exported season", () => {
     // solveScenario's contract is that locks have already been through
     // validateLocks. If a caller skips that, the same team pinned to two weeks
     // must fail loudly rather than quietly dropping one of them.
-    const team = entries.find((e) => e.week === 2)?.team as string;
-    const alsoLater = entries.find((e) => e.week > 2 && e.team === team) as SurvivalEntry;
+    const team = entries.find((e) => e.week === firstWeek)?.team as string;
+    const alsoLater = entries.find((e) => e.week > firstWeek && e.team === team) as SurvivalEntry;
     const s = solveScenario(entries, weeks, teams, [
-      { season: 2026, week: 2, team },
+      { season: 2026, week: firstWeek, team },
       { season: 2026, week: alsoLater.week, team },
     ]);
     expect(s.error).toMatch(/no complete plan/i);
@@ -179,7 +188,7 @@ describe("solveScenario on the real exported season", () => {
     // And validateLocks would have caught it first.
     const v = validateLocks(
       [
-        { season: 2026, week: 2, team },
+        { season: 2026, week: firstWeek, team },
         { season: 2026, week: alsoLater.week, team },
       ],
       weeks,
@@ -191,7 +200,9 @@ describe("solveScenario on the real exported season", () => {
   });
 
   it("agrees with a direct solve of the same locked table", () => {
-    const locks: ScenarioLock[] = [{ season: 2026, week: 3, team: entries.find((e) => e.week === 3)?.team as string }];
+    const locks: ScenarioLock[] = [
+      { season: 2026, week: secondWeek, team: entries.find((e) => e.week === secondWeek)?.team as string },
+    ];
     const s = solveScenario(entries, weeks, teams, locks);
     const direct = solveOptimalAssignment(weeks, teams, applyLocks(entries, locks));
     expect(s.scenario?.totalLogSurvival).toBeCloseTo(direct.totalLogSurvival, 12);
@@ -203,6 +214,13 @@ describe("diffPlans", () => {
   const weeks = matrix.weeks;
   const teams = matrix.teams;
 
+  // Weeks are taken from the matrix, never named. The exported bundle only
+  // covers weeks from the current one forward, so a literal week number is a
+  // fixture with an expiry date -- these tests were pinned to weeks 2, 4, 7
+  // and 11, and started failing the moment the season moved past week 2.
+  const firstWeek = weeks[0];
+  const midWeek = weeks[Math.floor(weeks.length / 2)];
+
   it("reports no changes when there are no locks", () => {
     const s = solveScenario(entries, weeks, teams, []);
     const d = diffPlans(s.baseline as AssignmentResult, s.scenario as AssignmentResult);
@@ -212,40 +230,40 @@ describe("diffPlans", () => {
   });
 
   it("names the locked week and the knock-on week, not just the locked one", () => {
-    // The motivating case: locking a team into week 1 that the plan was
+    // The motivating case: locking a team into the current week when the plan was
     // already using in a later week frees that later week too.
     const base = solveScenario(entries, weeks, teams, []);
     const basePicks = base.scenario as AssignmentResult;
-    const week1Team = basePicks.picks.find((p) => p.week === 1)?.team as string;
+    const firstWeekTeam = basePicks.picks.find((p) => p.week === firstWeek)?.team as string;
 
     // Find a team used later in the plan that also plays in week 1.
     const laterPick = basePicks.picks.find(
-      (p) => p.week > 1 && entries.some((e) => e.week === 1 && e.team === p.team),
+      (p) => p.week > firstWeek && entries.some((e) => e.week === firstWeek && e.team === p.team),
     );
     if (!laterPick) return; // schedule-dependent; nothing to assert
 
     const s = solveScenario(entries, weeks, teams, [
-      { season: 2026, week: 1, team: laterPick.team },
+      { season: 2026, week: firstWeek, team: laterPick.team },
     ]);
     const d = diffPlans(base.scenario as AssignmentResult, s.scenario as AssignmentResult);
 
     const changedWeeks = d.changes.map((c) => c.week);
-    expect(changedWeeks).toContain(1);
+    expect(changedWeeks).toContain(firstWeek);
     expect(changedWeeks).toContain(laterPick.week); // the knock-on
-    expect(d.changes.find((c) => c.week === 1)?.from).toBe(week1Team);
-    expect(d.changes.find((c) => c.week === 1)?.to).toBe(laterPick.team);
+    expect(d.changes.find((c) => c.week === firstWeek)?.from).toBe(firstWeekTeam);
+    expect(d.changes.find((c) => c.week === firstWeek)?.to).toBe(laterPick.team);
   });
 
   it("reports the displaced team as dropped when it isn't redeployed", () => {
     const base = solveScenario(entries, weeks, teams, []);
     const basePicks = base.scenario as AssignmentResult;
     const laterPick = basePicks.picks.find(
-      (p) => p.week > 1 && entries.some((e) => e.week === 1 && e.team === p.team),
+      (p) => p.week > firstWeek && entries.some((e) => e.week === firstWeek && e.team === p.team),
     );
     if (!laterPick) return;
 
     const s = solveScenario(entries, weeks, teams, [
-      { season: 2026, week: 1, team: laterPick.team },
+      { season: 2026, week: firstWeek, team: laterPick.team },
     ]);
     const d = diffPlans(base.scenario as AssignmentResult, s.scenario as AssignmentResult);
 
@@ -262,11 +280,11 @@ describe("diffPlans", () => {
 
   it("every changed week is a real swap, and unchanged weeks are omitted", () => {
     const base = solveScenario(entries, weeks, teams, []);
-    const pick7 = (base.scenario as AssignmentResult).picks.find((p) => p.week === 7);
+    const pickMid = (base.scenario as AssignmentResult).picks.find((p) => p.week === midWeek);
     const other = entries.find(
-      (e) => e.week === 7 && e.team !== pick7?.team && e.survival_prob > 0.5,
+      (e) => e.week === midWeek && e.team !== pickMid?.team && e.survival_prob > 0.5,
     ) as SurvivalEntry;
-    const s = solveScenario(entries, weeks, teams, [{ season: 2026, week: 7, team: other.team }]);
+    const s = solveScenario(entries, weeks, teams, [{ season: 2026, week: midWeek, team: other.team }]);
     const d = diffPlans(base.scenario as AssignmentResult, s.scenario as AssignmentResult);
 
     expect(d.changes.length).toBeGreaterThan(0);

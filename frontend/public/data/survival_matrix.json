@@ -1,10 +1,9 @@
 {
   "season": 2026,
-  "current_week": 2,
+  "current_week": 3,
   "decay_rate": 0.05,
   "tie_counts_as_loss": true,
   "weeks": [
-    2,
     3,
     4,
     5,
@@ -58,334 +57,14 @@
   ],
   "entries": [
     {
-      "week": 2,
-      "team": "ARI",
-      "opponent": "SEA",
-      "is_home": true,
-      "game_id": "2026_02_SEA_ARI",
-      "survival_prob": 0.33688265517459043,
-      "weeks_ahead": 0,
-      "source": "vegas"
-    },
-    {
-      "week": 2,
-      "team": "ATL",
-      "opponent": "CAR",
-      "is_home": true,
-      "game_id": "2026_02_CAR_ATL",
-      "survival_prob": 0.4529097631564748,
-      "weeks_ahead": 0,
-      "source": "vegas"
-    },
-    {
-      "week": 2,
-      "team": "BAL",
-      "opponent": "NO",
-      "is_home": true,
-      "game_id": "2026_02_NO_BAL",
-      "survival_prob": 0.7569000712554892,
-      "weeks_ahead": 0,
-      "source": "vegas"
-    },
-    {
-      "week": 2,
-      "team": "BUF",
-      "opponent": "DET",
-      "is_home": true,
-      "game_id": "2026_02_DET_BUF",
-      "survival_prob": 0.6456495743188936,
-      "weeks_ahead": 0,
-      "source": "vegas"
-    },
-    {
-      "week": 2,
-      "team": "CAR",
-      "opponent": "ATL",
-      "is_home": false,
-      "game_id": "2026_02_CAR_ATL",
-      "survival_prob": 0.545032905887552,
-      "weeks_ahead": 0,
-      "source": "vegas"
-    },
-    {
-      "week": 2,
-      "team": "CHI",
-      "opponent": "MIN",
-      "is_home": true,
-      "game_id": "2026_02_MIN_CHI",
-      "survival_prob": 0.6678601542003302,
-      "weeks_ahead": 0,
-      "source": "vegas"
-    },
-    {
-      "week": 2,
-      "team": "CIN",
-      "opponent": "HOU",
-      "is_home": false,
-      "game_id": "2026_02_CIN_HOU",
-      "survival_prob": 0.408124458514451,
-      "weeks_ahead": 0,
-      "source": "vegas"
-    },
-    {
-      "week": 2,
-      "team": "CLE",
-      "opponent": "TB",
-      "is_home": false,
-      "game_id": "2026_02_CLE_TB",
-      "survival_prob": 0.2378611911440373,
-      "weeks_ahead": 0,
-      "source": "vegas"
-    },
-    {
-      "week": 2,
-      "team": "DAL",
-      "opponent": "WAS",
-      "is_home": true,
-      "game_id": "2026_02_WAS_DAL",
-      "survival_prob": 0.6291103173796716,
-      "weeks_ahead": 0,
-      "source": "vegas"
-    },
-    {
-      "week": 2,
-      "team": "DEN",
-      "opponent": "JAX",
-      "is_home": true,
-      "game_id": "2026_02_JAX_DEN",
-      "survival_prob": 0.4989713345220134,
-      "weeks_ahead": 0,
-      "source": "vegas"
-    },
-    {
-      "week": 2,
-      "team": "DET",
-      "opponent": "BUF",
-      "is_home": false,
-      "game_id": "2026_02_DET_BUF",
-      "survival_prob": 0.3522930947251333,
-      "weeks_ahead": 0,
-      "source": "vegas"
-    },
-    {
-      "week": 2,
-      "team": "GB",
-      "opponent": "NYJ",
-      "is_home": false,
-      "game_id": "2026_02_GB_NYJ",
-      "survival_prob": 0.6579799147185755,
-      "weeks_ahead": 0,
-      "source": "vegas"
-    },
-    {
-      "week": 2,
-      "team": "HOU",
-      "opponent": "CIN",
-      "is_home": true,
-      "game_id": "2026_02_CIN_HOU",
-      "survival_prob": 0.5898182105295758,
-      "weeks_ahead": 0,
-      "source": "vegas"
-    },
-    {
-      "week": 2,
-      "team": "IND",
-      "opponent": "KC",
-      "is_home": false,
-      "game_id": "2026_02_IND_KC",
-      "survival_prob": 0.4989713345220134,
-      "weeks_ahead": 0,
-      "source": "vegas"
-    },
-    {
-      "week": 2,
-      "team": "JAX",
-      "opponent": "DEN",
-      "is_home": false,
-      "game_id": "2026_02_JAX_DEN",
-      "survival_prob": 0.4989713345220134,
-      "weeks_ahead": 0,
-      "source": "vegas"
-    },
-    {
-      "week": 2,
-      "team": "KC",
-      "opponent": "IND",
-      "is_home": true,
-      "game_id": "2026_02_IND_KC",
-      "survival_prob": 0.4989713345220134,
-      "weeks_ahead": 0,
-      "source": "vegas"
-    },
-    {
-      "week": 2,
-      "team": "LA",
-      "opponent": "NYG",
-      "is_home": true,
-      "game_id": "2026_02_NYG_LA",
-      "survival_prob": 0.7351760991437799,
-      "weeks_ahead": 0,
-      "source": "vegas"
-    },
-    {
-      "week": 2,
-      "team": "LAC",
-      "opponent": "LV",
-      "is_home": true,
-      "game_id": "2026_02_LV_LAC",
-      "survival_prob": 0.7203006741289152,
-      "weeks_ahead": 0,
-      "source": "vegas"
-    },
-    {
-      "week": 2,
-      "team": "LV",
-      "opponent": "LAC",
-      "is_home": false,
-      "game_id": "2026_02_LV_LAC",
-      "survival_prob": 0.2776419949151117,
-      "weeks_ahead": 0,
-      "source": "vegas"
-    },
-    {
-      "week": 2,
-      "team": "MIA",
-      "opponent": "SF",
-      "is_home": false,
-      "game_id": "2026_02_MIA_SF",
-      "survival_prob": 0.1287442163369433,
-      "weeks_ahead": 0,
-      "source": "vegas"
-    },
-    {
-      "week": 2,
-      "team": "MIN",
-      "opponent": "CHI",
-      "is_home": false,
-      "game_id": "2026_02_MIN_CHI",
-      "survival_prob": 0.33008251484369666,
-      "weeks_ahead": 0,
-      "source": "vegas"
-    },
-    {
-      "week": 2,
-      "team": "NE",
-      "opponent": "PIT",
-      "is_home": true,
-      "game_id": "2026_02_PIT_NE",
-      "survival_prob": 0.6766201053277405,
-      "weeks_ahead": 0,
-      "source": "vegas"
-    },
-    {
-      "week": 2,
-      "team": "NO",
-      "opponent": "BAL",
-      "is_home": false,
-      "game_id": "2026_02_NO_BAL",
-      "survival_prob": 0.2410425977885377,
-      "weeks_ahead": 0,
-      "source": "vegas"
-    },
-    {
-      "week": 2,
-      "team": "NYG",
-      "opponent": "LA",
-      "is_home": false,
-      "game_id": "2026_02_NYG_LA",
-      "survival_prob": 0.26276656990024694,
-      "weeks_ahead": 0,
-      "source": "vegas"
-    },
-    {
-      "week": 2,
-      "team": "NYJ",
-      "opponent": "GB",
-      "is_home": true,
-      "game_id": "2026_02_GB_NYJ",
-      "survival_prob": 0.33996275432545126,
-      "weeks_ahead": 0,
-      "source": "vegas"
-    },
-    {
-      "week": 2,
-      "team": "PHI",
-      "opponent": "TEN",
-      "is_home": false,
-      "game_id": "2026_02_PHI_TEN",
-      "survival_prob": 0.7293827500812394,
-      "weeks_ahead": 0,
-      "source": "vegas"
-    },
-    {
-      "week": 2,
-      "team": "PIT",
-      "opponent": "NE",
-      "is_home": false,
-      "game_id": "2026_02_PIT_NE",
-      "survival_prob": 0.3213225637162863,
-      "weeks_ahead": 0,
-      "source": "vegas"
-    },
-    {
-      "week": 2,
-      "team": "SEA",
-      "opponent": "ARI",
-      "is_home": false,
-      "game_id": "2026_02_SEA_ARI",
-      "survival_prob": 0.6610600138694364,
-      "weeks_ahead": 0,
-      "source": "vegas"
-    },
-    {
-      "week": 2,
-      "team": "SF",
-      "opponent": "MIA",
-      "is_home": true,
-      "game_id": "2026_02_MIA_SF",
-      "survival_prob": 0.8691984527070835,
-      "weeks_ahead": 0,
-      "source": "vegas"
-    },
-    {
-      "week": 2,
-      "team": "TB",
-      "opponent": "CLE",
-      "is_home": true,
-      "game_id": "2026_02_CLE_TB",
-      "survival_prob": 0.7600814778999896,
-      "weeks_ahead": 0,
-      "source": "vegas"
-    },
-    {
-      "week": 2,
-      "team": "TEN",
-      "opponent": "PHI",
-      "is_home": true,
-      "game_id": "2026_02_PHI_TEN",
-      "survival_prob": 0.26855991896278747,
-      "weeks_ahead": 0,
-      "source": "vegas"
-    },
-    {
-      "week": 2,
-      "team": "WAS",
-      "opponent": "DAL",
-      "is_home": false,
-      "game_id": "2026_02_WAS_DAL",
-      "survival_prob": 0.3688323516643553,
-      "weeks_ahead": 0,
-      "source": "vegas"
-    },
-    {
       "week": 3,
       "team": "ARI",
       "opponent": "SF",
       "is_home": false,
       "game_id": "2026_03_ARI_SF",
-      "survival_prob": 0.2792149589848939,
-      "weeks_ahead": 1,
-      "source": "model"
+      "survival_prob": 0.2469005627388919,
+      "weeks_ahead": 0,
+      "source": "vegas"
     },
     {
       "week": 3,
@@ -393,9 +72,9 @@
       "opponent": "GB",
       "is_home": false,
       "game_id": "2026_03_ATL_GB",
-      "survival_prob": 0.3369026515102745,
-      "weeks_ahead": 1,
-      "source": "model"
+      "survival_prob": 0.34035149860971503,
+      "weeks_ahead": 0,
+      "source": "vegas"
     },
     {
       "week": 3,
@@ -403,9 +82,9 @@
       "opponent": "DAL",
       "is_home": false,
       "game_id": "2026_03_BAL_DAL",
-      "survival_prob": 0.569839984634168,
-      "weeks_ahead": 1,
-      "source": "model"
+      "survival_prob": 0.6177813726518528,
+      "weeks_ahead": 0,
+      "source": "vegas"
     },
     {
       "week": 3,
@@ -413,9 +92,9 @@
       "opponent": "LAC",
       "is_home": true,
       "game_id": "2026_03_LAC_BUF",
-      "survival_prob": 0.5597531641203448,
-      "weeks_ahead": 1,
-      "source": "model"
+      "survival_prob": 0.7279224448153674,
+      "weeks_ahead": 0,
+      "source": "vegas"
     },
     {
       "week": 3,
@@ -423,9 +102,9 @@
       "opponent": "CLE",
       "is_home": false,
       "game_id": "2026_03_CAR_CLE",
-      "survival_prob": 0.5692935748496769,
-      "weeks_ahead": 1,
-      "source": "model"
+      "survival_prob": 0.5720436998267026,
+      "weeks_ahead": 0,
+      "source": "vegas"
     },
     {
       "week": 3,
@@ -433,9 +112,9 @@
       "opponent": "PHI",
       "is_home": true,
       "game_id": "2026_03_PHI_CHI",
-      "survival_prob": 0.6477273745396619,
-      "weeks_ahead": 1,
-      "source": "model"
+      "survival_prob": 0.3398059308629723,
+      "weeks_ahead": 0,
+      "source": "vegas"
     },
     {
       "week": 3,
@@ -443,9 +122,9 @@
       "opponent": "PIT",
       "is_home": false,
       "game_id": "2026_03_CIN_PIT",
-      "survival_prob": 0.42957561689899326,
-      "weeks_ahead": 1,
-      "source": "model"
+      "survival_prob": 0.6213750421649046,
+      "weeks_ahead": 0,
+      "source": "vegas"
     },
     {
       "week": 3,
@@ -453,9 +132,9 @@
       "opponent": "CAR",
       "is_home": true,
       "game_id": "2026_03_CAR_CLE",
-      "survival_prob": 0.4287494314090652,
-      "weeks_ahead": 1,
-      "source": "model"
+      "survival_prob": 0.4259037550173041,
+      "weeks_ahead": 0,
+      "source": "vegas"
     },
     {
       "week": 3,
@@ -463,9 +142,9 @@
       "opponent": "BAL",
       "is_home": true,
       "game_id": "2026_03_BAL_DAL",
-      "survival_prob": 0.42820302162457435,
-      "weeks_ahead": 1,
-      "source": "model"
+      "survival_prob": 0.3801660821921538,
+      "weeks_ahead": 0,
+      "source": "vegas"
     },
     {
       "week": 3,
@@ -473,9 +152,9 @@
       "opponent": "LA",
       "is_home": true,
       "game_id": "2026_03_LA_DEN",
-      "survival_prob": 0.5905483041277299,
-      "weeks_ahead": 1,
-      "source": "model"
+      "survival_prob": 0.44760670371384476,
+      "weeks_ahead": 0,
+      "source": "vegas"
     },
     {
       "week": 3,
@@ -483,9 +162,9 @@
       "opponent": "NYJ",
       "is_home": true,
       "game_id": "2026_03_NYJ_DET",
-      "survival_prob": 0.6453172152485298,
-      "weeks_ahead": 1,
-      "source": "model"
+      "survival_prob": 0.7279224448153674,
+      "weeks_ahead": 0,
+      "source": "vegas"
     },
     {
       "week": 3,
@@ -493,9 +172,9 @@
       "opponent": "ATL",
       "is_home": true,
       "game_id": "2026_03_ATL_GB",
-      "survival_prob": 0.6611403547484677,
-      "weeks_ahead": 1,
-      "source": "model"
+      "survival_prob": 0.6575959562342916,
+      "weeks_ahead": 0,
+      "source": "vegas"
     },
     {
       "week": 3,
@@ -503,9 +182,9 @@
       "opponent": "IND",
       "is_home": false,
       "game_id": "2026_03_HOU_IND",
-      "survival_prob": 0.5129475047306783,
-      "weeks_ahead": 1,
-      "source": "model"
+      "survival_prob": 0.5452132939637071,
+      "weeks_ahead": 0,
+      "source": "vegas"
     },
     {
       "week": 3,
@@ -513,9 +192,9 @@
       "opponent": "HOU",
       "is_home": true,
       "game_id": "2026_03_HOU_IND",
-      "survival_prob": 0.48509550152806385,
-      "weeks_ahead": 1,
-      "source": "model"
+      "survival_prob": 0.45273416088029944,
+      "weeks_ahead": 0,
+      "source": "vegas"
     },
     {
       "week": 3,
@@ -523,9 +202,9 @@
       "opponent": "NE",
       "is_home": true,
       "game_id": "2026_03_NE_JAX",
-      "survival_prob": 0.6003595984021715,
-      "weeks_ahead": 1,
-      "source": "model"
+      "survival_prob": 0.5948205848000486,
+      "weeks_ahead": 0,
+      "source": "vegas"
     },
     {
       "week": 3,
@@ -533,9 +212,9 @@
       "opponent": "MIA",
       "is_home": false,
       "game_id": "2026_03_KC_MIA",
-      "survival_prob": 0.6453361575183266,
-      "weeks_ahead": 1,
-      "source": "model"
+      "survival_prob": 0.8148635842899685,
+      "weeks_ahead": 0,
+      "source": "vegas"
     },
     {
       "week": 3,
@@ -543,9 +222,9 @@
       "opponent": "DEN",
       "is_home": false,
       "game_id": "2026_03_LA_DEN",
-      "survival_prob": 0.4074947021310123,
-      "weeks_ahead": 1,
-      "source": "model"
+      "survival_prob": 0.5503407511301618,
+      "weeks_ahead": 0,
+      "source": "vegas"
     },
     {
       "week": 3,
@@ -553,9 +232,9 @@
       "opponent": "BUF",
       "is_home": false,
       "game_id": "2026_03_LAC_BUF",
-      "survival_prob": 0.43828984213839733,
-      "weeks_ahead": 1,
-      "source": "model"
+      "survival_prob": 0.27002501002863916,
+      "weeks_ahead": 0,
+      "source": "vegas"
     },
     {
       "week": 3,
@@ -563,9 +242,9 @@
       "opponent": "NO",
       "is_home": false,
       "game_id": "2026_03_LV_NO",
-      "survival_prob": 0.4141865026008216,
-      "weeks_ahead": 1,
-      "source": "model"
+      "survival_prob": 0.3801187861943604,
+      "weeks_ahead": 0,
+      "source": "vegas"
     },
     {
       "week": 3,
@@ -573,9 +252,9 @@
       "opponent": "KC",
       "is_home": true,
       "game_id": "2026_03_KC_MIA",
-      "survival_prob": 0.3527068487404156,
-      "weeks_ahead": 1,
-      "source": "model"
+      "survival_prob": 0.18308387055403808,
+      "weeks_ahead": 0,
+      "source": "vegas"
     },
     {
       "week": 3,
@@ -583,9 +262,9 @@
       "opponent": "TB",
       "is_home": false,
       "game_id": "2026_03_MIN_TB",
-      "survival_prob": 0.375595872171937,
-      "weeks_ahead": 1,
-      "source": "model"
+      "survival_prob": 0.5398601032121441,
+      "weeks_ahead": 0,
+      "source": "vegas"
     },
     {
       "week": 3,
@@ -593,9 +272,9 @@
       "opponent": "JAX",
       "is_home": false,
       "game_id": "2026_03_NE_JAX",
-      "survival_prob": 0.39768340785657064,
-      "weeks_ahead": 1,
-      "source": "model"
+      "survival_prob": 0.40312687004395803,
+      "weeks_ahead": 0,
+      "source": "vegas"
     },
     {
       "week": 3,
@@ -603,9 +282,9 @@
       "opponent": "LV",
       "is_home": true,
       "game_id": "2026_03_LV_NO",
-      "survival_prob": 0.5838565036579205,
-      "weeks_ahead": 1,
-      "source": "model"
+      "survival_prob": 0.6178286686496463,
+      "weeks_ahead": 0,
+      "source": "vegas"
     },
     {
       "week": 3,
@@ -613,9 +292,9 @@
       "opponent": "TEN",
       "is_home": true,
       "game_id": "2026_03_TEN_NYG",
-      "survival_prob": 0.7432628254372539,
-      "weeks_ahead": 1,
-      "source": "model"
+      "survival_prob": 0.5609495050946194,
+      "weeks_ahead": 0,
+      "source": "vegas"
     },
     {
       "week": 3,
@@ -623,9 +302,9 @@
       "opponent": "DET",
       "is_home": false,
       "game_id": "2026_03_NYJ_DET",
-      "survival_prob": 0.35272579101021234,
-      "weeks_ahead": 1,
-      "source": "model"
+      "survival_prob": 0.27002501002863916,
+      "weeks_ahead": 0,
+      "source": "vegas"
     },
     {
       "week": 3,
@@ -633,9 +312,9 @@
       "opponent": "CHI",
       "is_home": false,
       "game_id": "2026_03_PHI_CHI",
-      "survival_prob": 0.35031563171908026,
-      "weeks_ahead": 1,
-      "source": "model"
+      "survival_prob": 0.6581415239810343,
+      "weeks_ahead": 0,
+      "source": "vegas"
     },
     {
       "week": 3,
@@ -643,9 +322,9 @@
       "opponent": "CIN",
       "is_home": true,
       "game_id": "2026_03_CIN_PIT",
-      "survival_prob": 0.5684673893597488,
-      "weeks_ahead": 1,
-      "source": "model"
+      "survival_prob": 0.3765724126791021,
+      "weeks_ahead": 0,
+      "source": "vegas"
     },
     {
       "week": 3,
@@ -653,9 +332,9 @@
       "opponent": "WAS",
       "is_home": false,
       "game_id": "2026_03_SEA_WAS",
-      "survival_prob": 0.5789588109824355,
-      "weeks_ahead": 1,
-      "source": "model"
+      "survival_prob": 0.7720178679924469,
+      "weeks_ahead": 0,
+      "source": "vegas"
     },
     {
       "week": 3,
@@ -663,9 +342,9 @@
       "opponent": "ARI",
       "is_home": true,
       "game_id": "2026_03_ARI_SF",
-      "survival_prob": 0.7188280472738483,
-      "weeks_ahead": 1,
-      "source": "model"
+      "survival_prob": 0.7510468921051147,
+      "weeks_ahead": 0,
+      "source": "vegas"
     },
     {
       "week": 3,
@@ -673,9 +352,9 @@
       "opponent": "MIN",
       "is_home": true,
       "game_id": "2026_03_MIN_TB",
-      "survival_prob": 0.6224471340868052,
-      "weeks_ahead": 1,
-      "source": "model"
+      "survival_prob": 0.4580873516318625,
+      "weeks_ahead": 0,
+      "source": "vegas"
     },
     {
       "week": 3,
@@ -683,9 +362,9 @@
       "opponent": "NYG",
       "is_home": false,
       "game_id": "2026_03_TEN_NYG",
-      "survival_prob": 0.2547801808214883,
-      "weeks_ahead": 1,
-      "source": "model"
+      "survival_prob": 0.43699794974938716,
+      "weeks_ahead": 0,
+      "source": "vegas"
     },
     {
       "week": 3,
@@ -693,9 +372,9 @@
       "opponent": "SEA",
       "is_home": true,
       "game_id": "2026_03_SEA_WAS",
-      "survival_prob": 0.41908419527630664,
-      "weeks_ahead": 1,
-      "source": "model"
+      "survival_prob": 0.2259295868515597,
+      "weeks_ahead": 0,
+      "source": "vegas"
     },
     {
       "week": 4,
@@ -703,8 +382,8 @@
       "opponent": "NYG",
       "is_home": false,
       "game_id": "2026_04_ARI_NYG",
-      "survival_prob": 0.2685203695727051,
-      "weeks_ahead": 2,
+      "survival_prob": 0.4207471875126039,
+      "weeks_ahead": 1,
       "source": "model"
     },
     {
@@ -713,8 +392,8 @@
       "opponent": "NO",
       "is_home": false,
       "game_id": "2026_04_ATL_NO",
-      "survival_prob": 0.344857003058526,
-      "weeks_ahead": 2,
+      "survival_prob": 0.36108401814377267,
+      "weeks_ahead": 1,
       "source": "model"
     },
     {
@@ -723,8 +402,8 @@
       "opponent": "TEN",
       "is_home": true,
       "game_id": "2026_04_TEN_BAL",
-      "survival_prob": 0.7623765253172539,
-      "weeks_ahead": 2,
+      "survival_prob": 0.6890715857211285,
+      "weeks_ahead": 1,
       "source": "model"
     },
     {
@@ -733,8 +412,8 @@
       "opponent": "NE",
       "is_home": true,
       "game_id": "2026_04_NE_BUF",
-      "survival_prob": 0.5029661576530624,
-      "weeks_ahead": 2,
+      "survival_prob": 0.6161818310956608,
+      "weeks_ahead": 1,
       "source": "model"
     },
     {
@@ -743,8 +422,8 @@
       "opponent": "DET",
       "is_home": true,
       "game_id": "2026_04_DET_CAR",
-      "survival_prob": 0.382844366257029,
-      "weeks_ahead": 2,
+      "survival_prob": 0.3694247516593265,
+      "weeks_ahead": 1,
       "source": "model"
     },
     {
@@ -753,8 +432,8 @@
       "opponent": "NYJ",
       "is_home": true,
       "game_id": "2026_04_NYJ_CHI",
-      "survival_prob": 0.6439133123945244,
-      "weeks_ahead": 2,
+      "survival_prob": 0.6505471141572972,
+      "weeks_ahead": 1,
       "source": "model"
     },
     {
@@ -763,8 +442,8 @@
       "opponent": "JAX",
       "is_home": true,
       "game_id": "2026_04_JAX_CIN",
-      "survival_prob": 0.6187664796068355,
-      "weeks_ahead": 2,
+      "survival_prob": 0.5092108829871231,
+      "weeks_ahead": 1,
       "source": "model"
     },
     {
@@ -773,8 +452,8 @@
       "opponent": "PIT",
       "is_home": true,
       "game_id": "2026_04_PIT_CLE",
-      "survival_prob": 0.4962157019454153,
-      "weeks_ahead": 2,
+      "survival_prob": 0.5400186592034679,
+      "weeks_ahead": 1,
       "source": "model"
     },
     {
@@ -783,8 +462,8 @@
       "opponent": "HOU",
       "is_home": false,
       "game_id": "2026_04_DAL_HOU",
-      "survival_prob": 0.6271989224988133,
-      "weeks_ahead": 2,
+      "survival_prob": 0.5287220735821526,
+      "weeks_ahead": 1,
       "source": "model"
     },
     {
@@ -793,8 +472,8 @@
       "opponent": "SF",
       "is_home": false,
       "game_id": "2026_04_DEN_SF",
-      "survival_prob": 0.2969602558510399,
-      "weeks_ahead": 2,
+      "survival_prob": 0.2043877269149797,
+      "weeks_ahead": 1,
       "source": "model"
     },
     {
@@ -803,8 +482,8 @@
       "opponent": "CAR",
       "is_home": false,
       "game_id": "2026_04_DET_CAR",
-      "survival_prob": 0.6152940837127229,
-      "weeks_ahead": 2,
+      "survival_prob": 0.6286228069931762,
+      "weeks_ahead": 1,
       "source": "model"
     },
     {
@@ -813,8 +492,8 @@
       "opponent": "TB",
       "is_home": false,
       "game_id": "2026_04_GB_TB",
-      "survival_prob": 0.462158037538772,
-      "weeks_ahead": 2,
+      "survival_prob": 0.6507282187263179,
+      "weeks_ahead": 1,
       "source": "model"
     },
     {
@@ -823,8 +502,8 @@
       "opponent": "DAL",
       "is_home": true,
       "game_id": "2026_04_DAL_HOU",
-      "survival_prob": 0.37093952747093856,
-      "weeks_ahead": 2,
+      "survival_prob": 0.46932548507034993,
+      "weeks_ahead": 1,
       "source": "model"
     },
     {
@@ -833,8 +512,8 @@
       "opponent": "WAS",
       "is_home": false,
       "game_id": "2026_04_IND_WAS",
-      "survival_prob": 0.410543754132296,
-      "weeks_ahead": 2,
+      "survival_prob": 0.5298058574736637,
+      "weeks_ahead": 1,
       "source": "model"
     },
     {
@@ -843,8 +522,8 @@
       "opponent": "CIN",
       "is_home": false,
       "game_id": "2026_04_JAX_CIN",
-      "survival_prob": 0.37937197036291626,
-      "weeks_ahead": 2,
+      "survival_prob": 0.4888366756653795,
+      "weeks_ahead": 1,
       "source": "model"
     },
     {
@@ -853,8 +532,8 @@
       "opponent": "LV",
       "is_home": false,
       "game_id": "2026_04_KC_LV",
-      "survival_prob": 0.6235878835606781,
-      "weeks_ahead": 2,
+      "survival_prob": 0.4863781248630153,
+      "weeks_ahead": 1,
       "source": "model"
     },
     {
@@ -863,8 +542,8 @@
       "opponent": "PHI",
       "is_home": false,
       "game_id": "2026_04_LA_PHI",
-      "survival_prob": 0.4502483327888887,
-      "weeks_ahead": 2,
+      "survival_prob": 0.6350215826524059,
+      "weeks_ahead": 1,
       "source": "model"
     },
     {
@@ -873,8 +552,8 @@
       "opponent": "SEA",
       "is_home": false,
       "game_id": "2026_04_LAC_SEA",
-      "survival_prob": 0.3100070278353333,
-      "weeks_ahead": 2,
+      "survival_prob": 0.3224718793418656,
+      "weeks_ahead": 1,
       "source": "model"
     },
     {
@@ -883,8 +562,8 @@
       "opponent": "KC",
       "is_home": true,
       "game_id": "2026_04_KC_LV",
-      "survival_prob": 0.37455056640907375,
-      "weeks_ahead": 2,
+      "survival_prob": 0.5116694337894875,
+      "weeks_ahead": 1,
       "source": "model"
     },
     {
@@ -893,8 +572,8 @@
       "opponent": "MIN",
       "is_home": false,
       "game_id": "2026_04_MIA_MIN",
-      "survival_prob": 0.4133008025589465,
-      "weeks_ahead": 2,
+      "survival_prob": 0.5188155231257258,
+      "weeks_ahead": 1,
       "source": "model"
     },
     {
@@ -903,8 +582,8 @@
       "opponent": "MIA",
       "is_home": true,
       "game_id": "2026_04_MIA_MIN",
-      "survival_prob": 0.5848376474108052,
-      "weeks_ahead": 2,
+      "survival_prob": 0.47923203552677696,
+      "weeks_ahead": 1,
       "source": "model"
     },
     {
@@ -913,8 +592,8 @@
       "opponent": "BUF",
       "is_home": false,
       "game_id": "2026_04_NE_BUF",
-      "survival_prob": 0.4951722923166894,
-      "weeks_ahead": 2,
+      "survival_prob": 0.38186572755684195,
+      "weeks_ahead": 1,
       "source": "model"
     },
     {
@@ -923,8 +602,8 @@
       "opponent": "ATL",
       "is_home": true,
       "game_id": "2026_04_ATL_NO",
-      "survival_prob": 0.6532814469112258,
-      "weeks_ahead": 2,
+      "survival_prob": 0.6369635405087299,
+      "weeks_ahead": 1,
       "source": "model"
     },
     {
@@ -933,8 +612,8 @@
       "opponent": "ARI",
       "is_home": true,
       "game_id": "2026_04_ARI_NYG",
-      "survival_prob": 0.7296180803970467,
-      "weeks_ahead": 2,
+      "survival_prob": 0.5773003711398988,
+      "weeks_ahead": 1,
       "source": "model"
     },
     {
@@ -943,8 +622,8 @@
       "opponent": "CHI",
       "is_home": false,
       "game_id": "2026_04_NYJ_CHI",
-      "survival_prob": 0.35422513757522733,
-      "weeks_ahead": 2,
+      "survival_prob": 0.34750044449520545,
+      "weeks_ahead": 1,
       "source": "model"
     },
     {
@@ -953,8 +632,8 @@
       "opponent": "LA",
       "is_home": true,
       "game_id": "2026_04_LA_PHI",
-      "survival_prob": 0.5478901171808631,
-      "weeks_ahead": 2,
+      "survival_prob": 0.3630259760000967,
+      "weeks_ahead": 1,
       "source": "model"
     },
     {
@@ -963,8 +642,8 @@
       "opponent": "CLE",
       "is_home": false,
       "game_id": "2026_04_PIT_CLE",
-      "survival_prob": 0.5019227480243363,
-      "weeks_ahead": 2,
+      "survival_prob": 0.45802889944903474,
+      "weeks_ahead": 1,
       "source": "model"
     },
     {
@@ -973,8 +652,8 @@
       "opponent": "LAC",
       "is_home": true,
       "game_id": "2026_04_LAC_SEA",
-      "survival_prob": 0.6881314221344185,
-      "weeks_ahead": 2,
+      "survival_prob": 0.675575679310637,
+      "weeks_ahead": 1,
       "source": "model"
     },
     {
@@ -983,8 +662,8 @@
       "opponent": "DEN",
       "is_home": true,
       "game_id": "2026_04_DEN_SF",
-      "survival_prob": 0.701178194118712,
-      "weeks_ahead": 2,
+      "survival_prob": 0.793659831737523,
+      "weeks_ahead": 1,
       "source": "model"
     },
     {
@@ -993,8 +672,8 @@
       "opponent": "GB",
       "is_home": true,
       "game_id": "2026_04_GB_TB",
-      "survival_prob": 0.5359804124309798,
-      "weeks_ahead": 2,
+      "survival_prob": 0.34731933992618474,
+      "weeks_ahead": 1,
       "source": "model"
     },
     {
@@ -1003,8 +682,8 @@
       "opponent": "BAL",
       "is_home": false,
       "game_id": "2026_04_TEN_BAL",
-      "survival_prob": 0.2357619246524979,
-      "weeks_ahead": 2,
+      "survival_prob": 0.30897597293137424,
+      "weeks_ahead": 1,
       "source": "model"
     },
     {
@@ -1013,28 +692,28 @@
       "opponent": "IND",
       "is_home": true,
       "game_id": "2026_04_IND_WAS",
-      "survival_prob": 0.5875946958374558,
+      "survival_prob": 0.468241701178839,
+      "weeks_ahead": 1,
+      "source": "model"
+    },
+    {
+      "week": 5,
+      "team": "ARI",
+      "opponent": "DET",
+      "is_home": true,
+      "game_id": "2026_05_DET_ARI",
+      "survival_prob": 0.4344152356589326,
       "weeks_ahead": 2,
       "source": "model"
     },
     {
       "week": 5,
-      "team": "ARI",
-      "opponent": "DET",
-      "is_home": true,
-      "game_id": "2026_05_DET_ARI",
-      "survival_prob": 0.5497616703791601,
-      "weeks_ahead": 3,
-      "source": "model"
-    },
-    {
-      "week": 5,
       "team": "ATL",
       "opponent": "BAL",
       "is_home": true,
       "game_id": "2026_05_BAL_ATL",
-      "survival_prob": 0.38847256704469163,
-      "weeks_ahead": 3,
+      "survival_prob": 0.3945774495506682,
+      "weeks_ahead": 2,
       "source": "model"
     },
     {
@@ -1043,8 +722,8 @@
       "opponent": "ATL",
       "is_home": false,
       "game_id": "2026_05_BAL_ATL",
-      "survival_prob": 0.6097566717913561,
-      "weeks_ahead": 3,
+      "survival_prob": 0.6035653307899805,
+      "weeks_ahead": 2,
       "source": "model"
     },
     {
@@ -1053,8 +732,8 @@
       "opponent": "LA",
       "is_home": false,
       "game_id": "2026_05_BUF_LA",
-      "survival_prob": 0.5318905138992672,
-      "weeks_ahead": 3,
+      "survival_prob": 0.4836025688308953,
+      "weeks_ahead": 2,
       "source": "model"
     },
     {
@@ -1063,8 +742,8 @@
       "opponent": "GB",
       "is_home": false,
       "game_id": "2026_05_CHI_GB",
-      "survival_prob": 0.42325101974896717,
-      "weeks_ahead": 3,
+      "survival_prob": 0.456077567043079,
+      "weeks_ahead": 2,
       "source": "model"
     },
     {
@@ -1073,8 +752,8 @@
       "opponent": "MIA",
       "is_home": false,
       "game_id": "2026_05_CIN_MIA",
-      "survival_prob": 0.48671373799192785,
-      "weeks_ahead": 3,
+      "survival_prob": 0.4609107296802041,
+      "weeks_ahead": 2,
       "source": "model"
     },
     {
@@ -1083,8 +762,8 @@
       "opponent": "NYJ",
       "is_home": false,
       "game_id": "2026_05_CLE_NYJ",
-      "survival_prob": 0.4143038511381369,
-      "weeks_ahead": 3,
+      "survival_prob": 0.4186079914986523,
+      "weeks_ahead": 2,
       "source": "model"
     },
     {
@@ -1093,8 +772,8 @@
       "opponent": "TB",
       "is_home": true,
       "game_id": "2026_05_TB_DAL",
-      "survival_prob": 0.6042964079388957,
-      "weeks_ahead": 3,
+      "survival_prob": 0.5901639996006048,
+      "weeks_ahead": 2,
       "source": "model"
     },
     {
@@ -1103,8 +782,8 @@
       "opponent": "LAC",
       "is_home": false,
       "game_id": "2026_05_DEN_LAC",
-      "survival_prob": 0.5378562399969627,
-      "weeks_ahead": 3,
+      "survival_prob": 0.5060334021852121,
+      "weeks_ahead": 2,
       "source": "model"
     },
     {
@@ -1113,8 +792,8 @@
       "opponent": "ARI",
       "is_home": false,
       "game_id": "2026_05_DET_ARI",
-      "survival_prob": 0.4484675684568876,
-      "weeks_ahead": 3,
+      "survival_prob": 0.5637275446817162,
+      "weeks_ahead": 2,
       "source": "model"
     },
     {
@@ -1123,8 +802,8 @@
       "opponent": "CHI",
       "is_home": true,
       "game_id": "2026_05_CHI_GB",
-      "survival_prob": 0.5749782190870806,
-      "weeks_ahead": 3,
+      "survival_prob": 0.5420652132975697,
+      "weeks_ahead": 2,
       "source": "model"
     },
     {
@@ -1133,8 +812,8 @@
       "opponent": "TEN",
       "is_home": false,
       "game_id": "2026_05_HOU_TEN",
-      "survival_prob": 0.5540695476024096,
-      "weeks_ahead": 3,
+      "survival_prob": 0.5725165030705759,
+      "weeks_ahead": 2,
       "source": "model"
     },
     {
@@ -1143,8 +822,8 @@
       "opponent": "PIT",
       "is_home": false,
       "game_id": "2026_05_IND_PIT",
-      "survival_prob": 0.41133645114133066,
-      "weeks_ahead": 3,
+      "survival_prob": 0.39460303334450475,
+      "weeks_ahead": 2,
       "source": "model"
     },
     {
@@ -1153,8 +832,8 @@
       "opponent": "PHI",
       "is_home": true,
       "game_id": "2026_05_PHI_JAX",
-      "survival_prob": 0.6352606743991596,
-      "weeks_ahead": 3,
+      "survival_prob": 0.6179469294430736,
+      "weeks_ahead": 2,
       "source": "model"
     },
     {
@@ -1163,8 +842,8 @@
       "opponent": "BUF",
       "is_home": true,
       "game_id": "2026_05_BUF_LA",
-      "survival_prob": 0.4663387249367804,
-      "weeks_ahead": 3,
+      "survival_prob": 0.5145402115097534,
+      "weeks_ahead": 2,
       "source": "model"
     },
     {
@@ -1173,8 +852,8 @@
       "opponent": "DEN",
       "is_home": true,
       "game_id": "2026_05_DEN_LAC",
-      "survival_prob": 0.46037299883908495,
-      "weeks_ahead": 3,
+      "survival_prob": 0.4921093781554366,
+      "weeks_ahead": 2,
       "source": "model"
     },
     {
@@ -1183,8 +862,8 @@
       "opponent": "NE",
       "is_home": false,
       "game_id": "2026_05_LV_NE",
-      "survival_prob": 0.33752026329984164,
-      "weeks_ahead": 3,
+      "survival_prob": 0.28966191016166437,
+      "weeks_ahead": 2,
       "source": "model"
     },
     {
@@ -1193,8 +872,8 @@
       "opponent": "CIN",
       "is_home": true,
       "game_id": "2026_05_CIN_MIA",
-      "survival_prob": 0.5115155008441199,
-      "weeks_ahead": 3,
+      "survival_prob": 0.5372320506604447,
+      "weeks_ahead": 2,
       "source": "model"
     },
     {
@@ -1203,8 +882,8 @@
       "opponent": "NO",
       "is_home": false,
       "game_id": "2026_05_MIN_NO",
-      "survival_prob": 0.41774406162176925,
-      "weeks_ahead": 3,
+      "survival_prob": 0.3846074424666383,
+      "weeks_ahead": 2,
       "source": "model"
     },
     {
@@ -1213,8 +892,8 @@
       "opponent": "LV",
       "is_home": true,
       "game_id": "2026_05_LV_NE",
-      "survival_prob": 0.6607089755362061,
-      "weeks_ahead": 3,
+      "survival_prob": 0.7084808701789843,
+      "weeks_ahead": 2,
       "source": "model"
     },
     {
@@ -1223,8 +902,8 @@
       "opponent": "MIN",
       "is_home": true,
       "game_id": "2026_05_MIN_NO",
-      "survival_prob": 0.5804851772142785,
-      "weeks_ahead": 3,
+      "survival_prob": 0.6135353378740104,
+      "weeks_ahead": 2,
       "source": "model"
     },
     {
@@ -1233,8 +912,8 @@
       "opponent": "WAS",
       "is_home": false,
       "game_id": "2026_05_NYG_WAS",
-      "survival_prob": 0.5968767090733437,
-      "weeks_ahead": 3,
+      "survival_prob": 0.4057452358626831,
+      "weeks_ahead": 2,
       "source": "model"
     },
     {
@@ -1243,8 +922,8 @@
       "opponent": "CLE",
       "is_home": true,
       "game_id": "2026_05_CLE_NYJ",
-      "survival_prob": 0.5839253876979108,
-      "weeks_ahead": 3,
+      "survival_prob": 0.5795347888419964,
+      "weeks_ahead": 2,
       "source": "model"
     },
     {
@@ -1253,8 +932,8 @@
       "opponent": "JAX",
       "is_home": false,
       "game_id": "2026_05_PHI_JAX",
-      "survival_prob": 0.3629685644368882,
-      "weeks_ahead": 3,
+      "survival_prob": 0.38019585089757507,
+      "weeks_ahead": 2,
       "source": "model"
     },
     {
@@ -1263,8 +942,8 @@
       "opponent": "IND",
       "is_home": true,
       "game_id": "2026_05_IND_PIT",
-      "survival_prob": 0.5868927876947171,
-      "weeks_ahead": 3,
+      "survival_prob": 0.6035397469961439,
+      "weeks_ahead": 2,
       "source": "model"
     },
     {
@@ -1273,8 +952,8 @@
       "opponent": "SF",
       "is_home": true,
       "game_id": "2026_05_SF_SEA",
-      "survival_prob": 0.5505157825854714,
-      "weeks_ahead": 3,
+      "survival_prob": 0.5923913759759888,
+      "weeks_ahead": 2,
       "source": "model"
     },
     {
@@ -1283,8 +962,8 @@
       "opponent": "SEA",
       "is_home": false,
       "game_id": "2026_05_SF_SEA",
-      "survival_prob": 0.44771345625057635,
-      "weeks_ahead": 3,
+      "survival_prob": 0.40575140436465995,
+      "weeks_ahead": 2,
       "source": "model"
     },
     {
@@ -1293,8 +972,8 @@
       "opponent": "DAL",
       "is_home": false,
       "game_id": "2026_05_TB_DAL",
-      "survival_prob": 0.3939328308971519,
-      "weeks_ahead": 3,
+      "survival_prob": 0.4079787807400439,
+      "weeks_ahead": 2,
       "source": "model"
     },
     {
@@ -1303,8 +982,8 @@
       "opponent": "HOU",
       "is_home": true,
       "game_id": "2026_05_HOU_TEN",
-      "survival_prob": 0.44415969123363813,
-      "weeks_ahead": 3,
+      "survival_prob": 0.42562627727007285,
+      "weeks_ahead": 2,
       "source": "model"
     },
     {
@@ -1313,28 +992,28 @@
       "opponent": "NYG",
       "is_home": true,
       "game_id": "2026_05_NYG_WAS",
-      "survival_prob": 0.401352529762704,
+      "survival_prob": 0.5923975444779657,
+      "weeks_ahead": 2,
+      "source": "model"
+    },
+    {
+      "week": 6,
+      "team": "ARI",
+      "opponent": "LA",
+      "is_home": false,
+      "game_id": "2026_06_ARI_LA",
+      "survival_prob": 0.38673979496709066,
       "weeks_ahead": 3,
       "source": "model"
     },
     {
       "week": 6,
-      "team": "ARI",
-      "opponent": "LA",
-      "is_home": false,
-      "game_id": "2026_06_ARI_LA",
-      "survival_prob": 0.3680974498690215,
-      "weeks_ahead": 4,
-      "source": "model"
-    },
-    {
-      "week": 6,
       "team": "ATL",
       "opponent": "CHI",
       "is_home": true,
       "game_id": "2026_06_CHI_ATL",
-      "survival_prob": 0.41583891338899126,
-      "weeks_ahead": 4,
+      "survival_prob": 0.43317579139340473,
+      "weeks_ahead": 3,
       "source": "model"
     },
     {
@@ -1343,8 +1022,8 @@
       "opponent": "CLE",
       "is_home": false,
       "game_id": "2026_06_BAL_CLE",
-      "survival_prob": 0.6519560287546559,
-      "weeks_ahead": 4,
+      "survival_prob": 0.6507115283135788,
+      "weeks_ahead": 3,
       "source": "model"
     },
     {
@@ -1353,8 +1032,8 @@
       "opponent": "LV",
       "is_home": false,
       "game_id": "2026_06_BUF_LV",
-      "survival_prob": 0.577629858697639,
-      "weeks_ahead": 4,
+      "survival_prob": 0.5615000464367401,
+      "weeks_ahead": 3,
       "source": "model"
     },
     {
@@ -1363,8 +1042,8 @@
       "opponent": "PHI",
       "is_home": false,
       "game_id": "2026_06_CAR_PHI",
-      "survival_prob": 0.4062588217870735,
-      "weeks_ahead": 4,
+      "survival_prob": 0.41567931513354633,
+      "weeks_ahead": 3,
       "source": "model"
     },
     {
@@ -1373,8 +1052,8 @@
       "opponent": "ATL",
       "is_home": false,
       "game_id": "2026_06_CHI_ATL",
-      "survival_prob": 0.5824766864880943,
-      "weeks_ahead": 4,
+      "survival_prob": 0.5650575666188592,
+      "weeks_ahead": 3,
       "source": "model"
     },
     {
@@ -1383,8 +1062,8 @@
       "opponent": "BAL",
       "is_home": true,
       "game_id": "2026_06_BAL_CLE",
-      "survival_prob": 0.34635957112242965,
-      "weeks_ahead": 4,
+      "survival_prob": 0.34752182969868506,
+      "weeks_ahead": 3,
       "source": "model"
     },
     {
@@ -1393,8 +1072,8 @@
       "opponent": "GB",
       "is_home": false,
       "game_id": "2026_06_DAL_GB",
-      "survival_prob": 0.5658423166520105,
-      "weeks_ahead": 4,
+      "survival_prob": 0.5292127249995495,
+      "weeks_ahead": 3,
       "source": "model"
     },
     {
@@ -1403,8 +1082,8 @@
       "opponent": "SEA",
       "is_home": true,
       "game_id": "2026_06_SEA_DEN",
-      "survival_prob": 0.5773914978302348,
-      "weeks_ahead": 4,
+      "survival_prob": 0.458833208459855,
+      "weeks_ahead": 3,
       "source": "model"
     },
     {
@@ -1413,8 +1092,8 @@
       "opponent": "DAL",
       "is_home": true,
       "game_id": "2026_06_DAL_GB",
-      "survival_prob": 0.432473283225075,
-      "weeks_ahead": 4,
+      "survival_prob": 0.46902063301271435,
+      "weeks_ahead": 3,
       "source": "model"
     },
     {
@@ -1423,8 +1102,8 @@
       "opponent": "JAX",
       "is_home": false,
       "game_id": "2026_06_HOU_JAX",
-      "survival_prob": 0.35915336532689773,
-      "weeks_ahead": 4,
+      "survival_prob": 0.3931076899409762,
+      "weeks_ahead": 3,
       "source": "model"
     },
     {
@@ -1433,8 +1112,8 @@
       "opponent": "TEN",
       "is_home": true,
       "game_id": "2026_06_TEN_IND",
-      "survival_prob": 0.7003138862772,
-      "weeks_ahead": 4,
+      "survival_prob": 0.6059943045761615,
+      "weeks_ahead": 3,
       "source": "model"
     },
     {
@@ -1443,8 +1122,8 @@
       "opponent": "HOU",
       "is_home": true,
       "game_id": "2026_06_HOU_JAX",
-      "survival_prob": 0.6391622345501877,
-      "weeks_ahead": 4,
+      "survival_prob": 0.6051256680712876,
+      "weeks_ahead": 3,
       "source": "model"
     },
     {
@@ -1453,8 +1132,8 @@
       "opponent": "LAC",
       "is_home": true,
       "game_id": "2026_06_LAC_KC",
-      "survival_prob": 0.6355063484108072,
-      "weeks_ahead": 4,
+      "survival_prob": 0.6066371672726845,
+      "weeks_ahead": 3,
       "source": "model"
     },
     {
@@ -1463,8 +1142,8 @@
       "opponent": "ARI",
       "is_home": true,
       "game_id": "2026_06_ARI_LA",
-      "survival_prob": 0.6302181500080639,
-      "weeks_ahead": 4,
+      "survival_prob": 0.6114935630451732,
+      "weeks_ahead": 3,
       "source": "model"
     },
     {
@@ -1473,8 +1152,8 @@
       "opponent": "KC",
       "is_home": false,
       "game_id": "2026_06_LAC_KC",
-      "survival_prob": 0.36280925146627824,
-      "weeks_ahead": 4,
+      "survival_prob": 0.39159619073957946,
+      "weeks_ahead": 3,
       "source": "model"
     },
     {
@@ -1483,8 +1162,8 @@
       "opponent": "BUF",
       "is_home": true,
       "game_id": "2026_06_BUF_LV",
-      "survival_prob": 0.42068574117944635,
-      "weeks_ahead": 4,
+      "survival_prob": 0.43673331157552386,
+      "weeks_ahead": 3,
       "source": "model"
     },
     {
@@ -1493,8 +1172,8 @@
       "opponent": "NYJ",
       "is_home": true,
       "game_id": "2026_06_NYJ_NE",
-      "survival_prob": 0.7225502845760112,
-      "weeks_ahead": 4,
+      "survival_prob": 0.7223234058755967,
+      "weeks_ahead": 3,
       "source": "model"
     },
     {
@@ -1503,8 +1182,8 @@
       "opponent": "NYG",
       "is_home": false,
       "game_id": "2026_06_NO_NYG",
-      "survival_prob": 0.3272551054031527,
-      "weeks_ahead": 4,
+      "survival_prob": 0.4540893609966453,
+      "weeks_ahead": 3,
       "source": "model"
     },
     {
@@ -1513,8 +1192,8 @@
       "opponent": "NO",
       "is_home": true,
       "game_id": "2026_06_NO_NYG",
-      "survival_prob": 0.6710604944739328,
-      "weeks_ahead": 4,
+      "survival_prob": 0.5441439970156184,
+      "weeks_ahead": 3,
       "source": "model"
     },
     {
@@ -1523,8 +1202,8 @@
       "opponent": "NE",
       "is_home": false,
       "game_id": "2026_06_NYJ_NE",
-      "survival_prob": 0.27576531530107423,
-      "weeks_ahead": 4,
+      "survival_prob": 0.27590995213666714,
+      "weeks_ahead": 3,
       "source": "model"
     },
     {
@@ -1533,8 +1212,8 @@
       "opponent": "CAR",
       "is_home": true,
       "game_id": "2026_06_CAR_PHI",
-      "survival_prob": 0.5920567780900119,
-      "weeks_ahead": 4,
+      "survival_prob": 0.5825540428787175,
+      "weeks_ahead": 3,
       "source": "model"
     },
     {
@@ -1543,8 +1222,8 @@
       "opponent": "TB",
       "is_home": false,
       "game_id": "2026_06_PIT_TB",
-      "survival_prob": 0.4629305164525877,
-      "weeks_ahead": 4,
+      "survival_prob": 0.44880756304378955,
+      "weeks_ahead": 3,
       "source": "model"
     },
     {
@@ -1553,8 +1232,8 @@
       "opponent": "DEN",
       "is_home": false,
       "game_id": "2026_06_SEA_DEN",
-      "survival_prob": 0.42092410204685066,
-      "weeks_ahead": 4,
+      "survival_prob": 0.5394001495524089,
+      "weeks_ahead": 3,
       "source": "model"
     },
     {
@@ -1563,8 +1242,8 @@
       "opponent": "WAS",
       "is_home": true,
       "game_id": "2026_06_WAS_SF",
-      "survival_prob": 0.6797012541799846,
-      "weeks_ahead": 4,
+      "survival_prob": 0.6768498292588587,
+      "weeks_ahead": 3,
       "source": "model"
     },
     {
@@ -1573,8 +1252,8 @@
       "opponent": "PIT",
       "is_home": true,
       "game_id": "2026_06_PIT_TB",
-      "survival_prob": 0.5353850834244978,
-      "weeks_ahead": 4,
+      "survival_prob": 0.5494257949684743,
+      "weeks_ahead": 3,
       "source": "model"
     },
     {
@@ -1583,8 +1262,8 @@
       "opponent": "IND",
       "is_home": false,
       "game_id": "2026_06_TEN_IND",
-      "survival_prob": 0.2980017135998854,
-      "weeks_ahead": 4,
+      "survival_prob": 0.3922390534361023,
+      "weeks_ahead": 3,
       "source": "model"
     },
     {
@@ -1593,28 +1272,28 @@
       "opponent": "SF",
       "is_home": false,
       "game_id": "2026_06_WAS_SF",
-      "survival_prob": 0.31861434569710084,
+      "survival_prob": 0.32138352875340503,
+      "weeks_ahead": 3,
+      "source": "model"
+    },
+    {
+      "week": 7,
+      "team": "ARI",
+      "opponent": "DEN",
+      "is_home": true,
+      "game_id": "2026_07_DEN_ARI",
+      "survival_prob": 0.484355510562635,
       "weeks_ahead": 4,
       "source": "model"
     },
     {
       "week": 7,
-      "team": "ARI",
-      "opponent": "DEN",
-      "is_home": true,
-      "game_id": "2026_07_DEN_ARI",
-      "survival_prob": 0.5597875562638656,
-      "weeks_ahead": 5,
-      "source": "model"
-    },
-    {
-      "week": 7,
       "team": "ATL",
       "opponent": "SF",
       "is_home": true,
       "game_id": "2026_07_SF_ATL",
-      "survival_prob": 0.3973087895217355,
-      "weeks_ahead": 5,
+      "survival_prob": 0.4718020822342506,
+      "weeks_ahead": 4,
       "source": "model"
     },
     {
@@ -1623,8 +1302,8 @@
       "opponent": "CIN",
       "is_home": true,
       "game_id": "2026_07_CIN_BAL",
-      "survival_prob": 0.5552850843216515,
-      "weeks_ahead": 5,
+      "survival_prob": 0.5738203514677405,
+      "weeks_ahead": 4,
       "source": "model"
     },
     {
@@ -1633,8 +1312,8 @@
       "opponent": "TB",
       "is_home": true,
       "game_id": "2026_07_TB_CAR",
-      "survival_prob": 0.5279054524752741,
-      "weeks_ahead": 5,
+      "survival_prob": 0.5524023519860972,
+      "weeks_ahead": 4,
       "source": "model"
     },
     {
@@ -1643,8 +1322,8 @@
       "opponent": "NE",
       "is_home": true,
       "game_id": "2026_07_NE_CHI",
-      "survival_prob": 0.5920350905503222,
-      "weeks_ahead": 5,
+      "survival_prob": 0.5999986287397041,
+      "weeks_ahead": 4,
       "source": "model"
     },
     {
@@ -1653,8 +1332,8 @@
       "opponent": "BAL",
       "is_home": false,
       "game_id": "2026_07_CIN_BAL",
-      "survival_prob": 0.44311266471879956,
-      "weeks_ahead": 5,
+      "survival_prob": 0.42449916669096655,
+      "weeks_ahead": 4,
       "source": "model"
     },
     {
@@ -1663,8 +1342,8 @@
       "opponent": "TEN",
       "is_home": false,
       "game_id": "2026_07_CLE_TEN",
-      "survival_prob": 0.5203038672635447,
-      "weeks_ahead": 5,
+      "survival_prob": 0.4980861075882335,
+      "weeks_ahead": 4,
       "source": "model"
     },
     {
@@ -1673,8 +1352,8 @@
       "opponent": "PHI",
       "is_home": false,
       "game_id": "2026_07_DAL_PHI",
-      "survival_prob": 0.559697322408688,
-      "weeks_ahead": 5,
+      "survival_prob": 0.6002034828256042,
+      "weeks_ahead": 4,
       "source": "model"
     },
     {
@@ -1683,8 +1362,8 @@
       "opponent": "ARI",
       "is_home": false,
       "game_id": "2026_07_DEN_ARI",
-      "survival_prob": 0.43861019277658553,
-      "weeks_ahead": 5,
+      "survival_prob": 0.513964007596072,
+      "weeks_ahead": 4,
       "source": "model"
     },
     {
@@ -1693,8 +1372,8 @@
       "opponent": "GB",
       "is_home": true,
       "game_id": "2026_07_GB_DET",
-      "survival_prob": 0.5232261930256625,
-      "weeks_ahead": 5,
+      "survival_prob": 0.5729706925279678,
+      "weeks_ahead": 4,
       "source": "model"
     },
     {
@@ -1703,8 +1382,8 @@
       "opponent": "DET",
       "is_home": false,
       "game_id": "2026_07_GB_DET",
-      "survival_prob": 0.4751715560147885,
-      "weeks_ahead": 5,
+      "survival_prob": 0.42534882563073917,
+      "weeks_ahead": 4,
       "source": "model"
     },
     {
@@ -1713,8 +1392,8 @@
       "opponent": "NYG",
       "is_home": true,
       "game_id": "2026_07_NYG_HOU",
-      "survival_prob": 0.40814830824072573,
-      "weeks_ahead": 5,
+      "survival_prob": 0.5169316696083803,
+      "weeks_ahead": 4,
       "source": "model"
     },
     {
@@ -1723,8 +1402,8 @@
       "opponent": "MIN",
       "is_home": false,
       "game_id": "2026_07_IND_MIN",
-      "survival_prob": 0.4047041117384968,
-      "weeks_ahead": 5,
+      "survival_prob": 0.47221255936965145,
+      "weeks_ahead": 4,
       "source": "model"
     },
     {
@@ -1733,8 +1412,8 @@
       "opponent": "SEA",
       "is_home": false,
       "game_id": "2026_07_KC_SEA",
-      "survival_prob": 0.4717328953305514,
-      "weeks_ahead": 5,
+      "survival_prob": 0.39287582871636334,
+      "weeks_ahead": 4,
       "source": "model"
     },
     {
@@ -1743,8 +1422,8 @@
       "opponent": "LV",
       "is_home": false,
       "game_id": "2026_07_LA_LV",
-      "survival_prob": 0.5945997848687747,
-      "weeks_ahead": 5,
+      "survival_prob": 0.547390681855172,
+      "weeks_ahead": 4,
       "source": "model"
     },
     {
@@ -1753,8 +1432,8 @@
       "opponent": "LA",
       "is_home": true,
       "game_id": "2026_07_LA_LV",
-      "survival_prob": 0.4037979641716763,
-      "weeks_ahead": 5,
+      "survival_prob": 0.45092883630353486,
+      "weeks_ahead": 4,
       "source": "model"
     },
     {
@@ -1763,8 +1442,8 @@
       "opponent": "NYJ",
       "is_home": false,
       "game_id": "2026_07_MIA_NYJ",
-      "survival_prob": 0.48971758702023155,
-      "weeks_ahead": 5,
+      "survival_prob": 0.4705983569782992,
+      "weeks_ahead": 4,
       "source": "model"
     },
     {
@@ -1773,8 +1452,8 @@
       "opponent": "IND",
       "is_home": true,
       "game_id": "2026_07_IND_MIN",
-      "survival_prob": 0.5936936373019543,
-      "weeks_ahead": 5,
+      "survival_prob": 0.5261069587890556,
+      "weeks_ahead": 4,
       "source": "model"
     },
     {
@@ -1783,8 +1462,8 @@
       "opponent": "CHI",
       "is_home": false,
       "game_id": "2026_07_NE_CHI",
-      "survival_prob": 0.40636265849012887,
-      "weeks_ahead": 5,
+      "survival_prob": 0.39832088941900295,
+      "weeks_ahead": 4,
       "source": "model"
     },
     {
@@ -1793,8 +1472,8 @@
       "opponent": "PIT",
       "is_home": true,
       "game_id": "2026_07_PIT_NO",
-      "survival_prob": 0.5087108023970234,
-      "weeks_ahead": 5,
+      "survival_prob": 0.6018529272276172,
+      "weeks_ahead": 4,
       "source": "model"
     },
     {
@@ -1803,8 +1482,8 @@
       "opponent": "HOU",
       "is_home": false,
       "game_id": "2026_07_NYG_HOU",
-      "survival_prob": 0.5902494407997253,
-      "weeks_ahead": 5,
+      "survival_prob": 0.4813878485503266,
+      "weeks_ahead": 4,
       "source": "model"
     },
     {
@@ -1813,8 +1492,8 @@
       "opponent": "MIA",
       "is_home": true,
       "game_id": "2026_07_MIA_NYJ",
-      "survival_prob": 0.5086801620202195,
-      "weeks_ahead": 5,
+      "survival_prob": 0.5277211611804078,
+      "weeks_ahead": 4,
       "source": "model"
     },
     {
@@ -1823,8 +1502,8 @@
       "opponent": "DAL",
       "is_home": true,
       "game_id": "2026_07_DAL_PHI",
-      "survival_prob": 0.4387004266317631,
-      "weeks_ahead": 5,
+      "survival_prob": 0.3981160353331027,
+      "weeks_ahead": 4,
       "source": "model"
     },
     {
@@ -1833,8 +1512,8 @@
       "opponent": "NO",
       "is_home": false,
       "game_id": "2026_07_PIT_NO",
-      "survival_prob": 0.48968694664342777,
-      "weeks_ahead": 5,
+      "survival_prob": 0.3964665909310898,
+      "weeks_ahead": 4,
       "source": "model"
     },
     {
@@ -1843,8 +1522,8 @@
       "opponent": "KC",
       "is_home": true,
       "game_id": "2026_07_KC_SEA",
-      "survival_prob": 0.5266648537098997,
-      "weeks_ahead": 5,
+      "survival_prob": 0.6054436894423436,
+      "weeks_ahead": 4,
       "source": "model"
     },
     {
@@ -1853,8 +1532,8 @@
       "opponent": "ATL",
       "is_home": false,
       "game_id": "2026_07_SF_ATL",
-      "survival_prob": 0.6010889595187154,
-      "weeks_ahead": 5,
+      "survival_prob": 0.5265174359244564,
+      "weeks_ahead": 4,
       "source": "model"
     },
     {
@@ -1863,8 +1542,8 @@
       "opponent": "CAR",
       "is_home": false,
       "game_id": "2026_07_TB_CAR",
-      "survival_prob": 0.470492296565177,
-      "weeks_ahead": 5,
+      "survival_prob": 0.44591716617260974,
+      "weeks_ahead": 4,
       "source": "model"
     },
     {
@@ -1873,28 +1552,28 @@
       "opponent": "CLE",
       "is_home": true,
       "game_id": "2026_07_CLE_TEN",
-      "survival_prob": 0.4780938817769063,
+      "survival_prob": 0.5002334105704734,
+      "weeks_ahead": 4,
+      "source": "model"
+    },
+    {
+      "week": 8,
+      "team": "ARI",
+      "opponent": "DAL",
+      "is_home": false,
+      "game_id": "2026_08_ARI_DAL",
+      "survival_prob": 0.4121343745732259,
       "weeks_ahead": 5,
       "source": "model"
     },
     {
       "week": 8,
-      "team": "ARI",
-      "opponent": "DAL",
-      "is_home": false,
-      "game_id": "2026_08_ARI_DAL",
-      "survival_prob": 0.4487330191898644,
-      "weeks_ahead": 6,
-      "source": "model"
-    },
-    {
-      "week": 8,
       "team": "ATL",
       "opponent": "TB",
       "is_home": false,
       "game_id": "2026_08_ATL_TB",
-      "survival_prob": 0.3862368822027359,
-      "weeks_ahead": 6,
+      "survival_prob": 0.4299452490656339,
+      "weeks_ahead": 5,
       "source": "model"
     },
     {
@@ -1903,8 +1582,8 @@
       "opponent": "BUF",
       "is_home": false,
       "game_id": "2026_08_BAL_BUF",
-      "survival_prob": 0.45911769347590015,
-      "weeks_ahead": 6,
+      "survival_prob": 0.4804166553823861,
+      "weeks_ahead": 5,
       "source": "model"
     },
     {
@@ -1913,8 +1592,8 @@
       "opponent": "BAL",
       "is_home": true,
       "game_id": "2026_08_BAL_BUF",
-      "survival_prob": 0.5393581982659424,
-      "weeks_ahead": 6,
+      "survival_prob": 0.5179848208428368,
+      "weeks_ahead": 5,
       "source": "model"
     },
     {
@@ -1923,8 +1602,8 @@
       "opponent": "GB",
       "is_home": false,
       "game_id": "2026_08_CAR_GB",
-      "survival_prob": 0.4007466044715295,
-      "weeks_ahead": 6,
+      "survival_prob": 0.4474652355553808,
+      "weeks_ahead": 5,
       "source": "model"
     },
     {
@@ -1933,8 +1612,8 @@
       "opponent": "SEA",
       "is_home": false,
       "game_id": "2026_08_CHI_SEA",
-      "survival_prob": 0.4922518576641676,
-      "weeks_ahead": 6,
+      "survival_prob": 0.3887134504868818,
+      "weeks_ahead": 5,
       "source": "model"
     },
     {
@@ -1943,8 +1622,8 @@
       "opponent": "TEN",
       "is_home": true,
       "game_id": "2026_08_TEN_CIN",
-      "survival_prob": 0.7392293746146311,
-      "weeks_ahead": 6,
+      "survival_prob": 0.6600203428866861,
+      "weeks_ahead": 5,
       "source": "model"
     },
     {
@@ -1953,8 +1632,8 @@
       "opponent": "PIT",
       "is_home": false,
       "game_id": "2026_08_CLE_PIT",
-      "survival_prob": 0.29248699558135577,
-      "weeks_ahead": 6,
+      "survival_prob": 0.310485677110374,
+      "weeks_ahead": 5,
       "source": "model"
     },
     {
@@ -1963,8 +1642,8 @@
       "opponent": "ARI",
       "is_home": true,
       "game_id": "2026_08_ARI_DAL",
-      "survival_prob": 0.5497428725519782,
-      "weeks_ahead": 6,
+      "survival_prob": 0.586267101651997,
+      "weeks_ahead": 5,
       "source": "model"
     },
     {
@@ -1973,8 +1652,8 @@
       "opponent": "KC",
       "is_home": true,
       "game_id": "2026_08_KC_DEN",
-      "survival_prob": 0.5611419080393693,
-      "weeks_ahead": 6,
+      "survival_prob": 0.43524527067929775,
+      "weeks_ahead": 5,
       "source": "model"
     },
     {
@@ -1983,8 +1662,8 @@
       "opponent": "MIN",
       "is_home": true,
       "game_id": "2026_08_MIN_DET",
-      "survival_prob": 0.5689825992539614,
-      "weeks_ahead": 6,
+      "survival_prob": 0.6121362626649391,
+      "weeks_ahead": 5,
       "source": "model"
     },
     {
@@ -1993,8 +1672,8 @@
       "opponent": "CAR",
       "is_home": true,
       "game_id": "2026_08_CAR_GB",
-      "survival_prob": 0.597729287270313,
-      "weeks_ahead": 6,
+      "survival_prob": 0.550936240669842,
+      "weeks_ahead": 5,
       "source": "model"
     },
     {
@@ -2003,8 +1682,8 @@
       "opponent": "JAX",
       "is_home": false,
       "game_id": "2026_08_IND_JAX",
-      "survival_prob": 0.37724948181960255,
-      "weeks_ahead": 6,
+      "survival_prob": 0.4138982378567359,
+      "weeks_ahead": 5,
       "source": "model"
     },
     {
@@ -2013,8 +1692,8 @@
       "opponent": "IND",
       "is_home": true,
       "game_id": "2026_08_IND_JAX",
-      "survival_prob": 0.62122640992224,
-      "weeks_ahead": 6,
+      "survival_prob": 0.584503238368487,
+      "weeks_ahead": 5,
       "source": "model"
     },
     {
@@ -2023,8 +1702,8 @@
       "opponent": "DEN",
       "is_home": false,
       "game_id": "2026_08_KC_DEN",
-      "survival_prob": 0.43733398370247334,
-      "weeks_ahead": 6,
+      "survival_prob": 0.5631562055459252,
+      "weeks_ahead": 5,
       "source": "model"
     },
     {
@@ -2033,8 +1712,8 @@
       "opponent": "LAC",
       "is_home": true,
       "game_id": "2026_08_LAC_LA",
-      "survival_prob": 0.5369581007492715,
-      "weeks_ahead": 6,
+      "survival_prob": 0.5318130833974544,
+      "weeks_ahead": 5,
       "source": "model"
     },
     {
@@ -2043,8 +1722,8 @@
       "opponent": "LA",
       "is_home": false,
       "game_id": "2026_08_LAC_LA",
-      "survival_prob": 0.46151779099257095,
-      "weeks_ahead": 6,
+      "survival_prob": 0.4665883928277685,
+      "weeks_ahead": 5,
       "source": "model"
     },
     {
@@ -2053,8 +1732,8 @@
       "opponent": "NYJ",
       "is_home": false,
       "game_id": "2026_08_LV_NYJ",
-      "survival_prob": 0.43347188303171713,
-      "weeks_ahead": 6,
+      "survival_prob": 0.4121343745732259,
+      "weeks_ahead": 5,
       "source": "model"
     },
     {
@@ -2063,8 +1742,8 @@
       "opponent": "NE",
       "is_home": true,
       "game_id": "2026_08_NE_MIA",
-      "survival_prob": 0.5095885130100426,
-      "weeks_ahead": 6,
+      "survival_prob": 0.446811231917996,
+      "weeks_ahead": 5,
       "source": "model"
     },
     {
@@ -2073,8 +1752,8 @@
       "opponent": "DET",
       "is_home": false,
       "game_id": "2026_08_MIN_DET",
-      "survival_prob": 0.42949329248788115,
-      "weeks_ahead": 6,
+      "survival_prob": 0.38626521356028376,
+      "weeks_ahead": 5,
       "source": "model"
     },
     {
@@ -2083,8 +1762,8 @@
       "opponent": "MIA",
       "is_home": false,
       "game_id": "2026_08_NE_MIA",
-      "survival_prob": 0.4888873787318,
-      "weeks_ahead": 6,
+      "survival_prob": 0.5515902443072269,
+      "weeks_ahead": 5,
       "source": "model"
     },
     {
@@ -2093,8 +1772,8 @@
       "opponent": "LV",
       "is_home": true,
       "game_id": "2026_08_LV_NYJ",
-      "survival_prob": 0.5650040087101255,
-      "weeks_ahead": 6,
+      "survival_prob": 0.586267101651997,
+      "weeks_ahead": 5,
       "source": "model"
     },
     {
@@ -2103,8 +1782,8 @@
       "opponent": "WAS",
       "is_home": false,
       "game_id": "2026_08_PHI_WAS",
-      "survival_prob": 0.47250828086409447,
-      "weeks_ahead": 6,
+      "survival_prob": 0.4560450972062567,
+      "weeks_ahead": 5,
       "source": "model"
     },
     {
@@ -2113,8 +1792,8 @@
       "opponent": "CLE",
       "is_home": true,
       "game_id": "2026_08_CLE_PIT",
-      "survival_prob": 0.7059888961604868,
-      "weeks_ahead": 6,
+      "survival_prob": 0.6879157991148488,
+      "weeks_ahead": 5,
       "source": "model"
     },
     {
@@ -2123,8 +1802,8 @@
       "opponent": "CHI",
       "is_home": true,
       "game_id": "2026_08_CHI_SEA",
-      "survival_prob": 0.5062240340776749,
-      "weeks_ahead": 6,
+      "survival_prob": 0.6096880257383411,
+      "weeks_ahead": 5,
       "source": "model"
     },
     {
@@ -2133,8 +1812,8 @@
       "opponent": "ATL",
       "is_home": true,
       "game_id": "2026_08_ATL_TB",
-      "survival_prob": 0.6122390095391066,
-      "weeks_ahead": 6,
+      "survival_prob": 0.568456227159589,
+      "weeks_ahead": 5,
       "source": "model"
     },
     {
@@ -2143,8 +1822,8 @@
       "opponent": "CIN",
       "is_home": false,
       "game_id": "2026_08_TEN_CIN",
-      "survival_prob": 0.2592465171272115,
-      "weeks_ahead": 6,
+      "survival_prob": 0.3383811333385368,
+      "weeks_ahead": 5,
       "source": "model"
     },
     {
@@ -2153,28 +1832,28 @@
       "opponent": "PHI",
       "is_home": true,
       "game_id": "2026_08_PHI_WAS",
-      "survival_prob": 0.525967610877748,
+      "survival_prob": 0.5423563790189663,
+      "weeks_ahead": 5,
+      "source": "model"
+    },
+    {
+      "week": 9,
+      "team": "ARI",
+      "opponent": "SEA",
+      "is_home": false,
+      "game_id": "2026_09_ARI_SEA",
+      "survival_prob": 0.3415714430425838,
       "weeks_ahead": 6,
       "source": "model"
     },
     {
       "week": 9,
-      "team": "ARI",
-      "opponent": "SEA",
-      "is_home": false,
-      "game_id": "2026_09_ARI_SEA",
-      "survival_prob": 0.4142938392603162,
-      "weeks_ahead": 7,
-      "source": "model"
-    },
-    {
-      "week": 9,
       "team": "ATL",
       "opponent": "CIN",
       "is_home": true,
       "game_id": "2026_09_CIN_ATL",
-      "survival_prob": 0.4741596692590766,
-      "weeks_ahead": 7,
+      "survival_prob": 0.5168736603603737,
+      "weeks_ahead": 6,
       "source": "model"
     },
     {
@@ -2183,8 +1862,8 @@
       "opponent": "JAX",
       "is_home": true,
       "game_id": "2026_09_JAX_BAL",
-      "survival_prob": 0.603179196715031,
-      "weeks_ahead": 7,
+      "survival_prob": 0.555904791366915,
+      "weeks_ahead": 6,
       "source": "model"
     },
     {
@@ -2193,8 +1872,8 @@
       "opponent": "MIN",
       "is_home": false,
       "game_id": "2026_09_BUF_MIN",
-      "survival_prob": 0.5262556301142736,
-      "weeks_ahead": 7,
+      "survival_prob": 0.6366807649960947,
+      "weeks_ahead": 6,
       "source": "model"
     },
     {
@@ -2203,8 +1882,8 @@
       "opponent": "DEN",
       "is_home": true,
       "game_id": "2026_09_DEN_CAR",
-      "survival_prob": 0.43456084731339295,
-      "weeks_ahead": 7,
+      "survival_prob": 0.5755228218322472,
+      "weeks_ahead": 6,
       "source": "model"
     },
     {
@@ -2213,8 +1892,8 @@
       "opponent": "TB",
       "is_home": true,
       "game_id": "2026_09_TB_CHI",
-      "survival_prob": 0.5885504497115691,
-      "weeks_ahead": 7,
+      "survival_prob": 0.5878209197043427,
+      "weeks_ahead": 6,
       "source": "model"
     },
     {
@@ -2223,8 +1902,8 @@
       "opponent": "ATL",
       "is_home": false,
       "game_id": "2026_09_CIN_ATL",
-      "survival_prob": 0.5243905541196395,
-      "weeks_ahead": 7,
+      "survival_prob": 0.48160577678929434,
+      "weeks_ahead": 6,
       "source": "model"
     },
     {
@@ -2233,8 +1912,8 @@
       "opponent": "NO",
       "is_home": false,
       "game_id": "2026_09_CLE_NO",
-      "survival_prob": 0.3386838800183181,
-      "weeks_ahead": 7,
+      "survival_prob": 0.28077301184854553,
+      "weeks_ahead": 6,
       "source": "model"
     },
     {
@@ -2243,8 +1922,8 @@
       "opponent": "IND",
       "is_home": false,
       "game_id": "2026_09_DAL_IND",
-      "survival_prob": 0.5574127660939162,
-      "weeks_ahead": 7,
+      "survival_prob": 0.5784427396352737,
+      "weeks_ahead": 6,
       "source": "model"
     },
     {
@@ -2253,8 +1932,8 @@
       "opponent": "CAR",
       "is_home": false,
       "game_id": "2026_09_DEN_CAR",
-      "survival_prob": 0.5639893760653232,
-      "weeks_ahead": 7,
+      "survival_prob": 0.4229566153174209,
+      "weeks_ahead": 6,
       "source": "model"
     },
     {
@@ -2263,8 +1942,8 @@
       "opponent": "MIA",
       "is_home": false,
       "game_id": "2026_09_DET_MIA",
-      "survival_prob": 0.517117479304123,
-      "weeks_ahead": 7,
+      "survival_prob": 0.5885957278572962,
+      "weeks_ahead": 6,
       "source": "model"
     },
     {
@@ -2273,8 +1952,8 @@
       "opponent": "NE",
       "is_home": false,
       "game_id": "2026_09_GB_NE",
-      "survival_prob": 0.4102908197456041,
-      "weeks_ahead": 7,
+      "survival_prob": 0.4204832975866494,
+      "weeks_ahead": 6,
       "source": "model"
     },
     {
@@ -2283,8 +1962,8 @@
       "opponent": "LAC",
       "is_home": false,
       "game_id": "2026_09_HOU_LAC",
-      "survival_prob": 0.48794126614347727,
-      "weeks_ahead": 7,
+      "survival_prob": 0.4740587651676836,
+      "weeks_ahead": 6,
       "source": "model"
     },
     {
@@ -2293,8 +1972,8 @@
       "opponent": "DAL",
       "is_home": true,
       "game_id": "2026_09_DAL_IND",
-      "survival_prob": 0.4411374572847998,
-      "weeks_ahead": 7,
+      "survival_prob": 0.42003669751439443,
+      "weeks_ahead": 6,
       "source": "model"
     },
     {
@@ -2303,8 +1982,8 @@
       "opponent": "BAL",
       "is_home": false,
       "game_id": "2026_09_JAX_BAL",
-      "survival_prob": 0.3953710266636851,
-      "weeks_ahead": 7,
+      "survival_prob": 0.44257464578275313,
+      "weeks_ahead": 6,
       "source": "model"
     },
     {
@@ -2313,8 +1992,8 @@
       "opponent": "NYJ",
       "is_home": true,
       "game_id": "2026_09_NYJ_KC",
-      "survival_prob": 0.5603941170439362,
-      "weeks_ahead": 7,
+      "survival_prob": 0.6029997893365269,
+      "weeks_ahead": 6,
       "source": "model"
     },
     {
@@ -2323,8 +2002,8 @@
       "opponent": "WAS",
       "is_home": false,
       "game_id": "2026_09_LA_WAS",
-      "survival_prob": 0.5194595960816012,
-      "weeks_ahead": 7,
+      "survival_prob": 0.5908293486766213,
+      "weeks_ahead": 6,
       "source": "model"
     },
     {
@@ -2333,8 +2012,8 @@
       "opponent": "HOU",
       "is_home": true,
       "game_id": "2026_09_HOU_LAC",
-      "survival_prob": 0.5106089572352388,
-      "weeks_ahead": 7,
+      "survival_prob": 0.5244206719819845,
+      "weeks_ahead": 6,
       "source": "model"
     },
     {
@@ -2343,8 +2022,8 @@
       "opponent": "SF",
       "is_home": false,
       "game_id": "2026_09_LV_SF",
-      "survival_prob": 0.25214175951553885,
-      "weeks_ahead": 7,
+      "survival_prob": 0.14437684281576874,
+      "weeks_ahead": 6,
       "source": "model"
     },
     {
@@ -2353,8 +2032,8 @@
       "opponent": "DET",
       "is_home": true,
       "game_id": "2026_09_DET_MIA",
-      "survival_prob": 0.48143274407459313,
-      "weeks_ahead": 7,
+      "survival_prob": 0.4098837092923718,
+      "weeks_ahead": 6,
       "source": "model"
     },
     {
@@ -2363,8 +2042,8 @@
       "opponent": "BUF",
       "is_home": true,
       "game_id": "2026_09_BUF_MIN",
-      "survival_prob": 0.4722945932644426,
-      "weeks_ahead": 7,
+      "survival_prob": 0.3617986721535734,
+      "weeks_ahead": 6,
       "source": "model"
     },
     {
@@ -2373,8 +2052,8 @@
       "opponent": "GB",
       "is_home": true,
       "game_id": "2026_09_GB_NE",
-      "survival_prob": 0.588259403633112,
-      "weeks_ahead": 7,
+      "survival_prob": 0.5779961395630188,
+      "weeks_ahead": 6,
       "source": "model"
     },
     {
@@ -2383,8 +2062,8 @@
       "opponent": "CLE",
       "is_home": true,
       "game_id": "2026_09_CLE_NO",
-      "survival_prob": 0.659866343360398,
-      "weeks_ahead": 7,
+      "survival_prob": 0.7177064253011226,
+      "weeks_ahead": 6,
       "source": "model"
     },
     {
@@ -2393,8 +2072,8 @@
       "opponent": "PHI",
       "is_home": false,
       "game_id": "2026_09_NYG_PHI",
-      "survival_prob": 0.4940130021592553,
-      "weeks_ahead": 7,
+      "survival_prob": 0.36252792694944924,
+      "weeks_ahead": 6,
       "source": "model"
     },
     {
@@ -2403,8 +2082,8 @@
       "opponent": "KC",
       "is_home": false,
       "game_id": "2026_09_NYJ_KC",
-      "survival_prob": 0.43815610633477986,
-      "weeks_ahead": 7,
+      "survival_prob": 0.39547964781314127,
+      "weeks_ahead": 6,
       "source": "model"
     },
     {
@@ -2413,8 +2092,8 @@
       "opponent": "NYG",
       "is_home": true,
       "game_id": "2026_09_NYG_PHI",
-      "survival_prob": 0.5045372212194608,
-      "weeks_ahead": 7,
+      "survival_prob": 0.6359515102002189,
+      "weeks_ahead": 6,
       "source": "model"
     },
     {
@@ -2423,8 +2102,8 @@
       "opponent": "ARI",
       "is_home": true,
       "game_id": "2026_09_ARI_SEA",
-      "survival_prob": 0.5842563841183999,
-      "weeks_ahead": 7,
+      "survival_prob": 0.6569079941070842,
+      "weeks_ahead": 6,
       "source": "model"
     },
     {
@@ -2433,8 +2112,8 @@
       "opponent": "LV",
       "is_home": true,
       "game_id": "2026_09_LV_SF",
-      "survival_prob": 0.7464084638631773,
-      "weeks_ahead": 7,
+      "survival_prob": 0.8541025943338993,
+      "weeks_ahead": 6,
       "source": "model"
     },
     {
@@ -2443,8 +2122,8 @@
       "opponent": "CHI",
       "is_home": false,
       "game_id": "2026_09_TB_CHI",
-      "survival_prob": 0.40999977366714696,
-      "weeks_ahead": 7,
+      "survival_prob": 0.4106585174453255,
+      "weeks_ahead": 6,
       "source": "model"
     },
     {
@@ -2453,28 +2132,28 @@
       "opponent": "LA",
       "is_home": true,
       "game_id": "2026_09_LA_WAS",
-      "survival_prob": 0.47909062729711493,
+      "survival_prob": 0.4076500884730468,
+      "weeks_ahead": 6,
+      "source": "model"
+    },
+    {
+      "week": 10,
+      "team": "ARI",
+      "opponent": "LA",
+      "is_home": true,
+      "game_id": "2026_10_LA_ARI",
+      "survival_prob": 0.43550498077864563,
       "weeks_ahead": 7,
       "source": "model"
     },
     {
       "week": 10,
-      "team": "ARI",
-      "opponent": "LA",
-      "is_home": true,
-      "game_id": "2026_10_LA_ARI",
-      "survival_prob": 0.5879155872169507,
-      "weeks_ahead": 8,
-      "source": "model"
-    },
-    {
-      "week": 10,
       "team": "ATL",
       "opponent": "KC",
       "is_home": true,
       "game_id": "2026_10_KC_ATL",
-      "survival_prob": 0.4010283641861079,
-      "weeks_ahead": 8,
+      "survival_prob": 0.4419516934314613,
+      "weeks_ahead": 7,
       "source": "model"
     },
     {
@@ -2483,8 +2162,8 @@
       "opponent": "LAC",
       "is_home": true,
       "game_id": "2026_10_LAC_BAL",
-      "survival_prob": 0.5876682981052083,
-      "weeks_ahead": 8,
+      "survival_prob": 0.5256766377816046,
+      "weeks_ahead": 7,
       "source": "model"
     },
     {
@@ -2493,8 +2172,8 @@
       "opponent": "NYJ",
       "is_home": false,
       "game_id": "2026_10_BUF_NYJ",
-      "survival_prob": 0.5503080522866981,
-      "weeks_ahead": 8,
+      "survival_prob": 0.6122047813036792,
+      "weeks_ahead": 7,
       "source": "model"
     },
     {
@@ -2503,8 +2182,8 @@
       "opponent": "NO",
       "is_home": false,
       "game_id": "2026_10_CAR_NO",
-      "survival_prob": 0.412417046289615,
-      "weeks_ahead": 8,
+      "survival_prob": 0.4585116893096585,
+      "weeks_ahead": 7,
       "source": "model"
     },
     {
@@ -2513,8 +2192,8 @@
       "opponent": "PIT",
       "is_home": true,
       "game_id": "2026_10_PIT_CIN",
-      "survival_prob": 0.6233062386250209,
-      "weeks_ahead": 8,
+      "survival_prob": 0.5676982187082363,
+      "weeks_ahead": 7,
       "source": "model"
     },
     {
@@ -2523,8 +2202,8 @@
       "opponent": "HOU",
       "is_home": true,
       "game_id": "2026_10_HOU_CLE",
-      "survival_prob": 0.45239653058995755,
-      "weeks_ahead": 8,
+      "survival_prob": 0.4065851249082042,
+      "weeks_ahead": 7,
       "source": "model"
     },
     {
@@ -2533,8 +2212,8 @@
       "opponent": "SF",
       "is_home": true,
       "game_id": "2026_10_SF_DAL",
-      "survival_prob": 0.6001393388335093,
-      "weeks_ahead": 8,
+      "survival_prob": 0.46087702609133563,
+      "weeks_ahead": 7,
       "source": "model"
     },
     {
@@ -2543,8 +2222,8 @@
       "opponent": "NE",
       "is_home": true,
       "game_id": "2026_10_NE_DET",
-      "survival_prob": 0.5795583832019491,
-      "weeks_ahead": 8,
+      "survival_prob": 0.5388612238106492,
+      "weeks_ahead": 7,
       "source": "model"
     },
     {
@@ -2553,8 +2232,8 @@
       "opponent": "MIN",
       "is_home": true,
       "game_id": "2026_10_MIN_GB",
-      "survival_prob": 0.6332426045502143,
-      "weeks_ahead": 8,
+      "survival_prob": 0.6476079718480771,
+      "weeks_ahead": 7,
       "source": "model"
     },
     {
@@ -2563,8 +2242,8 @@
       "opponent": "CLE",
       "is_home": false,
       "game_id": "2026_10_HOU_CLE",
-      "survival_prob": 0.546224399228924,
-      "weeks_ahead": 8,
+      "survival_prob": 0.5919684709667574,
+      "weeks_ahead": 7,
       "source": "model"
     },
     {
@@ -2573,8 +2252,8 @@
       "opponent": "MIA",
       "is_home": true,
       "game_id": "2026_10_MIA_IND",
-      "survival_prob": 0.5056317389246112,
-      "weeks_ahead": 8,
+      "survival_prob": 0.553178282518783,
+      "weeks_ahead": 7,
       "source": "model"
     },
     {
@@ -2583,8 +2262,8 @@
       "opponent": "TEN",
       "is_home": false,
       "game_id": "2026_10_JAX_TEN",
-      "survival_prob": 0.6244110738570389,
-      "weeks_ahead": 8,
+      "survival_prob": 0.6173069601191578,
+      "weeks_ahead": 7,
       "source": "model"
     },
     {
@@ -2593,8 +2272,8 @@
       "opponent": "ATL",
       "is_home": false,
       "game_id": "2026_10_KC_ATL",
-      "survival_prob": 0.5975925656327736,
-      "weeks_ahead": 8,
+      "survival_prob": 0.5566019024435003,
+      "weeks_ahead": 7,
       "source": "model"
     },
     {
@@ -2603,8 +2282,8 @@
       "opponent": "ARI",
       "is_home": false,
       "game_id": "2026_10_LA_ARI",
-      "survival_prob": 0.41070534260193076,
-      "weeks_ahead": 8,
+      "survival_prob": 0.563048615096316,
+      "weeks_ahead": 7,
       "source": "model"
     },
     {
@@ -2613,8 +2292,8 @@
       "opponent": "BAL",
       "is_home": false,
       "game_id": "2026_10_LAC_BAL",
-      "survival_prob": 0.4109526317136733,
-      "weeks_ahead": 8,
+      "survival_prob": 0.47287695809335695,
+      "weeks_ahead": 7,
       "source": "model"
     },
     {
@@ -2623,8 +2302,8 @@
       "opponent": "SEA",
       "is_home": true,
       "game_id": "2026_10_SEA_LV",
-      "survival_prob": 0.49742877307853844,
-      "weeks_ahead": 8,
+      "survival_prob": 0.424005294767028,
+      "weeks_ahead": 7,
       "source": "model"
     },
     {
@@ -2633,8 +2312,8 @@
       "opponent": "IND",
       "is_home": false,
       "game_id": "2026_10_MIA_IND",
-      "survival_prob": 0.49298919089427035,
-      "weeks_ahead": 8,
+      "survival_prob": 0.44537531335617864,
+      "weeks_ahead": 7,
       "source": "model"
     },
     {
@@ -2643,8 +2322,8 @@
       "opponent": "GB",
       "is_home": false,
       "game_id": "2026_10_MIN_GB",
-      "survival_prob": 0.3653783252686673,
-      "weeks_ahead": 8,
+      "survival_prob": 0.3509456240268845,
+      "weeks_ahead": 7,
       "source": "model"
     },
     {
@@ -2653,8 +2332,8 @@
       "opponent": "DET",
       "is_home": false,
       "game_id": "2026_10_NE_DET",
-      "survival_prob": 0.41906254661693243,
-      "weeks_ahead": 8,
+      "survival_prob": 0.4596923720643124,
+      "weeks_ahead": 7,
       "source": "model"
     },
     {
@@ -2663,8 +2342,8 @@
       "opponent": "CAR",
       "is_home": true,
       "game_id": "2026_10_CAR_NO",
-      "survival_prob": 0.5862038835292666,
-      "weeks_ahead": 8,
+      "survival_prob": 0.5400419065653032,
+      "weeks_ahead": 7,
       "source": "model"
     },
     {
@@ -2673,8 +2352,8 @@
       "opponent": "WAS",
       "is_home": true,
       "game_id": "2026_10_WAS_NYG",
-      "survival_prob": 0.5662469677418306,
-      "weeks_ahead": 8,
+      "survival_prob": 0.40927503016851824,
+      "weeks_ahead": 7,
       "source": "model"
     },
     {
@@ -2683,8 +2362,8 @@
       "opponent": "BUF",
       "is_home": true,
       "game_id": "2026_10_BUF_NYJ",
-      "survival_prob": 0.4483128775321834,
-      "weeks_ahead": 8,
+      "survival_prob": 0.38634881457128245,
+      "weeks_ahead": 7,
       "source": "model"
     },
     {
@@ -2693,8 +2372,8 @@
       "opponent": "CIN",
       "is_home": false,
       "game_id": "2026_10_PIT_CIN",
-      "survival_prob": 0.37531469119386063,
-      "weeks_ahead": 8,
+      "survival_prob": 0.4308553771667253,
+      "weeks_ahead": 7,
       "source": "model"
     },
     {
@@ -2703,8 +2382,8 @@
       "opponent": "LV",
       "is_home": false,
       "game_id": "2026_10_SEA_LV",
-      "survival_prob": 0.501192156740343,
-      "weeks_ahead": 8,
+      "survival_prob": 0.5745483011079336,
+      "weeks_ahead": 7,
       "source": "model"
     },
     {
@@ -2713,8 +2392,8 @@
       "opponent": "DAL",
       "is_home": false,
       "game_id": "2026_10_SF_DAL",
-      "survival_prob": 0.39848159098537217,
-      "weeks_ahead": 8,
+      "survival_prob": 0.537676569783626,
+      "weeks_ahead": 7,
       "source": "model"
     },
     {
@@ -2723,8 +2402,8 @@
       "opponent": "JAX",
       "is_home": true,
       "game_id": "2026_10_JAX_TEN",
-      "survival_prob": 0.3742098559618427,
-      "weeks_ahead": 8,
+      "survival_prob": 0.381246635755804,
+      "weeks_ahead": 7,
       "source": "model"
     },
     {
@@ -2733,28 +2412,28 @@
       "opponent": "NYG",
       "is_home": false,
       "game_id": "2026_10_WAS_NYG",
-      "survival_prob": 0.43237396207705087,
+      "survival_prob": 0.5892785657064433,
+      "weeks_ahead": 7,
+      "source": "model"
+    },
+    {
+      "week": 11,
+      "team": "ARI",
+      "opponent": "KC",
+      "is_home": false,
+      "game_id": "2026_11_ARI_KC",
+      "survival_prob": 0.421056325282475,
       "weeks_ahead": 8,
       "source": "model"
     },
     {
       "week": 11,
-      "team": "ARI",
-      "opponent": "KC",
-      "is_home": false,
-      "game_id": "2026_11_ARI_KC",
-      "survival_prob": 0.45470421851803977,
-      "weeks_ahead": 9,
-      "source": "model"
-    },
-    {
-      "week": 11,
       "team": "BAL",
       "opponent": "CAR",
       "is_home": false,
       "game_id": "2026_11_BAL_CAR",
-      "survival_prob": 0.5813497095232308,
-      "weeks_ahead": 9,
+      "survival_prob": 0.5450629576907041,
+      "weeks_ahead": 8,
       "source": "model"
     },
     {
@@ -2763,8 +2442,8 @@
       "opponent": "MIA",
       "is_home": true,
       "game_id": "2026_11_MIA_BUF",
-      "survival_prob": 0.6508529296315403,
-      "weeks_ahead": 9,
+      "survival_prob": 0.659666530193933,
+      "weeks_ahead": 8,
       "source": "model"
     },
     {
@@ -2773,8 +2452,8 @@
       "opponent": "BAL",
       "is_home": true,
       "game_id": "2026_11_BAL_CAR",
-      "survival_prob": 0.4173384783420378,
-      "weeks_ahead": 9,
+      "survival_prob": 0.45356118014584024,
+      "weeks_ahead": 8,
       "source": "model"
     },
     {
@@ -2783,8 +2462,8 @@
       "opponent": "NO",
       "is_home": true,
       "game_id": "2026_11_NO_CHI",
-      "survival_prob": 0.6308693716456224,
-      "weeks_ahead": 9,
+      "survival_prob": 0.5818719526148234,
+      "weeks_ahead": 8,
       "source": "model"
     },
     {
@@ -2793,8 +2472,8 @@
       "opponent": "WAS",
       "is_home": false,
       "game_id": "2026_11_CIN_WAS",
-      "survival_prob": 0.46523397921908693,
-      "weeks_ahead": 9,
+      "survival_prob": 0.44083186585577694,
+      "weeks_ahead": 8,
       "source": "model"
     },
     {
@@ -2803,8 +2482,8 @@
       "opponent": "TEN",
       "is_home": true,
       "game_id": "2026_11_TEN_DAL",
-      "survival_prob": 0.7116913249213279,
-      "weeks_ahead": 9,
+      "survival_prob": 0.7258797862386694,
+      "weeks_ahead": 8,
       "source": "model"
     },
     {
@@ -2813,8 +2492,8 @@
       "opponent": "LV",
       "is_home": true,
       "game_id": "2026_11_LV_DEN",
-      "survival_prob": 0.6515766973418962,
-      "weeks_ahead": 9,
+      "survival_prob": 0.6127705513450243,
+      "weeks_ahead": 8,
       "source": "model"
     },
     {
@@ -2823,8 +2502,8 @@
       "opponent": "TB",
       "is_home": true,
       "game_id": "2026_11_TB_DET",
-      "survival_prob": 0.5269208072694803,
-      "weeks_ahead": 9,
+      "survival_prob": 0.5643965376215592,
+      "weeks_ahead": 8,
       "source": "model"
     },
     {
@@ -2833,8 +2512,8 @@
       "opponent": "IND",
       "is_home": true,
       "game_id": "2026_11_IND_HOU",
-      "survival_prob": 0.4810579287459705,
-      "weeks_ahead": 9,
+      "survival_prob": 0.5647861600475429,
+      "weeks_ahead": 8,
       "source": "model"
     },
     {
@@ -2843,8 +2522,8 @@
       "opponent": "HOU",
       "is_home": false,
       "game_id": "2026_11_IND_HOU",
-      "survival_prob": 0.517630259119298,
-      "weeks_ahead": 9,
+      "survival_prob": 0.43383797778900135,
+      "weeks_ahead": 8,
       "source": "model"
     },
     {
@@ -2853,8 +2532,8 @@
       "opponent": "NYG",
       "is_home": false,
       "game_id": "2026_11_JAX_NYG",
-      "survival_prob": 0.3806234843420635,
-      "weeks_ahead": 9,
+      "survival_prob": 0.5195452435252447,
+      "weeks_ahead": 8,
       "source": "model"
     },
     {
@@ -2863,8 +2542,8 @@
       "opponent": "ARI",
       "is_home": true,
       "game_id": "2026_11_ARI_KC",
-      "survival_prob": 0.5439839693472288,
-      "weeks_ahead": 9,
+      "survival_prob": 0.5775678125540692,
+      "weeks_ahead": 8,
       "source": "model"
     },
     {
@@ -2873,8 +2552,8 @@
       "opponent": "NYJ",
       "is_home": true,
       "game_id": "2026_11_NYJ_LAC",
-      "survival_prob": 0.4467074148835515,
-      "weeks_ahead": 9,
+      "survival_prob": 0.5430989734102498,
+      "weeks_ahead": 8,
       "source": "model"
     },
     {
@@ -2883,8 +2562,8 @@
       "opponent": "DEN",
       "is_home": false,
       "game_id": "2026_11_LV_DEN",
-      "survival_prob": 0.3471114905233724,
-      "weeks_ahead": 9,
+      "survival_prob": 0.38585358649151996,
+      "weeks_ahead": 8,
       "source": "model"
     },
     {
@@ -2893,8 +2572,8 @@
       "opponent": "BUF",
       "is_home": false,
       "game_id": "2026_11_MIA_BUF",
-      "survival_prob": 0.3478352582337283,
-      "weeks_ahead": 9,
+      "survival_prob": 0.3389576076426114,
+      "weeks_ahead": 8,
       "source": "model"
     },
     {
@@ -2903,8 +2582,8 @@
       "opponent": "SF",
       "is_home": false,
       "game_id": "2026_11_MIN_SF",
-      "survival_prob": 0.3419217743032859,
-      "weeks_ahead": 9,
+      "survival_prob": 0.24910832376772418,
+      "weeks_ahead": 8,
       "source": "model"
     },
     {
@@ -2913,8 +2592,8 @@
       "opponent": "CHI",
       "is_home": false,
       "game_id": "2026_11_NO_CHI",
-      "survival_prob": 0.36781881621964607,
-      "weeks_ahead": 9,
+      "survival_prob": 0.41675218522172086,
+      "weeks_ahead": 8,
       "source": "model"
     },
     {
@@ -2923,8 +2602,8 @@
       "opponent": "JAX",
       "is_home": true,
       "game_id": "2026_11_JAX_NYG",
-      "survival_prob": 0.6180647035232051,
-      "weeks_ahead": 9,
+      "survival_prob": 0.47907889431129963,
+      "weeks_ahead": 8,
       "source": "model"
     },
     {
@@ -2933,8 +2612,8 @@
       "opponent": "LAC",
       "is_home": false,
       "game_id": "2026_11_NYJ_LAC",
-      "survival_prob": 0.5519807729817171,
-      "weeks_ahead": 9,
+      "survival_prob": 0.4555251644262945,
+      "weeks_ahead": 8,
       "source": "model"
     },
     {
@@ -2943,8 +2622,8 @@
       "opponent": "PIT",
       "is_home": true,
       "game_id": "2026_11_PIT_PHI",
-      "survival_prob": 0.5787117422988963,
-      "weeks_ahead": 9,
+      "survival_prob": 0.5946515042232279,
+      "weeks_ahead": 8,
       "source": "model"
     },
     {
@@ -2953,8 +2632,8 @@
       "opponent": "PHI",
       "is_home": false,
       "game_id": "2026_11_PIT_PHI",
-      "survival_prob": 0.41997644556637226,
-      "weeks_ahead": 9,
+      "survival_prob": 0.4039726336133164,
+      "weeks_ahead": 8,
       "source": "model"
     },
     {
@@ -2963,8 +2642,8 @@
       "opponent": "MIN",
       "is_home": true,
       "game_id": "2026_11_MIN_SF",
-      "survival_prob": 0.6567664135619827,
-      "weeks_ahead": 9,
+      "survival_prob": 0.7495158140688201,
+      "weeks_ahead": 8,
       "source": "model"
     },
     {
@@ -2973,8 +2652,8 @@
       "opponent": "DET",
       "is_home": false,
       "game_id": "2026_11_TB_DET",
-      "survival_prob": 0.47176738059578827,
-      "weeks_ahead": 9,
+      "survival_prob": 0.43422760021498513,
+      "weeks_ahead": 8,
       "source": "model"
     },
     {
@@ -2983,8 +2662,8 @@
       "opponent": "DAL",
       "is_home": false,
       "game_id": "2026_11_TEN_DAL",
-      "survival_prob": 0.28699686294394067,
-      "weeks_ahead": 9,
+      "survival_prob": 0.2727443515978748,
+      "weeks_ahead": 8,
       "source": "model"
     },
     {
@@ -2993,28 +2672,28 @@
       "opponent": "CIN",
       "is_home": true,
       "game_id": "2026_11_CIN_WAS",
-      "survival_prob": 0.5334542086461816,
+      "survival_prob": 0.5577922719807673,
+      "weeks_ahead": 8,
+      "source": "model"
+    },
+    {
+      "week": 12,
+      "team": "ARI",
+      "opponent": "WAS",
+      "is_home": true,
+      "game_id": "2026_12_WAS_ARI",
+      "survival_prob": 0.5001817803350619,
       "weeks_ahead": 9,
       "source": "model"
     },
     {
       "week": 12,
-      "team": "ARI",
-      "opponent": "WAS",
-      "is_home": true,
-      "game_id": "2026_12_WAS_ARI",
-      "survival_prob": 0.5549153223484973,
-      "weeks_ahead": 10,
-      "source": "model"
-    },
-    {
-      "week": 12,
       "team": "ATL",
       "opponent": "MIN",
       "is_home": false,
       "game_id": "2026_12_ATL_MIN",
-      "survival_prob": 0.486536667914416,
-      "weeks_ahead": 10,
+      "survival_prob": 0.5088530259613155,
+      "weeks_ahead": 9,
       "source": "model"
     },
     {
@@ -3023,8 +2702,8 @@
       "opponent": "HOU",
       "is_home": false,
       "game_id": "2026_12_BAL_HOU",
-      "survival_prob": 0.5708807734938313,
-      "weeks_ahead": 10,
+      "survival_prob": 0.5448409941666769,
+      "weeks_ahead": 9,
       "source": "model"
     },
     {
@@ -3033,8 +2712,8 @@
       "opponent": "KC",
       "is_home": true,
       "game_id": "2026_12_KC_BUF",
-      "survival_prob": 0.4842352058288378,
-      "weeks_ahead": 10,
+      "survival_prob": 0.5484883201659235,
+      "weeks_ahead": 9,
       "source": "model"
     },
     {
@@ -3043,8 +2722,8 @@
       "opponent": "TB",
       "is_home": false,
       "game_id": "2026_12_CAR_TB",
-      "survival_prob": 0.4657868359844978,
-      "weeks_ahead": 10,
+      "survival_prob": 0.47907777016007863,
+      "weeks_ahead": 9,
       "source": "model"
     },
     {
@@ -3053,8 +2732,8 @@
       "opponent": "DET",
       "is_home": false,
       "game_id": "2026_12_CHI_DET",
-      "survival_prob": 0.5257922398377852,
-      "weeks_ahead": 10,
+      "survival_prob": 0.47907777016007863,
+      "weeks_ahead": 9,
       "source": "model"
     },
     {
@@ -3063,8 +2742,8 @@
       "opponent": "NO",
       "is_home": true,
       "game_id": "2026_12_NO_CIN",
-      "survival_prob": 0.5802701497719521,
-      "weeks_ahead": 10,
+      "survival_prob": 0.5001817803350619,
+      "weeks_ahead": 9,
       "source": "model"
     },
     {
@@ -3073,8 +2752,8 @@
       "opponent": "LV",
       "is_home": true,
       "game_id": "2026_12_LV_CLE",
-      "survival_prob": 0.46151038196364363,
-      "weeks_ahead": 10,
+      "survival_prob": 0.4959116796702955,
+      "weeks_ahead": 9,
       "source": "model"
     },
     {
@@ -3083,8 +2762,8 @@
       "opponent": "PHI",
       "is_home": true,
       "game_id": "2026_12_PHI_DAL",
-      "survival_prob": 0.5579113391448874,
-      "weeks_ahead": 10,
+      "survival_prob": 0.5462311739949027,
+      "weeks_ahead": 9,
       "source": "model"
     },
     {
@@ -3093,8 +2772,8 @@
       "opponent": "PIT",
       "is_home": false,
       "game_id": "2026_12_DEN_PIT",
-      "survival_prob": 0.4794056160248947,
-      "weeks_ahead": 10,
+      "survival_prob": 0.44893752837002737,
+      "weeks_ahead": 9,
       "source": "model"
     },
     {
@@ -3103,8 +2782,8 @@
       "opponent": "CHI",
       "is_home": true,
       "game_id": "2026_12_CHI_DET",
-      "survival_prob": 0.4729599258602411,
-      "weeks_ahead": 10,
+      "survival_prob": 0.5196134692659851,
+      "weeks_ahead": 9,
       "source": "model"
     },
     {
@@ -3113,8 +2792,8 @@
       "opponent": "LA",
       "is_home": false,
       "game_id": "2026_12_GB_LA",
-      "survival_prob": 0.4711376092034374,
-      "weeks_ahead": 10,
+      "survival_prob": 0.4359555939786709,
+      "weeks_ahead": 9,
       "source": "model"
     },
     {
@@ -3123,8 +2802,8 @@
       "opponent": "BAL",
       "is_home": true,
       "game_id": "2026_12_BAL_HOU",
-      "survival_prob": 0.42787139220419507,
-      "weeks_ahead": 10,
+      "survival_prob": 0.45385024525938683,
+      "weeks_ahead": 9,
       "source": "model"
     },
     {
@@ -3133,8 +2812,8 @@
       "opponent": "NYG",
       "is_home": true,
       "game_id": "2026_12_NYG_IND",
-      "survival_prob": 0.43278417966112026,
-      "weeks_ahead": 10,
+      "survival_prob": 0.4758297692564491,
+      "weeks_ahead": 9,
       "source": "model"
     },
     {
@@ -3143,8 +2822,8 @@
       "opponent": "TEN",
       "is_home": true,
       "game_id": "2026_12_TEN_JAX",
-      "survival_prob": 0.6739269518227158,
-      "weeks_ahead": 10,
+      "survival_prob": 0.6052204697846466,
+      "weeks_ahead": 9,
       "source": "model"
     },
     {
@@ -3153,8 +2832,8 @@
       "opponent": "BUF",
       "is_home": false,
       "game_id": "2026_12_KC_BUF",
-      "survival_prob": 0.5145169598691887,
-      "weeks_ahead": 10,
+      "survival_prob": 0.4502029192601401,
+      "weeks_ahead": 9,
       "source": "model"
     },
     {
@@ -3163,8 +2842,8 @@
       "opponent": "GB",
       "is_home": true,
       "game_id": "2026_12_GB_LA",
-      "survival_prob": 0.527614556494589,
-      "weeks_ahead": 10,
+      "survival_prob": 0.5627356454473929,
+      "weeks_ahead": 9,
       "source": "model"
     },
     {
@@ -3173,8 +2852,8 @@
       "opponent": "NE",
       "is_home": true,
       "game_id": "2026_12_NE_LAC",
-      "survival_prob": 0.5707907357063587,
-      "weeks_ahead": 10,
+      "survival_prob": 0.45140664824717397,
+      "weeks_ahead": 9,
       "source": "model"
     },
     {
@@ -3183,8 +2862,8 @@
       "opponent": "CLE",
       "is_home": false,
       "game_id": "2026_12_LV_CLE",
-      "survival_prob": 0.5372417837343828,
-      "weeks_ahead": 10,
+      "survival_prob": 0.5027795597557682,
+      "weeks_ahead": 9,
       "source": "model"
     },
     {
@@ -3193,8 +2872,8 @@
       "opponent": "NYJ",
       "is_home": true,
       "game_id": "2026_12_NYJ_MIA",
-      "survival_prob": 0.4740198222963698,
-      "weeks_ahead": 10,
+      "survival_prob": 0.5897508829418103,
+      "weeks_ahead": 9,
       "source": "model"
     },
     {
@@ -3203,8 +2882,8 @@
       "opponent": "ATL",
       "is_home": true,
       "game_id": "2026_12_ATL_MIN",
-      "survival_prob": 0.5122154977836103,
-      "weeks_ahead": 10,
+      "survival_prob": 0.4898382134647482,
+      "weeks_ahead": 9,
       "source": "model"
     },
     {
@@ -3213,8 +2892,8 @@
       "opponent": "LAC",
       "is_home": false,
       "game_id": "2026_12_NE_LAC",
-      "survival_prob": 0.42796142999166764,
-      "weeks_ahead": 10,
+      "survival_prob": 0.5472845911788897,
+      "weeks_ahead": 9,
       "source": "model"
     },
     {
@@ -3223,8 +2902,8 @@
       "opponent": "CIN",
       "is_home": false,
       "game_id": "2026_12_NO_CIN",
-      "survival_prob": 0.41848201592607426,
-      "weeks_ahead": 10,
+      "survival_prob": 0.49850945909100186,
+      "weeks_ahead": 9,
       "source": "model"
     },
     {
@@ -3233,8 +2912,8 @@
       "opponent": "IND",
       "is_home": false,
       "game_id": "2026_12_NYG_IND",
-      "survival_prob": 0.565967986036906,
-      "weeks_ahead": 10,
+      "survival_prob": 0.5228614701696146,
+      "weeks_ahead": 9,
       "source": "model"
     },
     {
@@ -3243,8 +2922,8 @@
       "opponent": "MIA",
       "is_home": false,
       "game_id": "2026_12_NYJ_MIA",
-      "survival_prob": 0.5247323434016565,
-      "weeks_ahead": 10,
+      "survival_prob": 0.40894035648425336,
+      "weeks_ahead": 9,
       "source": "model"
     },
     {
@@ -3253,8 +2932,8 @@
       "opponent": "DAL",
       "is_home": false,
       "game_id": "2026_12_PHI_DAL",
-      "survival_prob": 0.440840826553139,
-      "weeks_ahead": 10,
+      "survival_prob": 0.4524600654311611,
+      "weeks_ahead": 9,
       "source": "model"
     },
     {
@@ -3263,8 +2942,8 @@
       "opponent": "DEN",
       "is_home": true,
       "game_id": "2026_12_DEN_PIT",
-      "survival_prob": 0.5193465496731318,
-      "weeks_ahead": 10,
+      "survival_prob": 0.5497537110560363,
+      "weeks_ahead": 9,
       "source": "model"
     },
     {
@@ -3273,8 +2952,8 @@
       "opponent": "SF",
       "is_home": false,
       "game_id": "2026_12_SEA_SF",
-      "survival_prob": 0.3683845738069299,
-      "weeks_ahead": 10,
+      "survival_prob": 0.43789191850549586,
+      "weeks_ahead": 9,
       "source": "model"
     },
     {
@@ -3283,8 +2962,8 @@
       "opponent": "SEA",
       "is_home": true,
       "game_id": "2026_12_SEA_SF",
-      "survival_prob": 0.6303675918910965,
-      "weeks_ahead": 10,
+      "survival_prob": 0.5607993209205678,
+      "weeks_ahead": 9,
       "source": "model"
     },
     {
@@ -3293,8 +2972,8 @@
       "opponent": "CAR",
       "is_home": true,
       "game_id": "2026_12_CAR_TB",
-      "survival_prob": 0.5329653297135285,
-      "weeks_ahead": 10,
+      "survival_prob": 0.5196134692659851,
+      "weeks_ahead": 9,
       "source": "model"
     },
     {
@@ -3303,8 +2982,8 @@
       "opponent": "JAX",
       "is_home": false,
       "game_id": "2026_12_TEN_JAX",
-      "survival_prob": 0.32482521387531055,
-      "weeks_ahead": 10,
+      "survival_prob": 0.39347076964141703,
+      "weeks_ahead": 9,
       "source": "model"
     },
     {
@@ -3313,28 +2992,28 @@
       "opponent": "ARI",
       "is_home": false,
       "game_id": "2026_12_WAS_ARI",
-      "survival_prob": 0.44383684334952916,
+      "survival_prob": 0.49850945909100186,
+      "weeks_ahead": 9,
+      "source": "model"
+    },
+    {
+      "week": 13,
+      "team": "ARI",
+      "opponent": "PHI",
+      "is_home": true,
+      "game_id": "2026_13_PHI_ARI",
+      "survival_prob": 0.4643032716722882,
       "weeks_ahead": 10,
       "source": "model"
     },
     {
       "week": 13,
-      "team": "ARI",
-      "opponent": "PHI",
-      "is_home": true,
-      "game_id": "2026_13_PHI_ARI",
-      "survival_prob": 0.5706777022305972,
-      "weeks_ahead": 11,
-      "source": "model"
-    },
-    {
-      "week": 13,
       "team": "ATL",
       "opponent": "DET",
       "is_home": true,
       "game_id": "2026_13_DET_ATL",
-      "survival_prob": 0.4727829383245913,
-      "weeks_ahead": 11,
+      "survival_prob": 0.4877043231813634,
+      "weeks_ahead": 10,
       "source": "model"
     },
     {
@@ -3343,8 +3022,8 @@
       "opponent": "NE",
       "is_home": false,
       "game_id": "2026_13_BUF_NE",
-      "survival_prob": 0.4303621380796803,
-      "weeks_ahead": 11,
+      "survival_prob": 0.48005038138728684,
+      "weeks_ahead": 10,
       "source": "model"
     },
     {
@@ -3353,8 +3032,8 @@
       "opponent": "MIN",
       "is_home": false,
       "game_id": "2026_13_CAR_MIN",
-      "survival_prob": 0.40995843715843927,
-      "weeks_ahead": 11,
+      "survival_prob": 0.487921134451657,
+      "weeks_ahead": 10,
       "source": "model"
     },
     {
@@ -3363,8 +3042,8 @@
       "opponent": "JAX",
       "is_home": true,
       "game_id": "2026_13_JAX_CHI",
-      "survival_prob": 0.6099826143516363,
-      "weeks_ahead": 11,
+      "survival_prob": 0.5576519933197274,
+      "weeks_ahead": 10,
       "source": "model"
     },
     {
@@ -3373,8 +3052,8 @@
       "opponent": "CLE",
       "is_home": false,
       "game_id": "2026_13_CIN_CLE",
-      "survival_prob": 0.5275869564764252,
-      "weeks_ahead": 11,
+      "survival_prob": 0.47837933595943355,
+      "weeks_ahead": 10,
       "source": "model"
     },
     {
@@ -3383,8 +3062,8 @@
       "opponent": "CIN",
       "is_home": true,
       "game_id": "2026_13_CIN_CLE",
-      "survival_prob": 0.47122606681863616,
-      "weeks_ahead": 11,
+      "survival_prob": 0.5203757324730118,
+      "weeks_ahead": 10,
       "source": "model"
     },
     {
@@ -3393,8 +3072,8 @@
       "opponent": "SEA",
       "is_home": false,
       "game_id": "2026_13_DAL_SEA",
-      "survival_prob": 0.472545244612871,
-      "weeks_ahead": 11,
+      "survival_prob": 0.4499967078966308,
+      "weeks_ahead": 10,
       "source": "model"
     },
     {
@@ -3403,8 +3082,8 @@
       "opponent": "MIA",
       "is_home": true,
       "game_id": "2026_13_MIA_DEN",
-      "survival_prob": 0.5970653063086734,
-      "weeks_ahead": 11,
+      "survival_prob": 0.5521691183629228,
+      "weeks_ahead": 10,
       "source": "model"
     },
     {
@@ -3413,8 +3092,8 @@
       "opponent": "ATL",
       "is_home": false,
       "game_id": "2026_13_DET_ATL",
-      "survival_prob": 0.5260300849704701,
-      "weeks_ahead": 11,
+      "survival_prob": 0.511050745251082,
+      "weeks_ahead": 10,
       "source": "model"
     },
     {
@@ -3423,8 +3102,8 @@
       "opponent": "NO",
       "is_home": false,
       "game_id": "2026_13_GB_NO",
-      "survival_prob": 0.5397857091217911,
-      "weeks_ahead": 11,
+      "survival_prob": 0.46643622278909175,
+      "weeks_ahead": 10,
       "source": "model"
     },
     {
@@ -3433,8 +3112,8 @@
       "opponent": "PIT",
       "is_home": false,
       "game_id": "2026_13_HOU_PIT",
-      "survival_prob": 0.40563158851085596,
-      "weeks_ahead": 11,
+      "survival_prob": 0.45564846903871453,
+      "weeks_ahead": 10,
       "source": "model"
     },
     {
@@ -3443,8 +3122,8 @@
       "opponent": "CHI",
       "is_home": false,
       "game_id": "2026_13_JAX_CHI",
-      "survival_prob": 0.38883040894342513,
-      "weeks_ahead": 11,
+      "survival_prob": 0.44110307511271796,
+      "weeks_ahead": 10,
       "source": "model"
     },
     {
@@ -3453,8 +3132,8 @@
       "opponent": "LA",
       "is_home": false,
       "game_id": "2026_13_KC_LA",
-      "survival_prob": 0.49536226045590104,
-      "weeks_ahead": 11,
+      "survival_prob": 0.47314401233314635,
+      "weeks_ahead": 10,
       "source": "model"
     },
     {
@@ -3463,8 +3142,8 @@
       "opponent": "KC",
       "is_home": true,
       "game_id": "2026_13_KC_LA",
-      "survival_prob": 0.5034507628391603,
-      "weeks_ahead": 11,
+      "survival_prob": 0.525611056099299,
+      "weeks_ahead": 10,
       "source": "model"
     },
     {
@@ -3473,8 +3152,8 @@
       "opponent": "TB",
       "is_home": false,
       "game_id": "2026_13_LAC_TB",
-      "survival_prob": 0.45271550149744205,
-      "weeks_ahead": 11,
+      "survival_prob": 0.46588191106398824,
+      "weeks_ahead": 10,
       "source": "model"
     },
     {
@@ -3483,8 +3162,8 @@
       "opponent": "DEN",
       "is_home": false,
       "game_id": "2026_13_MIA_DEN",
-      "survival_prob": 0.401747716986388,
-      "weeks_ahead": 11,
+      "survival_prob": 0.4465859500695225,
+      "weeks_ahead": 10,
       "source": "model"
     },
     {
@@ -3493,8 +3172,8 @@
       "opponent": "CAR",
       "is_home": true,
       "game_id": "2026_13_CAR_MIN",
-      "survival_prob": 0.5888545861366221,
-      "weeks_ahead": 11,
+      "survival_prob": 0.5108339339807884,
+      "weeks_ahead": 10,
       "source": "model"
     },
     {
@@ -3503,8 +3182,8 @@
       "opponent": "BUF",
       "is_home": true,
       "game_id": "2026_13_BUF_NE",
-      "survival_prob": 0.568450885215381,
-      "weeks_ahead": 11,
+      "survival_prob": 0.5187046870451586,
+      "weeks_ahead": 10,
       "source": "model"
     },
     {
@@ -3513,8 +3192,8 @@
       "opponent": "GB",
       "is_home": true,
       "game_id": "2026_13_GB_NO",
-      "survival_prob": 0.45902731417327025,
-      "weeks_ahead": 11,
+      "survival_prob": 0.5323188456433536,
+      "weeks_ahead": 10,
       "source": "model"
     },
     {
@@ -3523,8 +3202,8 @@
       "opponent": "SF",
       "is_home": true,
       "game_id": "2026_13_SF_NYG",
-      "survival_prob": 0.47845833152172507,
-      "weeks_ahead": 11,
+      "survival_prob": 0.4135405662691686,
+      "weeks_ahead": 10,
       "source": "model"
     },
     {
@@ -3533,8 +3212,8 @@
       "opponent": "ARI",
       "is_home": false,
       "game_id": "2026_13_PHI_ARI",
-      "survival_prob": 0.42813532106446417,
-      "weeks_ahead": 11,
+      "survival_prob": 0.5344517967601572,
+      "weeks_ahead": 10,
       "source": "model"
     },
     {
@@ -3543,8 +3222,8 @@
       "opponent": "HOU",
       "is_home": true,
       "game_id": "2026_13_HOU_PIT",
-      "survival_prob": 0.5931814347842055,
-      "weeks_ahead": 11,
+      "survival_prob": 0.5431065993937308,
+      "weeks_ahead": 10,
       "source": "model"
     },
     {
@@ -3553,8 +3232,8 @@
       "opponent": "DAL",
       "is_home": true,
       "game_id": "2026_13_DAL_SEA",
-      "survival_prob": 0.5262677786821903,
-      "weeks_ahead": 11,
+      "survival_prob": 0.5487583605358145,
+      "weeks_ahead": 10,
       "source": "model"
     },
     {
@@ -3563,8 +3242,8 @@
       "opponent": "NYG",
       "is_home": false,
       "game_id": "2026_13_SF_NYG",
-      "survival_prob": 0.5203546917733364,
-      "weeks_ahead": 11,
+      "survival_prob": 0.5852145021632768,
+      "weeks_ahead": 10,
       "source": "model"
     },
     {
@@ -3573,8 +3252,8 @@
       "opponent": "LAC",
       "is_home": true,
       "game_id": "2026_13_LAC_TB",
-      "survival_prob": 0.5460975217976194,
-      "weeks_ahead": 11,
+      "survival_prob": 0.5328731573684571,
+      "weeks_ahead": 10,
       "source": "model"
     },
     {
@@ -3583,8 +3262,8 @@
       "opponent": "WAS",
       "is_home": true,
       "game_id": "2026_13_WAS_TEN",
-      "survival_prob": 0.48048174314921616,
-      "weeks_ahead": 11,
+      "survival_prob": 0.4697130508468912,
+      "weeks_ahead": 10,
       "source": "model"
     },
     {
@@ -3593,28 +3272,28 @@
       "opponent": "TEN",
       "is_home": false,
       "game_id": "2026_13_WAS_TEN",
-      "survival_prob": 0.5183312801458453,
+      "survival_prob": 0.5290420175855541,
+      "weeks_ahead": 10,
+      "source": "model"
+    },
+    {
+      "week": 14,
+      "team": "ATL",
+      "opponent": "CLE",
+      "is_home": false,
+      "game_id": "2026_14_ATL_CLE",
+      "survival_prob": 0.5236394658806806,
       "weeks_ahead": 11,
       "source": "model"
     },
     {
       "week": 14,
-      "team": "ATL",
-      "opponent": "CLE",
-      "is_home": false,
-      "game_id": "2026_14_ATL_CLE",
-      "survival_prob": 0.5169296723891925,
-      "weeks_ahead": 12,
-      "source": "model"
-    },
-    {
-      "week": 14,
       "team": "BAL",
       "opponent": "TB",
       "is_home": true,
       "game_id": "2026_14_TB_BAL",
-      "survival_prob": 0.6016651940868867,
-      "weeks_ahead": 12,
+      "survival_prob": 0.567654887683181,
+      "weeks_ahead": 11,
       "source": "model"
     },
     {
@@ -3623,8 +3302,8 @@
       "opponent": "GB",
       "is_home": false,
       "game_id": "2026_14_BUF_GB",
-      "survival_prob": 0.5223185548422016,
-      "weeks_ahead": 12,
+      "survival_prob": 0.5472825367915388,
+      "weeks_ahead": 11,
       "source": "model"
     },
     {
@@ -3633,8 +3312,8 @@
       "opponent": "NO",
       "is_home": true,
       "game_id": "2026_14_NO_CAR",
-      "survival_prob": 0.5028625980246046,
-      "weeks_ahead": 12,
+      "survival_prob": 0.567654887683181,
+      "weeks_ahead": 11,
       "source": "model"
     },
     {
@@ -3643,8 +3322,8 @@
       "opponent": "MIA",
       "is_home": false,
       "game_id": "2026_14_CHI_MIA",
-      "survival_prob": 0.5102136519845643,
-      "weeks_ahead": 12,
+      "survival_prob": 0.5316590404173174,
+      "weeks_ahead": 11,
       "source": "model"
     },
     {
@@ -3653,8 +3332,8 @@
       "opponent": "KC",
       "is_home": true,
       "game_id": "2026_14_KC_CIN",
-      "survival_prob": 0.5044207276090317,
-      "weeks_ahead": 12,
+      "survival_prob": 0.484533830223885,
+      "weeks_ahead": 11,
       "source": "model"
     },
     {
@@ -3663,8 +3342,8 @@
       "opponent": "ATL",
       "is_home": true,
       "game_id": "2026_14_ATL_CLE",
-      "survival_prob": 0.481941240442873,
-      "weeks_ahead": 12,
+      "survival_prob": 0.4751763185807717,
+      "weeks_ahead": 11,
       "source": "model"
     },
     {
@@ -3673,8 +3352,8 @@
       "opponent": "NYJ",
       "is_home": false,
       "game_id": "2026_14_DEN_NYJ",
-      "survival_prob": 0.5532118713104304,
-      "weeks_ahead": 12,
+      "survival_prob": 0.5351979426940703,
+      "weeks_ahead": 11,
       "source": "model"
     },
     {
@@ -3683,8 +3362,8 @@
       "opponent": "TEN",
       "is_home": true,
       "game_id": "2026_14_TEN_DET",
-      "survival_prob": 0.660479099754695,
-      "weeks_ahead": 12,
+      "survival_prob": 0.6880831121855485,
+      "weeks_ahead": 11,
       "source": "model"
     },
     {
@@ -3693,8 +3372,8 @@
       "opponent": "BUF",
       "is_home": true,
       "game_id": "2026_14_BUF_GB",
-      "survival_prob": 0.4765523579898639,
-      "weeks_ahead": 12,
+      "survival_prob": 0.45153324766991343,
+      "weeks_ahead": 11,
       "source": "model"
     },
     {
@@ -3703,8 +3382,8 @@
       "opponent": "WAS",
       "is_home": false,
       "game_id": "2026_14_HOU_WAS",
-      "survival_prob": 0.45595593141337754,
-      "weeks_ahead": 12,
+      "survival_prob": 0.4321322477076487,
+      "weeks_ahead": 11,
       "source": "model"
     },
     {
@@ -3713,8 +3392,8 @@
       "opponent": "PHI",
       "is_home": false,
       "game_id": "2026_14_IND_PHI",
-      "survival_prob": 0.43876948407668614,
-      "weeks_ahead": 12,
+      "survival_prob": 0.40561986626574187,
+      "weeks_ahead": 11,
       "source": "model"
     },
     {
@@ -3723,8 +3402,8 @@
       "opponent": "PIT",
       "is_home": true,
       "game_id": "2026_14_PIT_JAX",
-      "survival_prob": 0.6071610035281445,
-      "weeks_ahead": 12,
+      "survival_prob": 0.6014948643084235,
+      "weeks_ahead": 11,
       "source": "model"
     },
     {
@@ -3733,8 +3412,8 @@
       "opponent": "CIN",
       "is_home": false,
       "game_id": "2026_14_KC_CIN",
-      "survival_prob": 0.4944501852230338,
-      "weeks_ahead": 12,
+      "survival_prob": 0.5142819542375672,
+      "weeks_ahead": 11,
       "source": "model"
     },
     {
@@ -3743,8 +3422,8 @@
       "opponent": "SF",
       "is_home": false,
       "game_id": "2026_14_LA_SF",
-      "survival_prob": 0.4037471701253167,
-      "weeks_ahead": 12,
+      "survival_prob": 0.4345013256192666,
+      "weeks_ahead": 11,
       "source": "model"
     },
     {
@@ -3753,8 +3432,8 @@
       "opponent": "LV",
       "is_home": false,
       "game_id": "2026_14_LAC_LV",
-      "survival_prob": 0.44632102041657973,
-      "weeks_ahead": 12,
+      "survival_prob": 0.4797642424589799,
+      "weeks_ahead": 11,
       "source": "model"
     },
     {
@@ -3763,8 +3442,8 @@
       "opponent": "LAC",
       "is_home": true,
       "game_id": "2026_14_LAC_LV",
-      "survival_prob": 0.5525498924154858,
-      "weeks_ahead": 12,
+      "survival_prob": 0.5190515420024723,
+      "weeks_ahead": 11,
       "source": "model"
     },
     {
@@ -3773,8 +3452,8 @@
       "opponent": "CHI",
       "is_home": true,
       "game_id": "2026_14_CHI_MIA",
-      "survival_prob": 0.4886572608475012,
-      "weeks_ahead": 12,
+      "survival_prob": 0.46715674404413476,
+      "weeks_ahead": 11,
       "source": "model"
     },
     {
@@ -3783,8 +3462,8 @@
       "opponent": "NE",
       "is_home": false,
       "game_id": "2026_14_MIN_NE",
-      "survival_prob": 0.3343356186567452,
-      "weeks_ahead": 12,
+      "survival_prob": 0.38512798084783106,
+      "weeks_ahead": 11,
       "source": "model"
     },
     {
@@ -3793,8 +3472,8 @@
       "opponent": "MIN",
       "is_home": true,
       "game_id": "2026_14_MIN_NE",
-      "survival_prob": 0.6645352941753203,
-      "weeks_ahead": 12,
+      "survival_prob": 0.6136878036136212,
+      "weeks_ahead": 11,
       "source": "model"
     },
     {
@@ -3803,8 +3482,8 @@
       "opponent": "CAR",
       "is_home": false,
       "game_id": "2026_14_NO_CAR",
-      "survival_prob": 0.4960083148074608,
-      "weeks_ahead": 12,
+      "survival_prob": 0.4311608967782713,
+      "weeks_ahead": 11,
       "source": "model"
     },
     {
@@ -3813,8 +3492,8 @@
       "opponent": "SEA",
       "is_home": false,
       "game_id": "2026_14_NYG_SEA",
-      "survival_prob": 0.4262036790100167,
-      "weeks_ahead": 12,
+      "survival_prob": 0.39026025201509174,
+      "weeks_ahead": 11,
       "source": "model"
     },
     {
@@ -3823,8 +3502,8 @@
       "opponent": "DEN",
       "is_home": true,
       "game_id": "2026_14_DEN_NYJ",
-      "survival_prob": 0.44565904152163516,
-      "weeks_ahead": 12,
+      "survival_prob": 0.463617841767382,
+      "weeks_ahead": 11,
       "source": "model"
     },
     {
@@ -3833,8 +3512,8 @@
       "opponent": "IND",
       "is_home": true,
       "game_id": "2026_14_IND_PHI",
-      "survival_prob": 0.5601014287553794,
-      "weeks_ahead": 12,
+      "survival_prob": 0.5931959181957104,
+      "weeks_ahead": 11,
       "source": "model"
     },
     {
@@ -3843,8 +3522,8 @@
       "opponent": "JAX",
       "is_home": false,
       "game_id": "2026_14_PIT_JAX",
-      "survival_prob": 0.391709909303921,
-      "weeks_ahead": 12,
+      "survival_prob": 0.3973209201530288,
+      "weeks_ahead": 11,
       "source": "model"
     },
     {
@@ -3853,8 +3532,8 @@
       "opponent": "NYG",
       "is_home": true,
       "game_id": "2026_14_NYG_SEA",
-      "survival_prob": 0.5726672338220488,
-      "weeks_ahead": 12,
+      "survival_prob": 0.6085555324463604,
+      "weeks_ahead": 11,
       "source": "model"
     },
     {
@@ -3863,8 +3542,8 @@
       "opponent": "LA",
       "is_home": true,
       "game_id": "2026_14_LA_SF",
-      "survival_prob": 0.5951237427067488,
-      "weeks_ahead": 12,
+      "survival_prob": 0.5643144588421856,
+      "weeks_ahead": 11,
       "source": "model"
     },
     {
@@ -3873,8 +3552,8 @@
       "opponent": "BAL",
       "is_home": false,
       "game_id": "2026_14_TB_BAL",
-      "survival_prob": 0.3972057187451788,
-      "weeks_ahead": 12,
+      "survival_prob": 0.4311608967782713,
+      "weeks_ahead": 11,
       "source": "model"
     },
     {
@@ -3883,8 +3562,8 @@
       "opponent": "DET",
       "is_home": false,
       "game_id": "2026_14_TEN_DET",
-      "survival_prob": 0.33839181307737043,
-      "weeks_ahead": 12,
+      "survival_prob": 0.3107326722759037,
+      "weeks_ahead": 11,
       "source": "model"
     },
     {
@@ -3893,28 +3572,28 @@
       "opponent": "HOU",
       "is_home": true,
       "game_id": "2026_14_HOU_WAS",
-      "survival_prob": 0.5429149814186879,
+      "survival_prob": 0.5666835367538035,
+      "weeks_ahead": 11,
+      "source": "model"
+    },
+    {
+      "week": 15,
+      "team": "ARI",
+      "opponent": "NYJ",
+      "is_home": true,
+      "game_id": "2026_15_NYJ_ARI",
+      "survival_prob": 0.5766210945377495,
       "weeks_ahead": 12,
       "source": "model"
     },
     {
       "week": 15,
-      "team": "ARI",
-      "opponent": "NYJ",
-      "is_home": true,
-      "game_id": "2026_15_NYJ_ARI",
-      "survival_prob": 0.5981151798469285,
-      "weeks_ahead": 13,
-      "source": "model"
-    },
-    {
-      "week": 15,
       "team": "ATL",
       "opponent": "WAS",
       "is_home": false,
       "game_id": "2026_15_ATL_WAS",
-      "survival_prob": 0.42727069757077213,
-      "weeks_ahead": 13,
+      "survival_prob": 0.4506332513883413,
+      "weeks_ahead": 12,
       "source": "model"
     },
     {
@@ -3923,8 +3602,8 @@
       "opponent": "PIT",
       "is_home": false,
       "game_id": "2026_15_BAL_PIT",
-      "survival_prob": 0.49987874210264127,
-      "weeks_ahead": 13,
+      "survival_prob": 0.5713902943730341,
+      "weeks_ahead": 12,
       "source": "model"
     },
     {
@@ -3933,8 +3612,8 @@
       "opponent": "CHI",
       "is_home": true,
       "game_id": "2026_15_CHI_BUF",
-      "survival_prob": 0.5506701005846673,
-      "weeks_ahead": 13,
+      "survival_prob": 0.6042110175254503,
+      "weeks_ahead": 12,
       "source": "model"
     },
     {
@@ -3943,8 +3622,8 @@
       "opponent": "CIN",
       "is_home": true,
       "game_id": "2026_15_CIN_CAR",
-      "survival_prob": 0.49435174718702757,
-      "weeks_ahead": 13,
+      "survival_prob": 0.5582140322743343,
+      "weeks_ahead": 12,
       "source": "model"
     },
     {
@@ -3953,8 +3632,8 @@
       "opponent": "BUF",
       "is_home": false,
       "game_id": "2026_15_CHI_BUF",
-      "survival_prob": 0.4482558784783673,
-      "weeks_ahead": 13,
+      "survival_prob": 0.3946625218093321,
+      "weeks_ahead": 12,
       "source": "model"
     },
     {
@@ -3963,8 +3642,8 @@
       "opponent": "CAR",
       "is_home": false,
       "game_id": "2026_15_CIN_CAR",
-      "survival_prob": 0.5045742318760069,
-      "weeks_ahead": 13,
+      "survival_prob": 0.4406595070604481,
+      "weeks_ahead": 12,
       "source": "model"
     },
     {
@@ -3973,8 +3652,8 @@
       "opponent": "NYG",
       "is_home": false,
       "game_id": "2026_15_CLE_NYG",
-      "survival_prob": 0.3109845461007298,
-      "weeks_ahead": 13,
+      "survival_prob": 0.40946646244796603,
+      "weeks_ahead": 12,
       "source": "model"
     },
     {
@@ -3983,8 +3662,8 @@
       "opponent": "LA",
       "is_home": false,
       "game_id": "2026_15_DAL_LA",
-      "survival_prob": 0.5283637472561689,
-      "weeks_ahead": 13,
+      "survival_prob": 0.4760910475993007,
+      "weeks_ahead": 12,
       "source": "model"
     },
     {
@@ -3993,8 +3672,8 @@
       "opponent": "LV",
       "is_home": false,
       "game_id": "2026_15_DEN_LV",
-      "survival_prob": 0.5396381339150863,
-      "weeks_ahead": 13,
+      "survival_prob": 0.46209371198279,
+      "weeks_ahead": 12,
       "source": "model"
     },
     {
@@ -4003,8 +3682,8 @@
       "opponent": "MIN",
       "is_home": false,
       "game_id": "2026_15_DET_MIN",
-      "survival_prob": 0.4988127766362619,
-      "weeks_ahead": 13,
+      "survival_prob": 0.5225907126717747,
+      "weeks_ahead": 12,
       "source": "model"
     },
     {
@@ -4013,8 +3692,8 @@
       "opponent": "MIA",
       "is_home": true,
       "game_id": "2026_15_MIA_GB",
-      "survival_prob": 0.5529086513855056,
-      "weeks_ahead": 13,
+      "survival_prob": 0.5568726600761676,
+      "weeks_ahead": 12,
       "source": "model"
     },
     {
@@ -4023,8 +3702,8 @@
       "opponent": "JAX",
       "is_home": true,
       "game_id": "2026_15_JAX_HOU",
-      "survival_prob": 0.4493774972357025,
-      "weeks_ahead": 13,
+      "survival_prob": 0.5001867119496455,
+      "weeks_ahead": 12,
       "source": "model"
     },
     {
@@ -4033,8 +3712,8 @@
       "opponent": "TEN",
       "is_home": false,
       "game_id": "2026_15_IND_TEN",
-      "survival_prob": 0.541512049011387,
-      "weeks_ahead": 13,
+      "survival_prob": 0.536880606620418,
+      "weeks_ahead": 12,
       "source": "model"
     },
     {
@@ -4043,8 +3722,8 @@
       "opponent": "HOU",
       "is_home": false,
       "game_id": "2026_15_JAX_HOU",
-      "survival_prob": 0.549548481827332,
-      "weeks_ahead": 13,
+      "survival_prob": 0.4986868273851369,
+      "weeks_ahead": 12,
       "source": "model"
     },
     {
@@ -4053,8 +3732,8 @@
       "opponent": "NE",
       "is_home": true,
       "game_id": "2026_15_NE_KC",
-      "survival_prob": 0.5806869364845216,
-      "weeks_ahead": 13,
+      "survival_prob": 0.504144840673747,
+      "weeks_ahead": 12,
       "source": "model"
     },
     {
@@ -4063,8 +3742,8 @@
       "opponent": "DAL",
       "is_home": true,
       "game_id": "2026_15_DAL_LA",
-      "survival_prob": 0.47056223180686574,
-      "weeks_ahead": 13,
+      "survival_prob": 0.5227824917354817,
+      "weeks_ahead": 12,
       "source": "model"
     },
     {
@@ -4073,8 +3752,8 @@
       "opponent": "SF",
       "is_home": true,
       "game_id": "2026_15_SF_LAC",
-      "survival_prob": 0.4864853425104467,
-      "weeks_ahead": 13,
+      "survival_prob": 0.41326958967352184,
+      "weeks_ahead": 12,
       "source": "model"
     },
     {
@@ -4083,8 +3762,8 @@
       "opponent": "DEN",
       "is_home": true,
       "game_id": "2026_15_DEN_LV",
-      "survival_prob": 0.4592878451479482,
-      "weeks_ahead": 13,
+      "survival_prob": 0.5367798273519924,
+      "weeks_ahead": 12,
       "source": "model"
     },
     {
@@ -4093,8 +3772,8 @@
       "opponent": "GB",
       "is_home": false,
       "game_id": "2026_15_MIA_GB",
-      "survival_prob": 0.44601732767752894,
-      "weeks_ahead": 13,
+      "survival_prob": 0.44200087925861475,
+      "weeks_ahead": 12,
       "source": "model"
     },
     {
@@ -4103,8 +3782,8 @@
       "opponent": "DET",
       "is_home": true,
       "game_id": "2026_15_DET_MIN",
-      "survival_prob": 0.5001132024267726,
-      "weeks_ahead": 13,
+      "survival_prob": 0.4762828266630077,
+      "weeks_ahead": 12,
       "source": "model"
     },
     {
@@ -4113,8 +3792,8 @@
       "opponent": "KC",
       "is_home": false,
       "game_id": "2026_15_NE_KC",
-      "survival_prob": 0.41823904257851285,
-      "weeks_ahead": 13,
+      "survival_prob": 0.49472869866103547,
+      "weeks_ahead": 12,
       "source": "model"
     },
     {
@@ -4123,8 +3802,8 @@
       "opponent": "TB",
       "is_home": false,
       "game_id": "2026_15_NO_TB",
-      "survival_prob": 0.46373615284804104,
-      "weeks_ahead": 13,
+      "survival_prob": 0.5162608644365372,
+      "weeks_ahead": 12,
       "source": "model"
     },
     {
@@ -4133,8 +3812,8 @@
       "opponent": "CLE",
       "is_home": true,
       "game_id": "2026_15_CLE_NYG",
-      "survival_prob": 0.6879414329623048,
-      "weeks_ahead": 13,
+      "survival_prob": 0.5894070768868165,
+      "weeks_ahead": 12,
       "source": "model"
     },
     {
@@ -4143,8 +3822,8 @@
       "opponent": "ARI",
       "is_home": false,
       "game_id": "2026_15_NYJ_ARI",
-      "survival_prob": 0.400810799216106,
-      "weeks_ahead": 13,
+      "survival_prob": 0.42225244479703294,
+      "weeks_ahead": 12,
       "source": "model"
     },
     {
@@ -4153,8 +3832,8 @@
       "opponent": "SEA",
       "is_home": true,
       "game_id": "2026_15_SEA_PHI",
-      "survival_prob": 0.5057321643823893,
-      "weeks_ahead": 13,
+      "survival_prob": 0.4478322532611961,
+      "weeks_ahead": 12,
       "source": "model"
     },
     {
@@ -4163,8 +3842,8 @@
       "opponent": "BAL",
       "is_home": true,
       "game_id": "2026_15_BAL_PIT",
-      "survival_prob": 0.4990472369603932,
-      "weeks_ahead": 13,
+      "survival_prob": 0.4274832449617483,
+      "weeks_ahead": 12,
       "source": "model"
     },
     {
@@ -4173,8 +3852,8 @@
       "opponent": "PHI",
       "is_home": false,
       "game_id": "2026_15_SEA_PHI",
-      "survival_prob": 0.4931938146806452,
-      "weeks_ahead": 13,
+      "survival_prob": 0.5510412860735863,
+      "weeks_ahead": 12,
       "source": "model"
     },
     {
@@ -4183,8 +3862,8 @@
       "opponent": "LAC",
       "is_home": false,
       "game_id": "2026_15_SF_LAC",
-      "survival_prob": 0.5124406365525878,
-      "weeks_ahead": 13,
+      "survival_prob": 0.5856039496612606,
+      "weeks_ahead": 12,
       "source": "model"
     },
     {
@@ -4193,8 +3872,8 @@
       "opponent": "NO",
       "is_home": true,
       "game_id": "2026_15_NO_TB",
-      "survival_prob": 0.5351898262149934,
-      "weeks_ahead": 13,
+      "survival_prob": 0.48261267489824516,
+      "weeks_ahead": 12,
       "source": "model"
     },
     {
@@ -4203,8 +3882,8 @@
       "opponent": "IND",
       "is_home": true,
       "game_id": "2026_15_IND_TEN",
-      "survival_prob": 0.45741393005164743,
-      "weeks_ahead": 13,
+      "survival_prob": 0.46199293271436437,
+      "weeks_ahead": 12,
       "source": "model"
     },
     {
@@ -4213,28 +3892,28 @@
       "opponent": "ATL",
       "is_home": true,
       "game_id": "2026_15_ATL_WAS",
-      "survival_prob": 0.5716552814922624,
+      "survival_prob": 0.5482402879464411,
+      "weeks_ahead": 12,
+      "source": "model"
+    },
+    {
+      "week": 16,
+      "team": "ARI",
+      "opponent": "NO",
+      "is_home": false,
+      "game_id": "2026_16_ARI_NO",
+      "survival_prob": 0.4185085728683462,
       "weeks_ahead": 13,
       "source": "model"
     },
     {
       "week": 16,
-      "team": "ARI",
-      "opponent": "NO",
-      "is_home": false,
-      "game_id": "2026_16_ARI_NO",
-      "survival_prob": 0.4923344936537773,
-      "weeks_ahead": 14,
-      "source": "model"
-    },
-    {
-      "week": 16,
       "team": "ATL",
       "opponent": "TB",
       "is_home": true,
       "game_id": "2026_16_TB_ATL",
-      "survival_prob": 0.5213810806334596,
-      "weeks_ahead": 14,
+      "survival_prob": 0.5118906674859142,
+      "weeks_ahead": 13,
       "source": "model"
     },
     {
@@ -4243,8 +3922,8 @@
       "opponent": "CLE",
       "is_home": true,
       "game_id": "2026_16_CLE_BAL",
-      "survival_prob": 0.6380307389485308,
-      "weeks_ahead": 14,
+      "survival_prob": 0.5844097169272872,
+      "weeks_ahead": 13,
       "source": "model"
     },
     {
@@ -4253,8 +3932,8 @@
       "opponent": "DEN",
       "is_home": false,
       "game_id": "2026_16_BUF_DEN",
-      "survival_prob": 0.5099940669070678,
-      "weeks_ahead": 14,
+      "survival_prob": 0.5552776643458834,
+      "weeks_ahead": 13,
       "source": "model"
     },
     {
@@ -4263,8 +3942,8 @@
       "opponent": "PIT",
       "is_home": false,
       "game_id": "2026_16_CAR_PIT",
-      "survival_prob": 0.42752457590274134,
-      "weeks_ahead": 14,
+      "survival_prob": 0.43388145228426916,
+      "weeks_ahead": 13,
       "source": "model"
     },
     {
@@ -4273,8 +3952,8 @@
       "opponent": "GB",
       "is_home": true,
       "game_id": "2026_16_GB_CHI",
-      "survival_prob": 0.5614695756463383,
-      "weeks_ahead": 14,
+      "survival_prob": 0.543203491049192,
+      "weeks_ahead": 13,
       "source": "model"
     },
     {
@@ -4283,8 +3962,8 @@
       "opponent": "IND",
       "is_home": false,
       "game_id": "2026_16_CIN_IND",
-      "survival_prob": 0.4715713859012741,
-      "weeks_ahead": 14,
+      "survival_prob": 0.4328736858436124,
+      "weeks_ahead": 13,
       "source": "model"
     },
     {
@@ -4293,8 +3972,8 @@
       "opponent": "BAL",
       "is_home": false,
       "game_id": "2026_16_CLE_BAL",
-      "survival_prob": 0.3609476207336978,
-      "weeks_ahead": 14,
+      "survival_prob": 0.41451876054241515,
+      "weeks_ahead": 13,
       "source": "model"
     },
     {
@@ -4303,8 +3982,8 @@
       "opponent": "JAX",
       "is_home": true,
       "game_id": "2026_16_JAX_DAL",
-      "survival_prob": 0.529340559808554,
-      "weeks_ahead": 14,
+      "survival_prob": 0.549645013605456,
+      "weeks_ahead": 13,
       "source": "model"
     },
     {
@@ -4313,8 +3992,8 @@
       "opponent": "BUF",
       "is_home": true,
       "game_id": "2026_16_BUF_DEN",
-      "survival_prob": 0.4889842927751608,
-      "weeks_ahead": 14,
+      "survival_prob": 0.443650813123819,
+      "weeks_ahead": 13,
       "source": "model"
     },
     {
@@ -4323,8 +4002,8 @@
       "opponent": "NYG",
       "is_home": true,
       "game_id": "2026_16_NYG_DET",
-      "survival_prob": 0.48770494421418537,
-      "weeks_ahead": 14,
+      "survival_prob": 0.5812870502138666,
+      "weeks_ahead": 13,
       "source": "model"
     },
     {
@@ -4333,8 +4012,8 @@
       "opponent": "CHI",
       "is_home": false,
       "game_id": "2026_16_GB_CHI",
-      "survival_prob": 0.4375087840358904,
-      "weeks_ahead": 14,
+      "survival_prob": 0.45572498642051035,
+      "weeks_ahead": 13,
       "source": "model"
     },
     {
@@ -4343,8 +4022,8 @@
       "opponent": "PHI",
       "is_home": false,
       "game_id": "2026_16_HOU_PHI",
-      "survival_prob": 0.40401998567782893,
-      "weeks_ahead": 14,
+      "survival_prob": 0.4007033697774187,
+      "weeks_ahead": 13,
       "source": "model"
     },
     {
@@ -4353,8 +4032,8 @@
       "opponent": "CIN",
       "is_home": true,
       "game_id": "2026_16_CIN_IND",
-      "survival_prob": 0.5274069737809545,
-      "weeks_ahead": 14,
+      "survival_prob": 0.56605479162609,
+      "weeks_ahead": 13,
       "source": "model"
     },
     {
@@ -4363,8 +4042,8 @@
       "opponent": "DAL",
       "is_home": false,
       "game_id": "2026_16_JAX_DAL",
-      "survival_prob": 0.46963779987367454,
-      "weeks_ahead": 14,
+      "survival_prob": 0.44928346386424634,
+      "weeks_ahead": 13,
       "source": "model"
     },
     {
@@ -4373,8 +4052,8 @@
       "opponent": "SF",
       "is_home": true,
       "game_id": "2026_16_SF_KC",
-      "survival_prob": 0.48840772250526665,
-      "weeks_ahead": 14,
+      "survival_prob": 0.5151792357956672,
+      "weeks_ahead": 13,
       "source": "model"
     },
     {
@@ -4383,8 +4062,8 @@
       "opponent": "SEA",
       "is_home": false,
       "game_id": "2026_16_LA_SEA",
-      "survival_prob": 0.4668462146010091,
-      "weeks_ahead": 14,
+      "survival_prob": 0.42610416623657504,
+      "weeks_ahead": 13,
       "source": "model"
     },
     {
@@ -4393,8 +4072,8 @@
       "opponent": "MIA",
       "is_home": false,
       "game_id": "2026_16_LAC_MIA",
-      "survival_prob": 0.4921159023054866,
-      "weeks_ahead": 14,
+      "survival_prob": 0.47365665615486485,
+      "weeks_ahead": 13,
       "source": "model"
     },
     {
@@ -4403,8 +4082,8 @@
       "opponent": "TEN",
       "is_home": true,
       "game_id": "2026_16_TEN_LV",
-      "survival_prob": 0.5549748239910444,
-      "weeks_ahead": 14,
+      "survival_prob": 0.5405553146100055,
+      "weeks_ahead": 13,
       "source": "model"
     },
     {
@@ -4413,8 +4092,8 @@
       "opponent": "LAC",
       "is_home": true,
       "game_id": "2026_16_LAC_MIA",
-      "survival_prob": 0.5068624573767421,
-      "weeks_ahead": 14,
+      "survival_prob": 0.5252718213148375,
+      "weeks_ahead": 13,
       "source": "model"
     },
     {
@@ -4423,8 +4102,8 @@
       "opponent": "WAS",
       "is_home": true,
       "game_id": "2026_16_WAS_MIN",
-      "survival_prob": 0.5519151571241033,
-      "weeks_ahead": 14,
+      "survival_prob": 0.4770961944126685,
+      "weeks_ahead": 13,
       "source": "model"
     },
     {
@@ -4433,8 +4112,8 @@
       "opponent": "NYJ",
       "is_home": false,
       "game_id": "2026_16_NE_NYJ",
-      "survival_prob": 0.5332123122068224,
-      "weeks_ahead": 14,
+      "survival_prob": 0.578220229231877,
+      "weeks_ahead": 13,
       "source": "model"
     },
     {
@@ -4443,8 +4122,8 @@
       "opponent": "ARI",
       "is_home": true,
       "game_id": "2026_16_ARI_NO",
-      "survival_prob": 0.5066438660284514,
-      "weeks_ahead": 14,
+      "survival_prob": 0.5804199046013562,
+      "weeks_ahead": 13,
       "source": "model"
     },
     {
@@ -4453,8 +4132,8 @@
       "opponent": "DET",
       "is_home": false,
       "game_id": "2026_16_NYG_DET",
-      "survival_prob": 0.5112734154680433,
-      "weeks_ahead": 14,
+      "survival_prob": 0.41764142725583575,
+      "weeks_ahead": 13,
       "source": "model"
     },
     {
@@ -4463,8 +4142,8 @@
       "opponent": "NE",
       "is_home": true,
       "game_id": "2026_16_NE_NYJ",
-      "survival_prob": 0.4657660474754062,
-      "weeks_ahead": 14,
+      "survival_prob": 0.4207082482378254,
+      "weeks_ahead": 13,
       "source": "model"
     },
     {
@@ -4473,8 +4152,8 @@
       "opponent": "HOU",
       "is_home": true,
       "game_id": "2026_16_HOU_PHI",
-      "survival_prob": 0.5949583740043997,
-      "weeks_ahead": 14,
+      "survival_prob": 0.5982251076922837,
+      "weeks_ahead": 13,
       "source": "model"
     },
     {
@@ -4483,8 +4162,8 @@
       "opponent": "CAR",
       "is_home": true,
       "game_id": "2026_16_CAR_PIT",
-      "survival_prob": 0.5714537837794873,
-      "weeks_ahead": 14,
+      "survival_prob": 0.5650470251854331,
+      "weeks_ahead": 13,
       "source": "model"
     },
     {
@@ -4493,8 +4172,8 @@
       "opponent": "LA",
       "is_home": true,
       "game_id": "2026_16_LA_SEA",
-      "survival_prob": 0.5321321450812195,
-      "weeks_ahead": 14,
+      "survival_prob": 0.5728243112331273,
+      "weeks_ahead": 13,
       "source": "model"
     },
     {
@@ -4503,8 +4182,8 @@
       "opponent": "KC",
       "is_home": false,
       "game_id": "2026_16_SF_KC",
-      "survival_prob": 0.5105706371769619,
-      "weeks_ahead": 14,
+      "survival_prob": 0.4837492416740352,
+      "weeks_ahead": 13,
       "source": "model"
     },
     {
@@ -4513,8 +4192,8 @@
       "opponent": "ATL",
       "is_home": false,
       "game_id": "2026_16_TB_ATL",
-      "survival_prob": 0.47759727904876903,
-      "weeks_ahead": 14,
+      "survival_prob": 0.4870378099837882,
+      "weeks_ahead": 13,
       "source": "model"
     },
     {
@@ -4523,8 +4202,8 @@
       "opponent": "LV",
       "is_home": false,
       "game_id": "2026_16_TEN_LV",
-      "survival_prob": 0.4440035356911843,
-      "weeks_ahead": 14,
+      "survival_prob": 0.4583731628596968,
+      "weeks_ahead": 13,
       "source": "model"
     },
     {
@@ -4533,28 +4212,28 @@
       "opponent": "MIN",
       "is_home": false,
       "game_id": "2026_16_WAS_MIN",
-      "survival_prob": 0.44706320255812526,
+      "survival_prob": 0.5218322830570339,
+      "weeks_ahead": 13,
+      "source": "model"
+    },
+    {
+      "week": 17,
+      "team": "ARI",
+      "opponent": "LV",
+      "is_home": true,
+      "game_id": "2026_17_LV_ARI",
+      "survival_prob": 0.5657318512133884,
       "weeks_ahead": 14,
       "source": "model"
     },
     {
       "week": 17,
-      "team": "ARI",
-      "opponent": "LV",
-      "is_home": true,
-      "game_id": "2026_17_LV_ARI",
-      "survival_prob": 0.6198711491392497,
-      "weeks_ahead": 15,
-      "source": "model"
-    },
-    {
-      "week": 17,
       "team": "ATL",
       "opponent": "NO",
       "is_home": true,
       "game_id": "2026_17_NO_ATL",
-      "survival_prob": 0.5338943211825651,
-      "weeks_ahead": 15,
+      "survival_prob": 0.4858840861605177,
+      "weeks_ahead": 14,
       "source": "model"
     },
     {
@@ -4563,8 +4242,8 @@
       "opponent": "CIN",
       "is_home": false,
       "game_id": "2026_17_BAL_CIN",
-      "survival_prob": 0.4549430769524454,
-      "weeks_ahead": 15,
+      "survival_prob": 0.5042750025381254,
+      "weeks_ahead": 14,
       "source": "model"
     },
     {
@@ -4573,8 +4252,8 @@
       "opponent": "MIA",
       "is_home": false,
       "game_id": "2026_17_BUF_MIA",
-      "survival_prob": 0.5352096488310498,
-      "weeks_ahead": 15,
+      "survival_prob": 0.5498018057098115,
+      "weeks_ahead": 14,
       "source": "model"
     },
     {
@@ -4583,8 +4262,8 @@
       "opponent": "SEA",
       "is_home": true,
       "game_id": "2026_17_SEA_CAR",
-      "survival_prob": 0.470318961482933,
-      "weeks_ahead": 15,
+      "survival_prob": 0.4582842796780767,
+      "weeks_ahead": 14,
       "source": "model"
     },
     {
@@ -4593,8 +4272,8 @@
       "opponent": "DET",
       "is_home": true,
       "game_id": "2026_17_DET_CHI",
-      "survival_prob": 0.540524108942207,
-      "weeks_ahead": 15,
+      "survival_prob": 0.5004224583013192,
+      "weeks_ahead": 14,
       "source": "model"
     },
     {
@@ -4603,8 +4282,8 @@
       "opponent": "BAL",
       "is_home": true,
       "game_id": "2026_17_BAL_CIN",
-      "survival_prob": 0.5440851087160342,
-      "weeks_ahead": 15,
+      "survival_prob": 0.49470573370204,
+      "weeks_ahead": 14,
       "source": "model"
     },
     {
@@ -4613,8 +4292,8 @@
       "opponent": "IND",
       "is_home": true,
       "game_id": "2026_17_IND_CLE",
-      "survival_prob": 0.5071113967023154,
-      "weeks_ahead": 15,
+      "survival_prob": 0.4975311601669427,
+      "weeks_ahead": 14,
       "source": "model"
     },
     {
@@ -4623,8 +4302,8 @@
       "opponent": "NYG",
       "is_home": true,
       "game_id": "2026_17_NYG_DAL",
-      "survival_prob": 0.5514365678114775,
-      "weeks_ahead": 15,
+      "survival_prob": 0.568645234905522,
+      "weeks_ahead": 14,
       "source": "model"
     },
     {
@@ -4633,8 +4312,8 @@
       "opponent": "NE",
       "is_home": false,
       "game_id": "2026_17_DEN_NE",
-      "survival_prob": 0.4335319057104597,
-      "weeks_ahead": 15,
+      "survival_prob": 0.4198694243550097,
+      "weeks_ahead": 14,
       "source": "model"
     },
     {
@@ -4643,8 +4322,8 @@
       "opponent": "CHI",
       "is_home": false,
       "game_id": "2026_17_DET_CHI",
-      "survival_prob": 0.45850407672627247,
-      "weeks_ahead": 15,
+      "survival_prob": 0.49855827793884633,
+      "weeks_ahead": 14,
       "source": "model"
     },
     {
@@ -4653,8 +4332,8 @@
       "opponent": "HOU",
       "is_home": true,
       "game_id": "2026_17_HOU_GB",
-      "survival_prob": 0.5328718236584202,
-      "weeks_ahead": 15,
+      "survival_prob": 0.5669085005618302,
+      "weeks_ahead": 14,
       "source": "model"
     },
     {
@@ -4663,8 +4342,8 @@
       "opponent": "GB",
       "is_home": false,
       "game_id": "2026_17_HOU_GB",
-      "survival_prob": 0.46615636201005933,
-      "weeks_ahead": 15,
+      "survival_prob": 0.4320722356783352,
+      "weeks_ahead": 14,
       "source": "model"
     },
     {
@@ -4673,8 +4352,8 @@
       "opponent": "CLE",
       "is_home": false,
       "game_id": "2026_17_IND_CLE",
-      "survival_prob": 0.4919167889661642,
-      "weeks_ahead": 15,
+      "survival_prob": 0.5014495760732227,
+      "weeks_ahead": 14,
       "source": "model"
     },
     {
@@ -4683,8 +4362,8 @@
       "opponent": "WAS",
       "is_home": true,
       "game_id": "2026_17_WAS_JAX",
-      "survival_prob": 0.5630783465623871,
-      "weeks_ahead": 15,
+      "survival_prob": 0.5535640804650945,
+      "weeks_ahead": 14,
       "source": "model"
     },
     {
@@ -4693,8 +4372,8 @@
       "opponent": "LAC",
       "is_home": false,
       "game_id": "2026_17_KC_LAC",
-      "survival_prob": 0.5586592882770777,
-      "weeks_ahead": 15,
+      "survival_prob": 0.5718798094231108,
+      "weeks_ahead": 14,
       "source": "model"
     },
     {
@@ -4703,8 +4382,8 @@
       "opponent": "TB",
       "is_home": false,
       "game_id": "2026_17_LA_TB",
-      "survival_prob": 0.5112567534569673,
-      "weeks_ahead": 15,
+      "survival_prob": 0.5403445192306584,
+      "weeks_ahead": 14,
       "source": "model"
     },
     {
@@ -4713,8 +4392,8 @@
       "opponent": "KC",
       "is_home": true,
       "game_id": "2026_17_KC_LAC",
-      "survival_prob": 0.44036889739140184,
-      "weeks_ahead": 15,
+      "survival_prob": 0.4271009268170546,
+      "weeks_ahead": 14,
       "source": "model"
     },
     {
@@ -4723,8 +4402,8 @@
       "opponent": "ARI",
       "is_home": false,
       "game_id": "2026_17_LV_ARI",
-      "survival_prob": 0.3791570365292299,
-      "weeks_ahead": 15,
+      "survival_prob": 0.433248885026777,
+      "weeks_ahead": 14,
       "source": "model"
     },
     {
@@ -4733,8 +4412,8 @@
       "opponent": "BUF",
       "is_home": true,
       "game_id": "2026_17_BUF_MIA",
-      "survival_prob": 0.4638185368374298,
-      "weeks_ahead": 15,
+      "survival_prob": 0.449178930530354,
+      "weeks_ahead": 14,
       "source": "model"
     },
     {
@@ -4743,8 +4422,8 @@
       "opponent": "NYJ",
       "is_home": false,
       "game_id": "2026_17_MIN_NYJ",
-      "survival_prob": 0.45549277284041034,
-      "weeks_ahead": 15,
+      "survival_prob": 0.4676126280430538,
+      "weeks_ahead": 14,
       "source": "model"
     },
     {
@@ -4753,8 +4432,8 @@
       "opponent": "DEN",
       "is_home": true,
       "game_id": "2026_17_DEN_NE",
-      "survival_prob": 0.5654962799580199,
-      "weeks_ahead": 15,
+      "survival_prob": 0.5791113118851557,
+      "weeks_ahead": 14,
       "source": "model"
     },
     {
@@ -4763,8 +4442,8 @@
       "opponent": "ATL",
       "is_home": false,
       "game_id": "2026_17_NO_ATL",
-      "survival_prob": 0.4651338644859145,
-      "weeks_ahead": 15,
+      "survival_prob": 0.5130966500796478,
+      "weeks_ahead": 14,
       "source": "model"
     },
     {
@@ -4773,8 +4452,8 @@
       "opponent": "DAL",
       "is_home": false,
       "game_id": "2026_17_NYG_DAL",
-      "survival_prob": 0.4475916178570021,
-      "weeks_ahead": 15,
+      "survival_prob": 0.4303355013346435,
+      "weeks_ahead": 14,
       "source": "model"
     },
     {
@@ -4783,8 +4462,8 @@
       "opponent": "MIN",
       "is_home": true,
       "game_id": "2026_17_MIN_NYJ",
-      "survival_prob": 0.5435354128280693,
-      "weeks_ahead": 15,
+      "survival_prob": 0.5313681081971117,
+      "weeks_ahead": 14,
       "source": "model"
     },
     {
@@ -4793,8 +4472,8 @@
       "opponent": "SF",
       "is_home": false,
       "game_id": "2026_17_PHI_SF",
-      "survival_prob": 0.4250077400147336,
-      "weeks_ahead": 15,
+      "survival_prob": 0.4359814030223644,
+      "weeks_ahead": 14,
       "source": "model"
     },
     {
@@ -4803,8 +4482,8 @@
       "opponent": "TEN",
       "is_home": false,
       "game_id": "2026_17_PIT_TEN",
-      "survival_prob": 0.5644294286135334,
-      "weeks_ahead": 15,
+      "survival_prob": 0.5042624952730614,
+      "weeks_ahead": 14,
       "source": "model"
     },
     {
@@ -4813,8 +4492,8 @@
       "opponent": "CAR",
       "is_home": false,
       "game_id": "2026_17_SEA_CAR",
-      "survival_prob": 0.5287092241855466,
-      "weeks_ahead": 15,
+      "survival_prob": 0.5406964565620888,
+      "weeks_ahead": 14,
       "source": "model"
     },
     {
@@ -4823,8 +4502,8 @@
       "opponent": "PHI",
       "is_home": true,
       "game_id": "2026_17_PHI_SF",
-      "survival_prob": 0.574020445653746,
-      "weeks_ahead": 15,
+      "survival_prob": 0.562999333217801,
+      "weeks_ahead": 14,
       "source": "model"
     },
     {
@@ -4833,8 +4512,8 @@
       "opponent": "LA",
       "is_home": true,
       "game_id": "2026_17_LA_TB",
-      "survival_prob": 0.48777143221151226,
-      "weeks_ahead": 15,
+      "survival_prob": 0.458636217009507,
+      "weeks_ahead": 14,
       "source": "model"
     },
     {
@@ -4843,8 +4522,8 @@
       "opponent": "PIT",
       "is_home": true,
       "game_id": "2026_17_PIT_TEN",
-      "survival_prob": 0.4345987570549462,
-      "weeks_ahead": 15,
+      "survival_prob": 0.494718240967104,
+      "weeks_ahead": 14,
       "source": "model"
     },
     {
@@ -4853,8 +4532,8 @@
       "opponent": "JAX",
       "is_home": false,
       "game_id": "2026_17_WAS_JAX",
-      "survival_prob": 0.43594983910609253,
-      "weeks_ahead": 15,
+      "survival_prob": 0.44541665577507095,
+      "weeks_ahead": 14,
       "source": "model"
     },
     {
@@ -4863,8 +4542,8 @@
       "opponent": "SF",
       "is_home": true,
       "game_id": "2026_18_SF_ARI",
-      "survival_prob": 0.5052753378272643,
-      "weeks_ahead": 16,
+      "survival_prob": 0.43266532530651824,
+      "weeks_ahead": 15,
       "source": "model"
     },
     {
@@ -4873,8 +4552,8 @@
       "opponent": "CAR",
       "is_home": false,
       "game_id": "2026_18_ATL_CAR",
-      "survival_prob": 0.4528959224658615,
-      "weeks_ahead": 16,
+      "survival_prob": 0.45087496903016183,
+      "weeks_ahead": 15,
       "source": "model"
     },
     {
@@ -4883,8 +4562,8 @@
       "opponent": "PIT",
       "is_home": true,
       "game_id": "2026_18_PIT_BAL",
-      "survival_prob": 0.5865886335919913,
-      "weeks_ahead": 16,
+      "survival_prob": 0.5599268194806977,
+      "weeks_ahead": 15,
       "source": "model"
     },
     {
@@ -4893,8 +4572,8 @@
       "opponent": "NYJ",
       "is_home": true,
       "game_id": "2026_18_NYJ_BUF",
-      "survival_prob": 0.5680764005012469,
-      "weeks_ahead": 16,
+      "survival_prob": 0.6576585754017469,
+      "weeks_ahead": 15,
       "source": "model"
     },
     {
@@ -4903,8 +4582,8 @@
       "opponent": "ATL",
       "is_home": true,
       "game_id": "2026_18_ATL_CAR",
-      "survival_prob": 0.5461796591468449,
-      "weeks_ahead": 16,
+      "survival_prob": 0.5481554772901562,
+      "weeks_ahead": 15,
       "source": "model"
     },
     {
@@ -4913,8 +4592,8 @@
       "opponent": "MIN",
       "is_home": false,
       "game_id": "2026_18_CHI_MIN",
-      "survival_prob": 0.5091688400460896,
-      "weeks_ahead": 16,
+      "survival_prob": 0.5051551453986768,
+      "weeks_ahead": 15,
       "source": "model"
     },
     {
@@ -4923,8 +4602,8 @@
       "opponent": "CLE",
       "is_home": true,
       "game_id": "2026_18_CLE_CIN",
-      "survival_prob": 0.6248118265290371,
-      "weeks_ahead": 16,
+      "survival_prob": 0.5872456040811519,
+      "weeks_ahead": 15,
       "source": "model"
     },
     {
@@ -4933,8 +4612,8 @@
       "opponent": "CIN",
       "is_home": false,
       "game_id": "2026_18_CLE_CIN",
-      "survival_prob": 0.37426375508366916,
-      "weeks_ahead": 16,
+      "survival_prob": 0.4117848422391662,
+      "weeks_ahead": 15,
       "source": "model"
     },
     {
@@ -4943,8 +4622,8 @@
       "opponent": "WAS",
       "is_home": false,
       "game_id": "2026_18_DAL_WAS",
-      "survival_prob": 0.555972119584321,
-      "weeks_ahead": 16,
+      "survival_prob": 0.5260942985662825,
+      "weeks_ahead": 15,
       "source": "model"
     },
     {
@@ -4953,8 +4632,8 @@
       "opponent": "LAC",
       "is_home": true,
       "game_id": "2026_18_LAC_DEN",
-      "survival_prob": 0.6059951492648823,
-      "weeks_ahead": 16,
+      "survival_prob": 0.5469179601739862,
+      "weeks_ahead": 15,
       "source": "model"
     },
     {
@@ -4963,8 +4642,8 @@
       "opponent": "GB",
       "is_home": false,
       "game_id": "2026_18_DET_GB",
-      "survival_prob": 0.484090400474252,
-      "weeks_ahead": 16,
+      "survival_prob": 0.49945305111634997,
+      "weeks_ahead": 15,
       "source": "model"
     },
     {
@@ -4973,8 +4652,8 @@
       "opponent": "DET",
       "is_home": true,
       "game_id": "2026_18_DET_GB",
-      "survival_prob": 0.5149851811384543,
-      "weeks_ahead": 16,
+      "survival_prob": 0.49957739520396816,
+      "weeks_ahead": 15,
       "source": "model"
     },
     {
@@ -4983,8 +4662,8 @@
       "opponent": "TEN",
       "is_home": true,
       "game_id": "2026_18_TEN_HOU",
-      "survival_prob": 0.5930262641262859,
-      "weeks_ahead": 16,
+      "survival_prob": 0.5576941898896809,
+      "weeks_ahead": 15,
       "source": "model"
     },
     {
@@ -4993,8 +4672,8 @@
       "opponent": "JAX",
       "is_home": true,
       "game_id": "2026_18_JAX_IND",
-      "survival_prob": 0.4590688210163383,
-      "weeks_ahead": 16,
+      "survival_prob": 0.4812633658664901,
+      "weeks_ahead": 15,
       "source": "model"
     },
     {
@@ -5003,8 +4682,8 @@
       "opponent": "IND",
       "is_home": false,
       "game_id": "2026_18_JAX_IND",
-      "survival_prob": 0.540006760596368,
-      "weeks_ahead": 16,
+      "survival_prob": 0.517767080453828,
+      "weeks_ahead": 15,
       "source": "model"
     },
     {
@@ -5013,8 +4692,8 @@
       "opponent": "LV",
       "is_home": true,
       "game_id": "2026_18_LV_KC",
-      "survival_prob": 0.498493698876955,
-      "weeks_ahead": 16,
+      "survival_prob": 0.5762682787132531,
+      "weeks_ahead": 15,
       "source": "model"
     },
     {
@@ -5023,8 +4702,8 @@
       "opponent": "SEA",
       "is_home": true,
       "game_id": "2026_18_SEA_LA",
-      "survival_prob": 0.5186154499959299,
-      "weeks_ahead": 16,
+      "survival_prob": 0.5007117337617034,
+      "weeks_ahead": 15,
       "source": "model"
     },
     {
@@ -5033,8 +4712,8 @@
       "opponent": "DEN",
       "is_home": false,
       "game_id": "2026_18_LAC_DEN",
-      "survival_prob": 0.3930804323478239,
-      "weeks_ahead": 16,
+      "survival_prob": 0.4521124861463319,
+      "weeks_ahead": 15,
       "source": "model"
     },
     {
@@ -5043,8 +4722,8 @@
       "opponent": "KC",
       "is_home": false,
       "game_id": "2026_18_LV_KC",
-      "survival_prob": 0.5005818827357513,
-      "weeks_ahead": 16,
+      "survival_prob": 0.4227621676070649,
+      "weeks_ahead": 15,
       "source": "model"
     },
     {
@@ -5053,8 +4732,8 @@
       "opponent": "NE",
       "is_home": false,
       "game_id": "2026_18_MIA_NE",
-      "survival_prob": 0.37177261871850287,
-      "weeks_ahead": 16,
+      "survival_prob": 0.4221305617273165,
+      "weeks_ahead": 15,
       "source": "model"
     },
     {
@@ -5063,8 +4742,8 @@
       "opponent": "CHI",
       "is_home": true,
       "game_id": "2026_18_CHI_MIN",
-      "survival_prob": 0.4899067415666166,
-      "weeks_ahead": 16,
+      "survival_prob": 0.49387530092164134,
+      "weeks_ahead": 15,
       "source": "model"
     },
     {
@@ -5073,8 +4752,8 @@
       "opponent": "MIA",
       "is_home": true,
       "game_id": "2026_18_MIA_NE",
-      "survival_prob": 0.6273029628942034,
-      "weeks_ahead": 16,
+      "survival_prob": 0.5768998845930017,
+      "weeks_ahead": 15,
       "source": "model"
     },
     {
@@ -5083,8 +4762,8 @@
       "opponent": "TB",
       "is_home": true,
       "game_id": "2026_18_TB_NO",
-      "survival_prob": 0.5357464783445925,
-      "weeks_ahead": 16,
+      "survival_prob": 0.5320023359564637,
+      "weeks_ahead": 15,
       "source": "model"
     },
     {
@@ -5093,8 +4772,8 @@
       "opponent": "PHI",
       "is_home": true,
       "game_id": "2026_18_PHI_NYG",
-      "survival_prob": 0.5945205511007594,
-      "weeks_ahead": 16,
+      "survival_prob": 0.4724300559047312,
+      "weeks_ahead": 15,
       "source": "model"
     },
     {
@@ -5103,8 +4782,8 @@
       "opponent": "BUF",
       "is_home": false,
       "game_id": "2026_18_NYJ_BUF",
-      "survival_prob": 0.4309991811114594,
-      "weeks_ahead": 16,
+      "survival_prob": 0.34137187091857124,
+      "weeks_ahead": 15,
       "source": "model"
     },
     {
@@ -5113,8 +4792,8 @@
       "opponent": "NYG",
       "is_home": false,
       "game_id": "2026_18_PHI_NYG",
-      "survival_prob": 0.4045550305119468,
-      "weeks_ahead": 16,
+      "survival_prob": 0.5266003904155869,
+      "weeks_ahead": 15,
       "source": "model"
     },
     {
@@ -5123,8 +4802,8 @@
       "opponent": "BAL",
       "is_home": false,
       "game_id": "2026_18_PIT_BAL",
-      "survival_prob": 0.41248694802071495,
-      "weeks_ahead": 16,
+      "survival_prob": 0.4391036268396205,
+      "weeks_ahead": 15,
       "source": "model"
     },
     {
@@ -5133,8 +4812,8 @@
       "opponent": "LA",
       "is_home": false,
       "game_id": "2026_18_SEA_LA",
-      "survival_prob": 0.4804601316167764,
-      "weeks_ahead": 16,
+      "survival_prob": 0.49831871255861465,
+      "weeks_ahead": 15,
       "source": "model"
     },
     {
@@ -5143,8 +4822,8 @@
       "opponent": "ARI",
       "is_home": false,
       "game_id": "2026_18_SF_ARI",
-      "survival_prob": 0.49380024378544196,
-      "weeks_ahead": 16,
+      "survival_prob": 0.5663651210137999,
+      "weeks_ahead": 15,
       "source": "model"
     },
     {
@@ -5153,8 +4832,8 @@
       "opponent": "NO",
       "is_home": false,
       "game_id": "2026_18_TB_NO",
-      "survival_prob": 0.4633291032681137,
-      "weeks_ahead": 16,
+      "survival_prob": 0.4670281103638544,
+      "weeks_ahead": 15,
       "source": "model"
     },
     {
@@ -5163,8 +4842,8 @@
       "opponent": "HOU",
       "is_home": false,
       "game_id": "2026_18_TEN_HOU",
-      "survival_prob": 0.4060493174864205,
-      "weeks_ahead": 16,
+      "survival_prob": 0.44133625643063723,
+      "weeks_ahead": 15,
       "source": "model"
     },
     {
@@ -5173,8 +4852,8 @@
       "opponent": "DAL",
       "is_home": true,
       "game_id": "2026_18_DAL_WAS",
-      "survival_prob": 0.4431034620283853,
-      "weeks_ahead": 16,
+      "survival_prob": 0.47293614775403553,
+      "weeks_ahead": 15,
       "source": "model"
     }
   ]

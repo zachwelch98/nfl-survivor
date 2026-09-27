@@ -8,7 +8,7 @@ import { useAsync } from "../lib/useAsync";
 import { getSeasonMeta, getSeasonPlan, getWeekBoard } from "../data/source";
 import { teamName } from "../lib/teams";
 import { useUserState } from "../lib/useUserState";
-import { survivalRecord, usedTeams } from "../data/storage";
+import { nextUnpickedWeek, survivalRecord, usedTeams } from "../data/storage";
 
 export default function Dashboard() {
   // Bumped after a pipeline command (refresh/export) succeeds, so the views
@@ -23,6 +23,9 @@ export default function Dashboard() {
       {(m) => {
         const record = survivalRecord(state, m.season);
         const myUsedTeams = Array.from(usedTeams(state, m.season));
+        // The week to act on, from My Picks -- not the week the bundle was
+        // exported for. See nextUnpickedWeek for why those differ.
+        const actionableWeek = nextUnpickedWeek(state, m.season, m.current_week);
         return (
           <div className="space-y-6">
             <div>
@@ -33,20 +36,26 @@ export default function Dashboard() {
                 Primary method: <span className="font-medium text-ink">{m.primary_method}</span> (backtesting shows this
                 is currently the best-calibrated method for the current week — see Analysis). Generated {new Date(m.generated_at).toLocaleString()}.
               </p>
+              {actionableWeek > m.current_week && (
+                <p className="mt-2 rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-sm text-amber-800">
+                  This data is for week {m.current_week}, but your next pick is week {actionableWeek}. Run{" "}
+                  <span className="font-medium">Export JSON</span> below to bring it up to date.
+                </p>
+              )}
             </div>
 
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
               <StatTile label="Wins" value={record.wins} tone="good" />
               <StatTile label="Losses" value={record.losses} tone={record.losses > 0 ? "bad" : "default"} />
               <StatTile label="Current streak" value={record.currentStreak} />
-              <StatTile label="Teams used" value={m.used_teams.length} />
+              <StatTile label="Teams used" value={myUsedTeams.length} />
             </div>
 
             <RecommendedPickCard season={m.season} week={m.current_week} refreshNonce={refreshNonce} />
             <SeasonPreviewCard refreshNonce={refreshNonce} />
             <CommandRunner
               season={m.season}
-              week={m.current_week}
+              week={actionableWeek}
               usedTeams={myUsedTeams}
               onSuccess={() => setRefreshNonce((n) => n + 1)}
             />

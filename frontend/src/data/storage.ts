@@ -81,3 +81,23 @@ export function survivalRecord(state: UserState, season: number): { wins: number
   }
   return { wins, losses, ties, currentStreak: streak, eliminatedWeek };
 }
+
+/**
+ * The week the user is actually deciding next.
+ *
+ * The Dashboard used to hand `season_meta.json`'s `current_week` straight to
+ * the pipeline controls, which is self-defeating: the button whose whole job
+ * is to regenerate the export was reading its week *from* the export, so it
+ * proposed the same stale week forever and could never advance on its own.
+ * Meanwhile the `used` argument beside it came from these picks. One live
+ * input, one frozen one.
+ *
+ * Both now come from the same place. `exportedWeek` remains the floor —
+ * if the bundle has moved past the user's logged picks (they fell behind on
+ * recording), the bundle is the better authority.
+ */
+export function nextUnpickedWeek(state: UserState, season: number, exportedWeek: number): number {
+  const weeks = state.picks.filter((p) => p.season === season).map((p) => p.week);
+  const afterLastPick = weeks.length > 0 ? Math.max(...weeks) + 1 : exportedWeek;
+  return Math.min(Math.max(afterLastPick, exportedWeek), 18);
+}
