@@ -43,7 +43,7 @@ export default function AnalysisView() {
                   <strong>The comparison that drives the season plan:</strong> future weeks have no posted line, so the ML model's real
                   competition is Monte Carlo, not Vegas.{" "}
                   {c.ml_vs_mc_bootstrap.ml_significantly_better
-                    ? "The ML model wins that matchup with the CI excluding zero, which is why weeks beyond this one blend the two rather than using Monte Carlo alone."
+                    ? "The ML model wins that matchup with the CI excluding zero, which is why weeks beyond this one use the ML model, with Monte Carlo only as a fallback."
                     : c.ml_vs_mc_bootstrap.mc_significantly_better
                       ? "Monte Carlo currently wins that matchup — worth re-checking before trusting ML-weighted future weeks."
                       : "Neither separates from the other yet on this sample."}{" "}

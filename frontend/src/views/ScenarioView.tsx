@@ -184,7 +184,7 @@ function Planner({ bundle }: { bundle: Bundle }) {
         <p className="text-sm text-slate-500 mt-1">
           Commit a team to a week and the optimizer re-solves every other week around it. Probabilities
           come from the last <code className="text-xs">make export</code> — week {currentWeek} from posted
-          lines, later weeks from the Monte Carlo + ML blend with horizon decay applied.
+          lines, later weeks from the ML model (Monte Carlo where it has no forecast) with horizon decay applied.
         </p>
       </div>
 

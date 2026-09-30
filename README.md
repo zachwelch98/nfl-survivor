@@ -1,221 +1,146 @@
-# NFL Survivor Pool ML Advisor
+# NFL Survivor Pool Optimizer
 
-A tool that recommends which team to pick each week in an NFL survivor pool —
-optimized for survival across the *full season*, not just this week's win
-probability.
+**Plans an entire season of survivor-pool picks at once, using calibrated win probabilities and an exact optimizer.**
 
-## Status: complete
+In a survivor pool you pick one NFL team to win each week, you can never use the same team twice, and one loss knocks you out. The usual approach, taking the safest team every week, burns your best teams early and leaves you picking coin flips in December. This project treats the whole season as one decision: it forecasts every remaining game, then finds the sequence of picks with the highest chance of surviving to the end.
 
-1. [x] Data layer: nflverse loaders, leakage gate (`AsOf`), stadium geography
-2. [x] Method 1: Vegas-implied win probability (baseline)
-3. [x] As-of feature store: team ratings, drive rates, situational adjustments
-4. [x] Method 2: drive-level Monte Carlo game simulator (challenger)
-4b. [x] Method 3: supervised, calibrated classifier (107 features, walk-forward)
-5. [x] Model evaluation: Brier score, log loss, calibration
-6. [x] Season-sequencing optimizer (exact assignment solve)
-7. [x] Backtest harness (2010–2025, no-leakage + real-lookahead variants)
-8. [x] Season & pool simulation
-9. [x] JSON export for the frontend
-10. [x] React app (Vite + TS + Tailwind + Recharts)
-11. [x] What-If planner: lock picks into weeks, re-solve the rest in-browser
+![What-If Planner: lock DAL into week 7 and the optimizer re-plans every other week, showing which picks moved and what the choice costs](docs/images/whatif.png)
 
-## Method 3, and what it changed
+<sub>The What-If Planner. Lock Dallas into week 7 when the plan was saving them for week 11, and the tool shows the knock-on (Kansas City takes over week 11) and what the change costs: 27.8% of the season's survival odds.</sub>
 
-A supervised classifier (`models/ml.py`) trained on 107 as-of features:
-opponent-adjusted ridge EPA, drive-rate matchup distributions, last-3/last-5
-rolling form, trajectory, rest/travel/weather, and starting-QB continuity. The
-classifier and calibration were chosen by a walk-forward grid
-(`evaluate/ml_model_selection.py`, expanding window: fit 2011..N-1, score
-season N, for N in 2015..2025) rather than assumed — `hist_gb` + isotonic won
-on calibration in the 0.85–0.99 band after no combination separated on Brier.
+---
 
-Head-to-head on identical games (2022–25, n=1084, walk-forward):
+## Highlights
 
-| method | Brier | high-confidence band (0.85–0.99) |
-|---|---|---|
-| Vegas | **0.2101** | predicted 87.5% → actual 96.1% |
-| ML (Method 3) | 0.2234 | predicted 90.9% → actual 87.8% |
-| Monte Carlo | 0.2465 | predicted 90.7% → actual 77.1% |
+- **Three competing win-probability models**, compared on the same held-out games: a Vegas-line baseline, a drive-level Monte Carlo simulator, and a gradient-boosted classifier trained on 107 features.
+- **Selected on calibration, not accuracy.** Models are judged by Brier score, log loss, and reliability in the 85–99% band where survivor picks actually live, with bootstrap confidence intervals to separate real differences from noise.
+- **Walk-forward evaluation with no lookahead.** Every feature and every model is built only from data that existed before the game it predicts, enforced through a single point-in-time gate and verified by a test that fails when leakage is injected on purpose.
+- **An exact season optimizer.** Maximizing the product of weekly survival probabilities is a bipartite assignment problem, solved exactly with the Hungarian algorithm rather than approximated with a greedy or search heuristic.
+- **An interactive planner that re-solves instantly.** Lock any team into any week and the rest of the season re-optimizes in the browser in milliseconds, including a live grid pricing every possible team-and-week commitment.
+- **Honest about what didn't win.** The trained model loses to the betting market for the current week, so the market stays the default there. The model is used only where it measurably helps.
 
-Both gaps are real (bootstrap CI excludes zero). So Method 3 **loses to Vegas**
-and does not touch the current week — `primary_method` stays `vegas`. But it
-**beats Monte Carlo by 0.0231**, and that is the matchup that matters: future
-weeks have no posted line, so Method 2 was previously running unopposed there.
+## Results
 
-Future weeks now use a *fitted* blend of Methods 2 and 3. Fitted, not a fixed
-average — a 50/50 logit blend scores 0.2304, significantly *worse* than ML
-alone, because it re-admits the weaker model at a weight it hasn't earned. The
-fitted blend scores 0.2242 with the best high-confidence calibration measured
-(predicted 91.4% → actual 90.2%).
+Walk-forward on **1,084 decisive games from the 2022–2025 seasons**, every model scored on the same games without seeing their outcomes:
 
-**Leakage prevention** is the property everything else rests on, so it's worth
-being explicit: one gate (`AsOf.visible()`), season-cadence expanding-window
-training (a model never sees the season it scores), as-of features even inside
-the training set, calibration cross-validated only within training seasons, and
-the QB train/inference asymmetry isolated to `resolve_starter`'s single null
-check. `tests/test_ml_features.py::test_no_leakage_from_future_results` erases
-every future result and asserts identical features — and it was verified to
-actually fail when leakage is deliberately injected, rather than passing
-vacuously.
+| Model | Brier score ↓ | Log loss ↓ | 85–99% band: predicted → actual |
+|---|---|---|---|
+| **Vegas line** (logistic on the spread) | **0.2101** | **0.607** | 87.5% → 96.1% (n=51) |
+| **ML classifier** (gradient boosting, isotonic calibration) | 0.2236 | 0.636 | 92.1% → 91.7% (n=36) |
+| **Monte Carlo** (drive-level simulation) | 0.2466 | 0.711 | 90.2% → 78.1% (n=64) |
 
-## The headline empirical finding
+What the evidence says, and what the system does about it:
 
-**Vegas closing lines beat the Monte Carlo simulator, decisively.** Walk-forward
-on real 2022–2024 games (n=813-1084 depending on the run): Vegas Brier ≈0.21 vs.
-Monte Carlo ≈0.25, bootstrap CI on the difference excludes zero. Worse, Monte
-Carlo is specifically *overconfident* in the 0.85–0.99 win-probability band —
-exactly where survivor picks live — predicting ~90% and delivering ~71–78%
-actual. Blending the two doesn't help either. `config.yaml`'s
-`model.primary_method: vegas` reflects this; see `evaluate/model_comparison.py`
-and the Analysis view for the full evidence. This isn't a failure of the
-project — it's the answer plan §3 asked for ("don't assume the answer"), and
-building Method 2 rigorously is what let the finding be trusted at all.
+1. **The betting market is the best forecaster available.** Vegas beats the ML model by 0.0135 Brier (95% CI 0.007–0.020) and the simulator by 0.0365. So when a line is posted, the optimizer uses it.
+2. **The ML model clearly beats the simulator** (by 0.023 Brier, CI 0.013–0.033) and is far better calibrated at high confidence, the zone that matters. The simulator says 90% there and delivers 78%.
+3. **That matters because future weeks have no betting line yet.** Before the ML model existed, the simulator was the only forecast for every week after the current one, and those weeks are most of what the season plan optimizes. They now use the ML model, with the simulator as a fallback only where ML has no forecast. Blends of the two were tested too: a fixed 50/50 average scored significantly *worse* than ML alone, and a blend with fitted weights tied it, so the simpler option won.
 
-## Setup
+![Reliability diagram and high-confidence calibration for all three models](docs/images/calibration.png)
+
+A backtest replaying the 2010–2025 seasons week by week reproduces the same ordering: plans built on Vegas lines survived 5.1 weeks on average, the ML model 3.7, and the simulator 2.9.
+
+## How it works
+
+```mermaid
+flowchart LR
+    A[nflverse<br/>schedules, lines,<br/>play-by-play] --> B[Point-in-time<br/>feature store]
+    B --> C1[Vegas model]
+    B --> C2[Monte Carlo<br/>simulator]
+    B --> C3[ML classifier]
+    C1 -->|this week| D[Week × team<br/>survival table]
+    C3 -->|future weeks| D
+    C2 -.->|fallback| D
+    D --> F[Exact assignment<br/>solver]
+    F --> G[Season plan +<br/>alternates]
+    D --> H[Browser: What-If<br/>planner]
+```
+
+1. **Data.** Schedules, betting lines, and play-by-play come from [nflverse](https://github.com/nflverse) through `nflreadpy`. No paid APIs or keys.
+2. **Features.** Every feature is computed as of the moment before each game: opponent-adjusted efficiency ratings from a ridge regression over expected points added (EPA), drive-outcome distributions, recent form and trajectory, rest and travel, weather, and starting-quarterback continuity.
+3. **Forecasts.** The current week uses the market line wherever one is posted. Later weeks use the ML model (the simulator fills in where it has no forecast), pulled toward 50% as the horizon grows, since a game ten weeks out is genuinely less predictable.
+4. **Optimization.** Surviving every week means multiplying the weekly probabilities, which is the same as adding their logarithms. That makes the season a weeks × teams assignment problem with an exact solution. Murty's algorithm supplies the next-best alternative plans.
+5. **Interface.** A React dashboard shows the week's recommended pick, the odds board, the full plan, model diagnostics, and the What-If planner.
+
+## Screenshots
+
+**Dashboard.** The pick for the current week comes straight from the full-season plan, so it accounts for every week after it.
+
+![Dashboard](docs/images/dashboard.png)
+
+**Cost-to-lock grid.** Every week against every team: the share of your season survival odds you give up by committing that team to that week. Green cells trace the optimal plan. A team's cost depends on what it would otherwise be saved for, not just its odds that week: a 76% favorite can cost more to use now than a 74% one.
+
+![Cost-to-lock grid](docs/images/cost-grid.png)
+
+## Engineering notes
+
+**Preventing lookahead.** A model that sees the future looks brilliant in testing and is useless live, so leakage is handled structurally rather than by care:
+- One gate, `AsOf.visible()` in [`clock.py`](backend/survivor/clock.py), is the only way any code reads historical data.
+- Training is season by season on an expanding window: the model scoring 2024 was fit only on 2011–2023.
+- Calibration is cross-validated inside the training seasons, so it never sees the season it scores.
+- [`test_no_leakage_from_future_results`](tests/test_ml_features.py) erases every future result and asserts the features don't change. It was checked by injecting leakage deliberately and confirming the test fails.
+
+**One optimizer, two languages, verified against each other.** The What-If planner re-solves in the browser because locks never change a win probability, only which cells the optimizer may use. The expensive forecasting runs once at export, and each re-solve after that is arithmetic on a table of a few hundred numbers. The TypeScript solver is tested against fixtures generated from SciPy's answers, and against the real exported plan, which it must reproduce exactly. Both suites were confirmed to fail when the solver was deliberately broken.
+
+**A silent data bug, found and fixed.** Play-by-play data uses each franchise's current abbreviation for its whole history, while the schedule uses the one from that year, so `STL`, `SD` and `OAK` never matched `LA`, `LAC` and `LV`. Every Rams, Chargers and Raiders game before each relocation quietly disappeared from the backtest: 48 of 256 games in 2011 alone. Names are now normalized when the schedule loads.
+
+**No invented numbers.** When a week has no posted lines yet, the system falls back to the models instead of treating a missing line as a 50/50 game, and the interface shows a dash rather than a fake percentage.
+
+## Quickstart
+
+Requires Python 3.12+ and Node 20+.
 
 ```bash
-python3 -m venv .venv
-source .venv/bin/activate
+git clone https://github.com/zachwelch98/nfl-survivor.git
+cd nfl-survivor
+
+python3 -m venv .venv && source .venv/bin/activate
 pip install -e ".[dev]"
-pytest                    # 207 tests
+cd frontend && npm install && cd ..
+
+make web        # open http://localhost:5173
 ```
 
-Use `make recommend` / `make export` / `make backtest` (see Makefile) rather
-than the installed `survivor` console script directly — on this Python 3.14
-venv the editable install's `.pth` file isn't reliably processed by `site.py`
-at interpreter startup, so the Makefile invokes `python -m survivor.cli` with
-`PYTHONPATH=backend` set explicitly instead.
+The repo ships with a data snapshot, so the app works on first launch. To pull fresh data and rebuild the forecasts:
 
 ```bash
-make refresh                            # re-fetch nflverse data (pbp seasons auto-detected)
-make recommend                          # this week's pick, current season
-make export                             # write the JSON bundle (fast)
-make export-full                        # also refresh calibration/backtest/simulation (~90s)
-make backtest                           # replay 2010-2025 for all three methods
-make test                               # run the Python test suite (214 tests)
-make test-web                           # run the browser solver's test suite (52 tests)
-make web                                # cd frontend && npm run dev
+make refresh                                   # download latest nflverse data
+make export SEASON=2026 WEEK=4 USED="JAX,TB"   # rebuild for a week, excluding teams you've used
 ```
 
-`frontend/public/data/*.json` is committed as a live snapshot (not gitignored
-mock data) — the pipeline was built before the frontend, so there was real
-data to show by the time it existed.
+The dashboard also has buttons for these commands when running locally.
 
-## The What-If planner
+| Command | What it does |
+|---|---|
+| `make refresh` | Re-download schedules, lines and play-by-play (seasons picked automatically) |
+| `make export` | Rebuild forecasts, season plan and dashboard data |
+| `make export-full` | Also rebuild model comparison, backtest and simulation (slow) |
+| `make backtest` | Replay the 2010–2025 seasons for every model |
+| `make test` / `make test-web` | Python (217) and TypeScript (62) test suites |
 
-`/whatif` lets you commit a team to a week — "I'm saving DAL for week 12" —
-and the optimizer re-solves every other week around it, reporting what the
-commitment costs. A lock is expressed by *removing cells* from the
-probability table (the locked week may only use its locked team; the locked
-team may only be used in its locked week), which is exactly the contract
-`optimize/assignment.py` already committed to: the solver is agnostic about
-why a `(week, team)` pair is unavailable.
-
-**The whole solve runs in the browser**, and the reason is worth stating
-because it drove the design: locks don't change any win probability. They
-change only which cells the optimizer may use. So the expensive half — Monte
-Carlo over every remaining game, plus one Method 3 fit — happens once at
-`make export` time and ships as `survival_matrix.json` (the full
-`(week, team) -> survival_prob` table, ~540 rows, exported *unfiltered*).
-Everything after that is combinatorics over 18x32 numbers, so a lock toggle
-is instant rather than a ~2s Python round-trip, and the cost of committing
-*every* team to *every* week can be recomputed live (~600 assignment solves
-per keystroke).
-
-That means the exact optimizer now exists in two languages, so it is
-checked in both directions:
-
-- `tests/test_optimizer.py` generates
-  `frontend/src/lib/__fixtures__/assignment_cases.json` from scipy's own
-  answers, covering square, rectangular, sparse, all-ties and infeasible
-  instances. `make test` regenerates it, so it cannot drift.
-- `frontend/src/lib/crosscheck.test.ts` runs the TypeScript solver over the
-  **actual exported bundle** and requires it to reproduce `season_plan.json`
-  exactly — the real 18x32 instance, real byes, real ties.
-
-Both compare *total cost*, not the assignment itself: ties mean several
-distinct assignments can be equally optimal, so cell-for-cell agreement with
-scipy would be a flaky test wearing a strict test's clothes. Validity plus
-equal total is the property that actually matters. Both were canary-checked
-by deliberately breaking the solver, rather than trusted for passing.
-
-Exported probabilities are shipped unfiltered so the browser applies its own
-availability from localStorage. That also fixes a live inconsistency: `/plan`
-reflects whatever `USED=` was passed to `make export`, while every other view
-reads used teams from localStorage, and the two could disagree.
-
-## Key design decisions
-
-- **`make refresh` works out which seasons to fetch.** The play-by-play
-  seasons were hardcoded in the Makefile, which went stale every September:
-  the moment a new season's play-by-play began to exist was the moment the
-  refresh stopped fetching it. `refresh_all()` now derives them from the
-  schedule (season in progress plus the one before), dropping the current
-  season until it has actually kicked off — nflreadpy rejects a request for a
-  season with no games rather than returning an empty frame. Override with
-  `make refresh PBP=2024,2025`, or skip play-by-play with `--no-pbp`.
-- **No paid odds API.** nflverse's `games.csv` (via `nflreadpy`) already
-  carries closing spreads (1999+) and moneylines (2010+), which is what both
-  the Vegas baseline and the backtest harness use — zero cost, zero keys,
-  and train/serve use the identical data source.
-- **The leakage gate is one file.** `survivor.clock.AsOf` is the single
-  enforcement point for "no lookahead" — every feature builder and backtest
-  step must go through `AsOf.visible(df)` rather than filtering season/week
-  by hand. See `backend/survivor/clock.py` and `tests/test_clock.py`.
-- **The season optimizer is exact, not heuristic.** Maximizing survival
-  probability across the season is equivalent to maximizing
-  `Σ log p(pick_w)`, which is a bipartite assignment problem (weeks × teams)
-  solvable exactly and instantly with `scipy.optimize.linear_sum_assignment`.
-  `optimize/kbest.py` adds Murty's algorithm for the k best alternate plans
-  and a cost-of-deviation figure for every team playable in a given week.
-- **Future weeks never touch a real posted line.** Beyond the current week,
-  probabilities come from a fitted blend of Methods 2 and 3 with confidence
-  decay toward a coin flip as the horizon grows (`optimize/projection.py`;
-  Method 2 alone before Method 3 existed) — using a
-  future week's actual closing line, even in a historical backtest, would be
-  lookahead (that value bakes in information — injury news, sharp money —
-  that didn't exist yet at decision time). The backtest harness also runs a
-  deliberately-cheating variant that *does* use real closing lines throughout,
-  purely to quantify what that lookahead would be worth.
-- **A relocated-franchise join bug, found late and worth knowing about.**
-  nflverse's play-by-play uses each franchise's *current* abbreviation for all
-  of its history while `games.csv` uses the period-correct one, so `STL`/`SD`/
-  `OAK` never matched `LA`/`LAC`/`LV`. Since the consuming code treats a
-  missing team profile as "skip this game," every Rams, Chargers and Raiders
-  game silently vanished from backtest seasons before each relocation — 48 of
-  256 games in 2011. `load_schedules()` now normalizes to the pbp convention.
-  Any `backtest.json` generated before this fix understates those seasons.
-- **Costs are reported as a share of your season odds, not in log points.**
-  The optimizer works in log space because that is what it sums, but "0.41
-  log-points" means nothing to a person. A cost of `c` multiplies total season
-  survival by `exp(-c)`, so the planner shows `1 - exp(-c)` — an actual
-  percentage of the odds you're giving up.
-- **The frontend is a thin, swappable read layer.** Every view fetches through
-  `frontend/src/data/source.ts`; nothing else calls `fetch`. Swapping static
-  JSON for a live API later is a one-file change.
-- **The Dashboard can trigger the pipeline itself.** A dev-only Vite
-  middleware (`frontend/vite-plugins/pipeline.ts`) exposes `/api/pipeline/*`
-  and shells out to `make <target>` (allowlisted, one job at a time) so
-  `make refresh|recommend|export|export-full|backtest|test` can be run from
-  a button instead of a terminal — see `frontend/README.md`.
-
-## Project layout
+## Project structure
 
 ```
 backend/survivor/
-  clock.py            AsOf leakage gate
-  config.py            typed config.yaml loader
-  data/                 nflverse loaders, stadium geography
-  features/            as-of team ratings, drive rates, situational adjustments
-  models/               vegas.py, montecarlo.py, blend.py
-  evaluate/             Brier/log-loss/calibration, walk-forward model comparison
-  optimize/             exact assignment solver, k-best, cost-of-deviation, projection
-  backtest/             replay real seasons week-by-week
-  simulate/             strategy comparison (season.py), pool-field simulation (pool.py)
-  export/               JSON bundle for the frontend (incl. survival_matrix.json)
-  cli.py                survivor refresh|recommend|export|backtest
-frontend/               Vite + React + TS + Tailwind + Recharts
-  src/lib/assignment.ts   the exact optimizer, ported for in-browser what-ifs
-  src/lib/planner.ts      lock semantics, validation, scenario cost
-tests/                  211 tests, pytest (+52 vitest in frontend/)
+  clock.py        point-in-time gate: the only way to read historical data
+  data/           nflverse loaders, stadium locations
+  features/       ratings, drive rates, situational and QB features
+  models/         Vegas, Monte Carlo, ML classifier, blend (evaluated)
+  evaluate/       Brier, log loss, calibration, bootstrap tests, model selection
+  optimize/       exact assignment solver, k-best plans, forecast projection
+  backtest/       week-by-week replay of real seasons
+  export/         JSON data for the frontend
+frontend/src/
+  views/          Dashboard, Odds Board, Season Plan, What-If, Analysis
+  lib/            browser assignment solver and What-If planner logic
+tests/            217 Python tests (plus 62 in frontend/)
 ```
+
+## Built with
+
+**Python:** scikit-learn, SciPy, NumPy, polars, pydantic, click, pytest
+**Frontend:** React, TypeScript, Vite, Tailwind CSS, Recharts, Zod, Vitest
+**Data:** [nflverse](https://github.com/nflverse) via `nflreadpy`
+
+---
+
+<sub>For analysis and entertainment. Not betting advice.</sub>
