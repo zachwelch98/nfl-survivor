@@ -102,6 +102,7 @@ def build_week_board(
     team_game_table: pl.DataFrame | None = None,
     depth_charts: pl.DataFrame | None = None,
     ml_model: MLWinProbModel | None = None,
+    season_survival_prob: dict[tuple[int, str], float] | None = None,
 ) -> dict:
     """Per-game Vegas vs. Monte Carlo win probability, plus the optimizer's
     recommended pick (and every available team's cost-of-deviation) among
@@ -195,7 +196,25 @@ def build_week_board(
     available_teams = list(survival_prob_teams(survival_prob, week))
     recommended = None
     deviations = {}
-    if available_teams:
+    if season_survival_prob is not None:
+        # Season-aware: this week's pick is whatever the full-season plan puts
+        # here, and each alternative's deviation cost is what forcing it into
+        # this week does to the whole remaining season. Without the season
+        # table the board can only solve this one week, which is just "highest
+        # win probability" -- the greedy pick the optimizer exists to beat,
+        # under a card that says "optimized for full-season survival".
+        # The whole remaining season, not just weeks from this one forward: a
+        # future week's board must star what the actual plan puts there, which
+        # depends on which teams the earlier weeks have already spent.
+        table = {(w, t): p for (w, t), p in season_survival_prob.items() if t not in used_teams}
+        season_weeks = sorted({w for (w, _) in table})
+        season_teams = sorted({t for (_, t) in table})
+        try:
+            recommended = solve_optimal_assignment(season_weeks, season_teams, table).team_for_week(week)
+            deviations = cost_of_deviation_by_team(season_weeks, season_teams, table, current_week=week)
+        except InfeasibleSeasonError:
+            pass
+    elif available_teams:
         try:
             plan = solve_optimal_assignment([week], available_teams, survival_prob)
             recommended = plan.team_for_week(week)
@@ -258,14 +277,36 @@ def build_survival_matrix(
     as_of = AsOf(season=season, week=current_week, game_type="REG")
     vegas = VegasModel().fit(as_of.visible(schedules))
 
-    current_target = season_games.filter(pl.col("week") == current_week)
-    current_probs = vegas.predict_proba(current_target)
+    # Vegas only where a line actually exists. VegasModel still returns a number
+    # for a game with no line -- an even split from its intercept -- and letting
+    # that through meant a week with no posted lines was optimized as 32
+    # identical 49.9% coin flips, labelled "vegas". The season plan then filled
+    # that week with an arbitrary team while the week's own board, which already
+    # had this fallback, recommended a different one. Line-less current-week
+    # games now take the same path as future games (Methods 2+3), with no
+    # horizon decay since they are this week.
+    has_line = pl.col("spread_line").is_not_null() | (
+        pl.col("home_moneyline").is_not_null() & pl.col("away_moneyline").is_not_null()
+    )
+    current_target = season_games.filter((pl.col("week") == current_week) & has_line)
+    # Early in a week nflverse can have no lines at all yet, and scikit-learn
+    # refuses to score zero rows, so an empty week gets an empty frame.
+    current_probs = (
+        vegas.predict_proba(current_target)
+        if current_target.height > 0
+        else pl.DataFrame(schema={
+            "week": pl.Int64, "home_team": pl.Utf8, "away_team": pl.Utf8,
+            "home_win_prob": pl.Float64, "away_win_prob": pl.Float64, "tie_prob": pl.Float64,
+        })
+    )
+    lined_current_games = set(current_target["game_id"].to_list())
 
     # Method 2 only needs the four key columns; Method 3's feature builder
     # needs the full schedule row (rest, roof, weather, stadium, qb ids), so
     # keep both rather than re-selecting.
     future_games_full = season_games.filter(
         pl.col("week").is_in([w for w in remaining_weeks if w != current_week])
+        | ((pl.col("week") == current_week) & ~has_line)
     )
     future_games = future_games_full.select(["game_id", "week", "home_team", "away_team"])
     mc_results = simulate_all_remaining_games(
@@ -285,6 +326,7 @@ def build_survival_matrix(
         decay_rate=decay_rate,
         ml_results_by_game=ml_results,
         future_blend_model=future_blend_model,
+        current_week=current_week,
     )
 
     # Matchup context for each (week, team), so the frontend can show who the
@@ -311,7 +353,7 @@ def build_survival_matrix(
             "game_id": ctx["game_id"],
             "survival_prob": prob,
             "weeks_ahead": w - current_week,
-            "source": "vegas" if w == current_week else "model",
+            "source": "vegas" if ctx["game_id"] in lined_current_games else "model",
         })
 
     payload = {
@@ -431,6 +473,16 @@ def export_all(
     season_start_train = AsOf(season=season, week=current_week, game_type="REG").visible(schedules)
     shared_ml_model = _fit_ml_model(team_game_table, drive_table, schedules, season_start_train, depth_charts)
 
+    # The expensive half of the season plan — one Monte Carlo pass over every
+    # remaining game — is computed once here and shared by the boards,
+    # season_plan.json and survival_matrix.json, reusing the Method 3 fit above.
+    # It comes first so every board's recommended pick is read off the same
+    # full-season plan rather than each board solving its own week in isolation.
+    survival_prob, matrix_payload = build_survival_matrix(
+        schedules, drive_table, season, current_week,
+        team_game_table=team_game_table, depth_charts=depth_charts,
+        ml_model=shared_ml_model,
+    )
     for board_week in board_weeks:
         _write_json(
             out_dir / f"week_{board_week:02d}_board.json",
@@ -438,17 +490,9 @@ def export_all(
                 schedules, drive_table, season, board_week, used_teams,
                 team_game_table=team_game_table, depth_charts=depth_charts,
                 ml_model=shared_ml_model,
+                season_survival_prob=survival_prob,
             ),
         )
-    # The expensive half of the season plan — one Monte Carlo pass over every
-    # remaining game — is computed once here and shared by season_plan.json and
-    # survival_matrix.json, reusing the Method 3 fit made above for the boards.
-    # (Before this, build_season_plan fit Method 3 a second time on its own.)
-    survival_prob, matrix_payload = build_survival_matrix(
-        schedules, drive_table, season, current_week,
-        team_game_table=team_game_table, depth_charts=depth_charts,
-        ml_model=shared_ml_model,
-    )
     _write_json(out_dir / "survival_matrix.json", matrix_payload)
     _write_json(
         out_dir / "season_plan.json",

@@ -176,6 +176,7 @@ def build_survival_prob_table(
     decay_rate: float = DEFAULT_DECAY_RATE,
     ml_results_by_game: dict[str, tuple[float, float, float]] | None = None,
     future_blend_model=None,
+    current_week: int | None = None,
 ) -> dict[tuple[int, str], float]:
     """Assemble the full (week, team) -> survival_prob table for the
     optimizer: current week from `current_week_probs` (must have week,
@@ -188,7 +189,12 @@ def build_survival_prob_table(
     """
     table: dict[tuple[int, str], float] = {}
 
-    current_week = int(current_week_probs["week"][0]) if current_week_probs.height > 0 else None
+    # Inferred from the Vegas rows when not given. Pass it explicitly when some
+    # current-week games have no posted line and travel through `future_games`
+    # instead: if *no* game has a line, there are no Vegas rows to infer from,
+    # and the current week would be decayed as though it were weeks away.
+    if current_week is None and current_week_probs.height > 0:
+        current_week = int(current_week_probs["week"][0])
     for row in current_week_probs.iter_rows(named=True):
         w = row["week"]
         home_survival = pick_survival_prob(row["home_win_prob"], row["away_win_prob"], row["tie_prob"], picked_is_home=True, tie_counts_as_loss=tie_counts_as_loss)

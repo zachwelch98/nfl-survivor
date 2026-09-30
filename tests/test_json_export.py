@@ -180,3 +180,64 @@ def test_survival_matrix_is_unfiltered_and_reproduces_the_season_plan(real_data)
         (p["week"], p["team"]) for p in plan["recommended_sequence"]
     ]
     assert solved.total_survival_prob == pytest.approx(plan["total_survival_prob"], rel=1e-12)
+
+
+def _strip_lines(schedules, season, week):
+    """The schedule as it looks early in a week before nflverse has the lines."""
+    blank = (pl.col("season") == season) & (pl.col("week") == week)
+    return schedules.with_columns([
+        pl.when(blank).then(None).otherwise(pl.col(c)).alias(c)
+        for c in ("spread_line", "home_moneyline", "away_moneyline")
+    ])
+
+
+def test_survival_matrix_current_week_without_lines_is_not_a_coin_flip(real_data):
+    """Regression: with no posted lines, VegasModel returns an even split from
+    its intercept, and that used to flow straight into the plan -- every team
+    in the current week at an identical 49.9%, labelled "vegas". The plan then
+    filled the week with an arbitrary team. Line-less current-week games must
+    fall back to Methods 2+3, as the week's board already did."""
+    pbp, schedules, drive_table = real_data
+    blank = _strip_lines(schedules, 2026, 1)
+    _, payload = build_survival_matrix(blank, drive_table, 2026, 1, mc_config=FAST_MC)
+
+    week1 = [e for e in payload["entries"] if e["week"] == 1]
+    assert week1, "current week vanished instead of falling back"
+    assert {e["source"] for e in week1} == {"model"}
+    probs = [e["survival_prob"] for e in week1]
+    assert max(probs) - min(probs) > 0.2, "current week is still a flat coin flip"
+    # And it is scored as this week, not decayed as if weeks away.
+    assert all(e["weeks_ahead"] == 0 for e in week1)
+
+
+def test_survival_matrix_uses_vegas_only_for_games_with_a_line(real_data):
+    pbp, schedules, drive_table = real_data
+    _, payload = build_survival_matrix(schedules, drive_table, 2026, 1, mc_config=FAST_MC)
+    week1 = [e for e in payload["entries"] if e["week"] == 1]
+    assert {e["source"] for e in week1} == {"vegas"}  # week 1 lines are all posted
+
+
+def test_every_board_stars_the_season_plans_pick(real_data):
+    """Regression: the board's recommended pick solved only its own week --
+    the greedy "highest win probability" pick -- under a Dashboard card that
+    says "optimized for full-season survival". Given the season table, every
+    board must star exactly what the season plan puts in that week."""
+    pbp, schedules, drive_table = real_data
+    used = ["KC"]
+    table, _ = build_survival_matrix(schedules, drive_table, 2026, 1, mc_config=FAST_MC)
+    plan = build_season_plan(
+        schedules, drive_table, 2026, 1, used_teams=used,
+        mc_config=FAST_MC, k_alternates=1, survival_prob=table,
+    )
+    planned = {p["week"]: p["team"] for p in plan["recommended_sequence"]}
+
+    for week in (1, 5, 12):
+        board = build_week_board(
+            schedules, drive_table, 2026, week, used_teams=used,
+            mc_config=FAST_MC, season_survival_prob=table,
+        )
+        assert board["recommended_pick"] == planned[week], f"week {week}"
+        # The starred pick costs nothing; every alternative costs something >= 0.
+        assert board["cost_of_deviation"][board["recommended_pick"]] == pytest.approx(0.0, abs=1e-12)
+        assert all(v >= 0 for v in board["cost_of_deviation"].values())
+        assert "KC" not in board["cost_of_deviation"]
